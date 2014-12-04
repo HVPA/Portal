@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+<!-- Breadcrumb -->
+{% block breadcrumb %} 
+	<a href="/" class="pathway">Home</a> 
+	{% if add_save or user_view_edit %}
+		<img src="/img/arrow.png" alt=""> 
+		<a href="/user_management/{{user_id}}/" class="pathway">User Details</a>
+		<img src="/img/arrow.png" alt=""> 
+		<a href="/user_org/user/{{user_id}}/" class="pathway">Organisations</a>
+	{% else %}
+		<img src="/img/arrow.png" alt=""> 
+		<a href="/user_org/" class="pathway">Organisations</a>
+	{% endif %}
+	<img src="/img/arrow.png" alt="">
+	Add Organisation
+{% endblock %}
+
+<!-- Content Heading -->
+{% block contentheader %} 
+	{% if add_save %}
+		Add and Save Organisations/Institutes to user 
+	{% endif %}
+	{% if add %}
+		Add Organisation/Institute
+	{% endif %}
+	{% if view_edit or user_view_edit %}
+		View/Edit Organisation/Institute
+	{% endif %}
+{% endblock %}
+
+<!-- Javascript -->
+{% block extra_js %}
+    <script type="text/javascript" src="/js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/js/jQueryValidatorPhoneNo.js"></script>
+	<script type="text/javascript">
+        jQuery(document).ready(function(){
+            // Validation
+            jQuery("#userForm").validate();
+        });
+    </script>
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+	<form id="userForm" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+		<table>
+			<tr>
+				<td>
+					<table>
+						{%if add_save %}
+							{% if org_name_exist %}
+			                    <tr>			                    
+			                        <td colspan="4">
+			                            <div class="ui-widget" style="width:75%;">
+			                                <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+			                                    <p class="errorMessage">
+			                                    <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+			                                        The organisation you have entered name: <b>{{ org_name_exist }}</b>, already exists 
+			                                        in database.   
+			                                    </p>
+			                                </div>
+			                            </div>
+			                        </td>
+			                    </tr>
+			                {% endif %}
+			            {% endif %}
+						<tr>
+							<td colspan="4">
+								Name of Organisation/Institute
+								<input type="text" name="org_name" style="width:250px" value="{{org_name}}" id="org_name" 
+									class="required" minlength="2" maxlength="255"/>
+							</td>
+						</tr>
+						<tr><td>&nbsp;</td></tr>
+						<tr>
+							<td colspan="4">
+								<table>
+									<tr>
+										<td>Address</td>
+										<td>
+											<textarea name="org_address" rows="3" cols="55" class="required">{{org_address}}</textarea>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr><td>&nbsp;</td></tr>
+						<tr>
+							<td>City</td> 
+							<td>
+								<input type="text" name="org_city" value="{{org_city}}" id="org_city" 
+									class="required" maxlength="25"/>
+							</td>
+						</tr>
+						<tr><td>&nbsp;</td></tr>
+						<tr>
+							<td>Post Code</td> 
+							<td>
+								<input type="text" name="org_post" value="{{org_post}}" id="org_post" style="width: 50px;"
+									class="required digit" minlength="4" maxlength="4" />
+							</td>
+							<td>
+								State/Territory
+							</td>
+							<td>
+								<select id="org_state" name="org_state" class="required">
+									{# first option should be blank to ensure user selects an option #}
+									<option></option>
+									{% if state_list %}
+										{% for state in state_list %}
+											<option {%ifequal org_state|stringformat:"s" state|stringformat:"s"%} 
+												selected="selected"{%endifequal%} value ="{{state}}">
+												{{state}}
+											</option>
+										{% endfor %}
+									{% endif %}
+								</select>
+							</td>
+						</tr>
+						<tr><td>&nbsp;</td></tr>
+						<tr>
+							<td>Phone</td>
+							<td>
+								<input type="text" name="org_phone" value="{{org_phone}}" id="org_phone" 
+									class="required phone" minlength="8" maxlength="25"/>
+							</td>
+							<td>Fax</td>
+							<td>
+								<input type="text" name="org_fax" value="{{org_fax}}" id="org_fax" 
+									class="phone" minlength="8" maxlength="25"/>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr><td>&nbsp</td></tr>
+			<tr>
+				<td align="center">
+					{% if add_save %}
+						<input type="submit" name="save" value='Add and Save' style="width: 100px;"
+							class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+						<input type="button" onclick="location.href='/user_org/user/{{user_object.id}}/'" value="Back" 
+							style="width: 100px;" class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+					{% endif %}
+					{% if user_view_edit %}
+						<input type="submit" name="save" value="Update" style="width: 100px;"
+							class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+						<input type="button" onclick="location.href='/user/user_org/user/{{user_object.id}}/'" value="Back" 
+							style="width: 100px;" class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+					{% endif %}
+					{% if add %}
+						<input type="submit" name="save" value="Add" style="width: 100px;"
+							class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+						<input type="button" onclick="location.href='/user_org/'" value="Back" 
+							style="width: 100px;" class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+					{% endif %}
+					{% if view_edit %}
+						<input type="submit" name="save" value="Update" style="width: 100px;"
+							class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+						<input type="button" onclick="location.href='/user_org/'" value="Back" 
+							style="width: 100px;" class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+					{% endif %}
+				</td>
+			</tr>
+		</table>
+	</form>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+<!-- Breadcrumb -->
+{% block breadcrumb %} 
+	<a href="/" class="pathway">Home</a> 
+	<img src="/img/arrow.png" alt=""> 
+	Sign up
+{% endblock %}
+
+<!-- Content Heading -->
+{% block contentheader %} Sign up {% endblock %}
+
+<!-- Content -->
+{% block content %}
+	&nbsp;
+	<form action="/signup/" method="post" accept-charset="utf-8">
+		<table cellpadding="10">
+			<tr>
+				<td>
+					<label for="firstName">First name</label>
+				</td>
+				<td>
+					<input type="text" name="firstName" value="" id="firstName" />
+				</td>
+			</tr>
+			<tr><td>&nbsp;</td></tr>
+			<tr>
+				<td>
+					<label for="surname">Surname</label>
+				</td>
+				<td>
+					<input type="text" name="surname" value="" id="surname" />
+				</td>
+			</tr>
+			<tr><td>&nbsp;</td></tr>
+			<tr>
+				<td>
+					<label for="phone">Phone No.</label>
+				</td>
+				<td>
+					<input type="text" name="phone" value="" id="phone" />
+				</td>
+			</tr>
+			<tr><td>&nbsp;</td></tr>
+			<tr>
+				<td>
+					<label for="email">Email</label>
+				</td>
+				<td>
+					<input type="text" name="email" value="" id="email" />
+				</td>
+			</tr>
+			<tr><td>&nbsp;</td></tr>
+			<tr>
+				<td>
+					<label for="username">User Name</label>
+				</td>
+				<td>
+					<input type="text" name="username" value="" id="username" />
+				</td>
+			</tr>
+			<tr><td>&nbsp;</td></tr>
+			<tr>
+				<td>
+					<label for="password">Password</label>
+				</td>
+				<td>
+					<input type="password" name="password" value="" id="password" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label for="confirmPassword">Confirm Password</label>
+				</td>
+				<td>
+					<input type="password" name="confirmPassword" value="" id="confirmPassword" />
+				</td>
+			</tr>
+			<tr><td>&nbsp;</td></tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input type="submit" value="Sign up" />
+				</td>
+			</tr>
+		</table>
+	</form>
+{% endblock %}

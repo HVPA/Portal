@@ -1,0 +1,657 @@
+{% extends "base.html" %}
+
+<!-- Breadcrumb -->
+{% block breadcrumb %} 
+    <a href="/" class="pathway">Home</a> 
+    <img src="/img/arrow.png" alt=""> 
+    <a href="/user_management/" class="pathway">User management</a>
+    <img src="/img/arrow.png" alt=""> 
+    User Details
+{% endblock %}
+
+<!-- Content Heading -->
+{% block contentheader %} User Account Details - {{ user_obj.first_name }} {{ user_obj.last_name }} {% endblock %}
+
+<!-- Javascript -->
+{% block extra_js %}    
+    <script type="text/javascript" src="/js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.fancybox-1.3.1.pack.js"></script>
+    <script type="text/javascript" src="/js/jquery.mousewheel-3.0.2.pack.js"></script>
+    <script type="text/javascript" src="/js/jQueryValidatorPhoneNo.js"></script>
+    <link rel="stylesheet" href="/css/cb/cb.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="/js/cb.js"></script>
+    <link rel="stylesheet" href="/css/fancybox/jquery.fancybox-1.3.1.css" type="text/css" media="screen" />
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+            // Validation
+            jQuery("#userForm").validate();
+            
+            // Fancybox
+            // change password confirmation
+            jQuery('#password').click(function() {
+            	jQuery.fancybox({'href': '#passForm'})
+            });
+            
+            // grant message
+            jQuery("#grant").click(function() {
+                jQuery.fancybox({'href': '#grantForm'});
+            });
+            
+            // request message
+            jQuery("#request").click(function() {
+                jQuery.fancybox({'href': '#requestForm'});
+            });
+            
+            // reject message
+            jQuery("#reject").click(function() {
+                jQuery.fancybox({'href': '#rejectForm'});
+            });
+            
+            // tabs
+    		jQuery("#tabs").tabs(
+    			{% if launch_inst_tab %}
+    				{ selected: 1 }
+    			{% endif %}
+    		);
+        });
+    </script>
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+	<div class="ui-tabs ui-widget ui-widget-content ui-corner-all" id="tabs">
+	    <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+	        <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#fragment-1"><span>Personal Details</span></a></li>
+	        <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#fragment-2"><span>Institution Details</span></a></li>
+	        {% comment %}
+	        	<li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#fragment-2"><span>Institution Details</span></a></li>
+	        {% endcomment %}
+	    </ul>
+	    <!--  
+	    	Personal Details
+	    -->
+	    <form id="userForm" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+	    <div id="fragment-1">
+	        <table>
+	        	{% if saved_user_changes %}
+	                <tr>
+	                    <td colspan="4">
+	                        <div class="ui-widget" style="width:65%;">
+	                            <div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">
+	                                <p class="errorMessage">
+	                                <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+	                                    User details saved!
+	                                </p>
+	                            </div>
+	                        </div>
+	                    </td>
+	                </tr>
+	            {% endif %}
+                {% if error %}
+                    <div class="ui-widget" style="width:500px;">
+                        <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+                            <p class="errorMessage">
+                                <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+                                    An error has occured sending email to : {{ user_obj.email }}
+                                    <br/>
+                                    {{ error|safe }}
+                            </p>
+                        </div>
+                    </div>
+                {% endif %}
+	        	<tr>
+	            	<td>
+	            		<div class="cbb">
+		            		<table>
+					            <tr>
+					                <td><h3>Personal Details</h3></td>
+					            </tr>
+					            <tr>
+					                <td>
+					                    <table>
+					                        <tr>
+					                            <td>Title</td>
+					                            <td>
+					                                <select id="user_title" name="user_title">
+					                                    {# first option should be blank to ensure user selects an option #}
+					                                    <option></option>
+					                                    {% if title_list %}
+					                                        {% for title in title_list %}
+					                                            <option {%ifequal user_obj.get_profile.Title|stringformat:"s" title|stringformat:"s"%}
+					                                                selected="selected"{%endifequal%} value ="{{title}}">
+					                                                {{title}}
+					                                            </option>
+					                                        {% endfor %}
+					                                    {% endif %}
+					                                </select>
+					                            </td>
+					                        </tr>
+					                    </table>
+					                </td>
+					            </tr>
+					            <tr><td>&nbsp;</td></tr>
+					            <tr>
+					                <td>
+					                    <table>
+					                        <tr>
+					                            <td>First name</td>
+					                            <td>
+					                                <input type="text" name="firstname" value="{{user_obj.first_name}}" id="firstname" class="required" minlength="2" />
+					                            </td>
+					                            <td>Last Name</td>
+					                            <td>
+					                                <input type="text" name="lastname" value="{{user_obj.last_name}}" id="lastname" class="required" minlength="2"/>
+					                            </td>
+					                        </tr>
+					                        <tr><td>&nbsp;</td></tr>
+					                        <tr>
+					                            <td>Phone No.</td>
+					                            <td>
+					                                <input type="text" name="user_phone" value="{{user_obj.get_profile.Phone}}" id="user_phone" 
+					                                    class="required phone" minlength="8" maxlength="25"/>
+					                            </td>
+					                            <td>Mobile</td>
+					                            <td>
+					                                <input type="text" name="user_mobile" value="{{user_obj.get_profile.Mobile}}" id="user_mobile" 
+					                                    class="phone" minlength="10" maxlength="25"/>
+					                            </td>
+					                        </tr>
+					                        <tr><td>&nbsp;</td></tr>
+					                        <tr>
+					                            <td>Email</td>
+					                            <td colspan="3">
+					                                <input type="text" name="user_email" value="{{user_obj.email}}" id="user_email" 
+					                                    class="required email" style="width:250px"/>
+					                            </td>
+					                        </tr>
+					                        {% if email_exist %}
+					                            <tr>
+					                                <td colspan="4">
+					                                    <div class="ui-widget" style="width:75%;">
+					                                        <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+					                                            <p class="errorMessage">
+					                                            <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+					                                                The email specified already exist please check your email is correct or speficiy a different email.
+					                                            </p>
+					                                        </div>
+					                                    </div>
+					                                </td>
+					                            </tr>
+					                        {% endif %}
+					                        <tr><td>&nbsp;</td></tr>
+	                        				<tr>
+					                			<td><h4>Reset Password</h4></td>
+					            			</tr>
+					                        <tr>
+					                            <td colspan="4">
+					                                <div style="float: left">
+					                                	This will instantly reset the users password and <br> 
+					                                	email them a new generated password to their email
+					                                </div>
+				                                	&nbsp;
+				                                	<input type="button" id="password" value="Reset Password"
+				                        				class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+					                            </td>
+					                        </tr>		
+					                        {% if new_password %}
+					                            <tr>
+					                                <td colspan="4">
+					                                    <div class="ui-widget" style="width:65%;">
+					                                        <div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">
+					                                            <p class="errorMessage">
+					                                            <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+					                                                Password changed to - <i>{{ new_password }}</i>, an email has been sent to the user.
+					                                            </p>
+					                                        </div>
+					                                    </div>
+					                                </td>
+					                            </tr>
+					                        {% endif %}
+					                    </table>
+					                </td>
+					            </tr>
+	            				<tr><td>&nbsp;</td></tr>
+		            		</table>
+		            	</div>
+	            	</td>
+	            </tr>
+	            
+	            <tr>
+	            	<td>
+	            		<div class="cbb">
+		            		<table>
+		            			<tr>
+					                <td><h4>User Usage Intention</h4></td>
+					            </tr>
+					            <tr>
+					                <td>
+					                    Usage Intention
+					                    <select id="usage" name="usage">
+					                        {# first option should be blank to ensure user selects an option #}
+					                        <option></option>
+					                        {% if usage_list %}
+					                            {% for usage_int in usage_list %}
+					                                <option {%ifequal usage_int|stringformat:"s" user_obj.get_profile.UsageIntention|stringformat:"s"%} 
+					                                    selected="selected"{%endifequal%} value ="{{usage_int}}">
+					                                    {{usage_int}}
+					                                </option>
+					                            {% endfor %}
+					                        {% endif %}
+					                    </select>
+					                </td>
+					            </tr>
+					            {% comment %}
+					            <tr><td>&nbsp;</td></tr>
+		            			<tr>
+					                <td><h4>Set Lab Leader</h4></td>
+					            </tr>
+					            <tr>
+					                <td colspan="4">
+					                    Check the box below to set the current user to be a Lab Leader. Lab leaders will <br> 
+					                    have access privileges to users within their organisation/insitute lab.
+					                </td>
+					            </tr>
+					            <tr><td>&nbsp;</td></tr>
+					            <tr>
+					                <td>
+					                    <input type="checkbox" name="lableader" {%if user_obj.get_profile.IsLabLeader%}CHECKED{%endif%}/> Lab Leader
+					                </td>
+					            </tr>
+		            			<tr><td>&nbsp;</td></tr>
+		            			<tr>
+					                <td><h4>Assign Laboratory Group</h4></td>
+					            </tr>
+					            <tr>
+					                <td colspan="4">
+					                    This setting is used for grouping users to a Lab Group that is <br> 
+					                    stored in the HVP database.
+					                </td>
+					            </tr>
+					            <tr><td>&nbsp;</td></tr>
+					            <tr>
+					                <td>
+					                    <input type="button" onclick="location.href='/user_org/user/{{user_obj.id}}/'" value="Assign" 
+					                        class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+					                    &nbsp;
+					                    {% if user_obj.get_profile.AdminOrganisation  %}
+					                        The current set Lab Group is: <b>{{ user_obj.get_profile.LaboratoryGroup.Name }}</b>
+					                    {% else %}
+					                        <b>There is currently no assigned Lab group for this user.</b> 
+					                    {% endif %}
+					                </td>
+					            </tr>
+					            <tr><td>&nbsp;</td></tr>
+					            {% endcomment %}
+		            		</table>
+	            		</div>
+	            	</td>
+	            </tr>
+	        </table>
+	       <table width="700px">
+		    	<tr>
+		    		<td align="center">
+		    			<input type="submit" name="update_user" value="Update Details" style="width: 120px;"
+							class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"/>
+						<input type="submit" name="back" value="Back" style="width: 120px;"
+							class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"/>
+					</td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+			</table>
+	    </div>
+	    <!-- 
+	    	Institution Details
+	     -->
+	    <div id="fragment-2">
+	    	<table>
+    			{% if saved_inst_changes %}
+	                <tr>
+	                    <td colspan="4">
+	                        <div class="ui-widget" style="width:65%;">
+	                            <div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">
+	                                <p class="errorMessage">
+	                                <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+	                                    Institution details saved!
+	                                </p>
+	                            </div>
+	                        </div>
+	                    </td>
+	                </tr>
+	            {% endif %}
+				{% if status_changed %}
+	                <tr>
+	                    <td colspan="4">
+	                        <div class="ui-widget" style="width:65%;">
+	                            <div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">
+	                                <p class="errorMessage">
+	                                <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+	                                    User status changed!
+	                                </p>
+	                            </div>
+	                        </div>
+	                    </td>
+	                </tr>
+	            {% endif %}
+	            <!-- Institution -->
+            		<tr>
+            			<td>
+            				<div class="cbb">
+            					<table>
+            						<tr>
+            							<!--Institution Details-->
+            							<td>
+            								<table>
+			            						<tr>
+									                <td colspan="4"><h3>Institution Details</h3></td>
+									            </tr>
+									            <tr>
+									                <td>
+									                    <table>
+									                        <tr>
+									                            <td colspan="4">
+									                                Name of Institution
+									                                <input type="text" name="inst_name" style="width:250px" value="{{institution.Name}}" id="inst_name" 
+									                                    class="required" minlength="2" maxlength="255"/>
+									                            </td>
+									                        </tr>
+									                        <tr><td>&nbsp;</td></tr>
+									                        <tr>
+									                            <td colspan="4">
+									                                Department/Lab
+									                                <input type="text" name="inst_dept" style="width:250px" value="{{institution.Department}}" id="inst_dept"
+									                                    minlength="2" maxlength="255"/>
+									                            </td>
+									                        </tr>
+									                        <tr><td>&nbsp;</td></tr>
+									                        <tr>
+									                            <td colspan="4">
+									                                <table>
+									                                    <tr>
+									                                        <td>Address</td>
+									                                        <td>
+									                                            <textarea name="inst_address" rows="3" cols="55" class="required">{{institution.Address}}</textarea>
+									                                        </td>
+									                                    </tr>
+									                                </table>
+									                            </td>
+									                        </tr>
+									                        <tr><td>&nbsp;</td></tr>
+									                        <tr>
+									                            <td>City</td> 
+									                            <td><input type="text" name="inst_city" value="{{institution.City}}" id="inst_city" 
+									                                class="required" maxlength="25"/></td>
+									                        </tr>
+									                        <tr><td>&nbsp;</td></tr>
+									                        <tr>
+									                            <td>Post Code</td> 
+									                            <td><input type="text" name="inst_post" value="{{institution.PostCode}}" id="inst_post" 
+									                                class="required digit" minlength="4" maxlength="4" /></td>
+									                            <td>
+									                                State/Territory
+									                            </td>
+									                            <td>
+									                                <select id="inst_state" name="inst_state" class="required">
+									                                    {# first option should be blank to ensure user selects an option #}
+									                                    <option></option>
+									                                    {% if state_list %}
+									                                        {% for state in state_list %}
+									                                            <option {%ifequal institution.State|stringformat:"s" state|stringformat:"s"%}
+									                                                selected="selected"{%endifequal%} value ="{{state}}">
+									                                                {{state}}
+									                                            </option>
+									                                        {% endfor %}
+									                                    {% endif %}
+									                                </select>
+									                            </td>
+									                        </tr>
+									                        <tr><td>&nbsp;</td></tr>
+									                        <tr>
+									                            <td>Phone</td>
+									                            <td>
+									                                <input type="text" name="inst_phone" value="{{institution.Phone}}" id="inst_phone" 
+									                                    class="required phone" minlength="8" maxlength="25"/>
+									                            </td>
+									                            <td>Fax</td>
+									                            <td>
+									                                <input type="text" name="inst_fax" value="{{institution.Fax|default:""}}" id="inst_fax" 
+									                                    class="phone" minlength="8" maxlength="25"/>
+									                            </td>
+									                        </tr>
+									                    </table>
+									                </td>
+									            </tr>
+									            <tr><td>&nbsp;</td></tr>
+			            					</table>
+            							</td>
+            							<!-- Contact details of person from institution -->
+            							<td valign="bottom">
+            								<div class="cbb">
+				            					<table>
+				            						<tr>
+										                <td><h4>Person to contact (Contact for verification)</h4></td>
+										            </tr>
+										            <tr>
+										                <td>
+										                    <table>
+										                        <tr>
+										                            <td>Title</td>
+										                            <td>
+										                                <select id="contact_title" name="contact_title">
+										                                    {# first option should be blank to ensure user selects an option #}
+										                                    <option></option>
+										                                    {% if title_list %}
+										                                        {% for title in title_list %}
+										                                            <option {%ifequal contact.ContactTitle|stringformat:"s" title|stringformat:"s"%}
+										                                                selected="selected"{%endifequal%} value="{{title}}">
+										                                                {{title}}
+										                                            </option>
+										                                        {% endfor %}
+										                                    {% endif %}
+										                                </select>
+										                            </td>
+										                        </tr>
+										                    </table>
+										                </td>
+										            </tr>
+										            <tr><td>&nbsp;</td></tr>
+										            <tr>
+										                <td >
+										                    <table>
+										                        <tr>
+										                            <td>First Name</td>
+										                            <td><input type="text" name="contact_firstname" value="{{contact.ContactFirstName}}" id="contact_firstname" 
+										                                class="required" minlength="2"/></td>
+										                         </tr>
+										                         <tr><td>&nbsp;</td></tr>
+										                         <tr>
+										                            <td>Last Name</td>
+										                            <td><input type="text" name="contact_lastname" value="{{contact.ContactLastName}}" id="contact_lastname" 
+										                                class="required" minlength="2"/></td>
+										                        </tr>
+										                        <tr><td>&nbsp;</td></tr>
+										                        <tr>
+										                            <td>Phone</td>
+										                            <td><input type="text" name="contact_phone" value="{{contact.ContactPhone}}" id="contact_phone" 
+										                                class="required phone" minlength="8" maxlength="25"/></td>
+										                        </tr>
+										                        <tr><td>&nbsp;</td></tr>
+										                        <tr>
+										                            <td>Email</td>
+										                            <td colspan="3"><input type="text" name="contact_email" value="{{contact.ContactEmail}}" 
+										                                id="contact_email" class="required email" style="width:250px"/></td>
+										                        </tr>
+										                    </table>
+										                </td>
+										            </tr>
+										            <tr><td>&nbsp;</td></tr>
+				            					</table>
+				            				</div>
+            							</td>
+            						</tr>
+            					</table>	            					
+            				</div>
+            			</td>
+            		</tr>
+	            {# {% endif %} #}
+	            {% comment %}
+	            <tr>
+	            	<td>
+	            		<div class="cbb">
+	            			<table>
+	            				<tr>
+					                <td colspan="4"><h3>User Submissions</h3></td>
+					            </tr>
+					            
+					            <tr>
+					                <td colspan="4">
+					                    {% if user_doc %} 
+					                        User has uploaded a referral
+					                        <input type="button" value="View user referral submission" 
+					                            onClick="window.open('http://google.com','google')"
+					                            class="ui-button ui-state-default ui-corner-all ui-button-text-only">
+					                        <a href="download/">Download</a>    
+					                    {% else %}
+					                        User has not submitted a referral 
+					                        <input type="button" value="View user referral submission" disabled="disabled" 
+					                            class="ui-button ui-state-default ui-corner-all ui-button-text-only ui-state-disabled"/>
+					                    {% endif %}
+					                    <br>
+					                </td>
+					            </tr>
+					            <tr><td>&nbsp;</td></tr>
+	            			</table>
+            			</div>
+	            	</td>
+	            </tr>
+	            {% endcomment %}
+	            <tr>
+	            	<td>
+	            		<div class="cbb">
+	            			<table>
+	            				<tr>
+					                <td colspan="4"><h3>User Access Status</h3></td>
+					            </tr>
+					            <tr>
+					                <td>Current status: <b>{{ user_obj.get_profile.AccessStatus }}</b></td>
+					            </tr>
+					            <tr><td>&nbsp;</td></tr>
+					            <tr>
+					                <td colspan="4" align="center">
+					                    <input type="button" id="grant" value="Grant Application"
+					                        class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+					                    <input type="button" id="request" value="Request Clarification"
+					                        class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+					                    <input type="button" id="reject" value="Reject Application"
+					                        class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+					                </td>
+					            </tr>
+					            <tr><td>&nbsp;</td></tr>
+	            			</table>
+	            		</div>
+	            	</td>
+	            </tr>
+	        </table>
+	        <table width="700px">
+		    	<tr>
+		    		<td align="center">
+		    			<input type="submit" name="update_inst" value="Update Details" style="width: 120px;"
+							class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"/>
+						<input type="submit" name="back" value="Back" style="width: 120px;"
+							class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"/>
+					</td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+			</table>
+			</form>
+	    </div>
+	    {% comment %}
+	    <div id="fragment-3">
+	        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+        	Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+	    </div>
+	    {% endcomment %}
+	    
+	    
+	    
+	</div>
+
+    <!-- popup NB: this should be moved outside the form for the popup to work -->
+    <div style="display: none;">
+        <div id="passform" style="width:320px;height:120px;overflow:auto;">
+            <form id="passForm" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+                <h3>Reset Password</h3>
+                <p>
+                    You are about to reset this users password, are you sure you want to continue?
+                </p>
+                <p>
+                    <center>
+                        <input type="submit" name="reset_password" value="Yes" style="width:100px;"
+                            class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+                        <input type="button" value="No" onClick="jQuery.fancybox.close();" style="width:100px;"
+                            class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+                    </center>
+                </p>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Grant -->
+    <div style="display: none;">
+        <div id="grantForm" style="width:320px;height:150px;overflow:auto;">
+            <form id="grantForm" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+                <h3>Grant Access</h3>
+                <p>
+                    You are about to <b>Grant Access</b> to the current user, are you sure you want to continue?
+                </p>
+                <p>
+                    <center>
+                        <input type="submit" name="grant" value="Yes" 
+                            class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+                        <input type="button" value="No" onClick="jQuery.fancybox.close();" 
+                            class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+                    </center>
+                </p>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Request -->
+    <div style="display: none;">
+        <div id="requestForm" style="width:320px;height:150px;overflow:auto;">
+            <form id="requestForm" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+                <h3>Request Clarification</h3>
+                <p>
+                    You are about to <b>Request Clarification</b> to the current user, are you sure you want to continue?
+                </p>
+                <p>
+                    <center>
+                        <input type="submit" name="request" value="Yes" 
+                            class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+                        <input type="button" value="No" onClick="jQuery.fancybox.close();" 
+                            class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+                    </center>
+                </p>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Reject -->
+    <div style="display: none;">
+        <div id="rejectForm" style="width:320px;height:150px;overflow:auto;">
+            <form id="rejectForm" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+                <h3>Reject Application</h3>
+                <p>
+                    You are about to <b>Reject Application</b> to the current user, are you sure you want to continue?
+                </p>
+                <p>
+                    <center>
+                        <input type="submit" name="reject" value="Yes" 
+                            class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+                        <input type="button" value="No" onClick="jQuery.fancybox.close();" 
+                            class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+                    </center>
+                </p>
+            </form>
+        </div>
+    </div>
+{% endblock %}

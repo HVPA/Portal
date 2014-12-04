@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+
+<!-- Breadcrumb -->
+{% block breadcrumb %} 
+	<a href="/" class="pathway">Home</a> 
+	<img src="/img/arrow.png" alt="">
+	<a href="/user/" class="pathway">User Details</a>
+	<img src="/img/arrow.png" alt=""> 
+	Organisation Change
+{% endblock %}
+
+<!-- extra javascript -->
+{% block extra_js %}
+	<script type="text/javascript" src="/js/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.date_input.min.js"></script>
+	<script type="text/javascript" src="/js/jQueryValidatorPhoneNo.js"></script>
+	<link rel="stylesheet" href="/css/date_input.css" type="text/css">
+	<script type="text/javascript">
+        jQuery(document).ready(function(){
+            // Validation
+            jQuery("#userForm").validate();
+            
+            // jQuery-UI date picker
+            // NB: for some reason using double quotes instead of single quotes in the dateFormat 
+            // prevents the django template UnicodeDecodeError exception
+            jQuery('#start_date').datepicker({dateFormat: "dd/mm/yy"});
+            jQuery('#end_date').datepicker({dateFormat: "dd/mm/yy"});
+        });
+	</script>
+{% endblock %}
+
+<!-- Content Heading -->
+{% block contentheader %}Request Organisation Change{% endblock %}
+
+<!-- Content -->
+{% block content %}
+	<form id="userForm" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+		<table>
+			<tr>
+				<td>
+					Date of change over or Start date 
+					<input type="text" id="start_date" name="start_date" class="required date"
+						style="width: 100px;" />
+				</td>
+			</tr>
+			<tr><td>&nbsp;</td></tr>
+			<tr>
+				<td>
+					Date of termination or End date (if applicable)
+					<input type="text" id="end_date" name="end_date" class="date" 
+						style="width: 100px;" />
+				</td>
+			</tr>
+			<tr><td>&nbsp;</td></tr>
+			<tr>
+				<td colspan="4"><h3>Organisation/Institute Details</h3></td>
+			</tr>
+			<tr>
+				<td>
+					<table>
+						<tr>
+							<td colspan="4">
+								Name of Organisation/Institute
+								<input type="text" name="org_name" style="width:250px" value="" id="org_name" 
+									class="required" minlength="2" maxlength="255"/>
+								<span style="color: red;">*</span>
+							</td>
+						</tr>
+						<tr><td>&nbsp;</td></tr>
+						<tr>
+							<td colspan="4">
+								Department/Lab
+								<input type="text" name="org_dept" style="width:250px" value="" id="org_dept"
+									minlength="2" maxlength="255"/>
+								<span style="color: red;">*</span>
+							</td>
+						</tr>
+						<tr><td>&nbsp;</td></tr>
+						<tr>
+							<td colspan="4">
+								<table>
+									<tr>
+										<td>Address</td>
+										<td>
+											<textarea name="org_address" rows="3" cols="55" class="required"></textarea>
+											<span style="color: red;">*</span>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr><td>&nbsp;</td></tr>
+						<tr>
+							<td>City</td> 
+							<td>
+								<input type="text" name="org_city" value="" id="org_city" class="required" maxlength="25"/>
+								<span style="color: red;">*</span>
+							</td>
+						</tr>
+						<tr><td>&nbsp;</td></tr>
+						<tr>
+							<td>Post Code</td> 
+							<td>
+								<input type="text" name="org_post" value="" id="org_post" class="required digit" minlength="4" maxlength="4" />
+								<span style="color: red;">*</span>
+							</td>
+							<td>
+								State/Territory
+							</td>
+							<td>
+								<select id="org_state" name="org_state" class="required">
+									{# first option should be blank to ensure user selects an option #}
+									<option></option>
+									{% if state_list %}
+										{% for state in state_list %}
+											<option value ="{{state}}">
+												{{state}}
+											</option>
+										{% endfor %}
+									{% endif %}
+								</select>
+								<span style="color: red;">*</span>
+							</td>
+						</tr>
+						<tr><td>&nbsp;</td></tr>
+						<tr>
+							<td>Phone</td>
+							<td>
+								<input type="text" name="org_phone" value="" id="org_phone" 
+									class="required phone" minlength="8" maxlength="25"/>
+								<span style="color: red;">*</span>
+							</td>
+							<td>Fax</td>
+							<td>
+								<input type="text" name="org_fax" value="" id="org_fax" 
+									class="phone" minlength="8" maxlength="25"/>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr><td>&nbsp;</td></tr>
+			<tr>
+				<td><h4>Person to contact (Contact for verification)</h4></td>
+			</tr>
+			<tr>
+				<td>
+					<table>
+						<tr>
+							<td>Title</td>
+							<td>
+								<select id="contact_title" name="contact_title">
+									{# first option should be blank to ensure user selects an option #}
+									<option></option>
+									{% if title_list %}
+										{% for title in title_list %}
+											<option value="{{title}}">
+												{{title}}
+											</option>
+										{% endfor %}
+									{% endif %}
+								</select>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr><td>&nbsp;</td></tr>
+			<tr>
+				<td>
+					<table>
+						<tr>
+							<td>First Name</td>
+							<td>
+								<input type="text" name="contact_firstname" value="" id="contact_firstname" 
+									class="required" minlength="2"/>
+								<span style="color: red;">*</span>
+							</td>
+							<td>Last Name</td>
+							<td>
+								<input type="text" name="contact_lastname" value="" id="contact_lastname" 
+									class="required" minlength="2"/>
+								<span style="color: red;">*</span>
+							</td>
+						</tr>
+						<tr><td>&nbsp;</td></tr>
+						<tr>
+							<td>Phone</td>
+							<td>
+								<input type="text" name="contact_phone" value="" id="contact_phone" 
+									class="required phone" minlength="8" maxlength="25"/>
+								<span style="color: red;">*</span>
+							</td>
+						</tr>
+						<tr><td>&nbsp;</td></tr>
+						<tr>
+							<td>Email</td>
+							<td colspan="3">
+								<input type="text" name="contact_email" value="" 
+									id="contact_email" class="required email" style="width:250px"/>
+								<span style="color: red;">*</span>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr><td>&nbsp;</td></tr>
+			<tr>
+				<td colspan="4" align="center">
+					<input type="submit" name="change" value="Request Change" 
+						class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"/>
+				</td>
+			</tr>
+		</table>
+	</form>
+{% endblock %}

@@ -1,0 +1,449 @@
+{% extends "base.html" %}
+
+<!-- Breadcrumb -->
+{% block breadcrumb %} 
+	<a href="/" class="pathway">Home</a> 
+	<img src="/img/arrow.png" alt=""> 
+	User Details
+{% endblock %}
+
+<!-- Content Heading -->
+{% block contentheader %} User Details {% endblock %}
+
+<!-- Javascript -->
+{% block extra_js %}
+	<script type="text/javascript" src="/js/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.fancybox-1.3.1.pack.js"></script>
+	<script type="text/javascript" src="/js/jquery.mousewheel-3.0.2.pack.js"></script>
+	<script type="text/javascript" src="/js/jQueryValidatorPhoneNo.js"></script>
+	<link rel="stylesheet" href="/css/fancybox/jquery.fancybox-1.3.1.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/css/cb/cb.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="/js/cb.js"></script>    
+	<script type="text/javascript">
+        jQuery(document).ready(function(){
+            // Form validation
+            jQuery("#userForm").validate();
+            jQuery("#passForm").validate();
+            
+            // Fancy Box - effects
+            jQuery("#password").fancybox({
+				'titlePosition'		: 'inside',
+				'transitionIn'		: 'none',
+				'transitionOut'		: 'none'
+			});
+			
+			// change password confirmation
+            jQuery('#password').click(function() {
+            	jQuery.fancybox({'href': '#passForm'})
+            });
+			
+			// tabs
+			jQuery("#tabs").tabs(
+				
+			);
+        });
+    </script>
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+	<form id="userForm" method="post" accept-charset="utf-8" 7>
+		<div id="tabs">
+			<ul>
+				<li><a href="#fragment-1"><span>Personal Details</span></a></li>
+				<li><a href="#fragment-2"><span>Institution Details</span></a></li>
+			</ul>
+			<!-- 
+				Personal Details
+			 -->
+			<div id="fragment-1">
+				<table>
+					<tr>
+						<td>
+							<div class="cbb">
+								<table>
+									<tr>
+								        <td><h3>Personal Details</h3></td>
+								    </tr>
+								    <tr>
+								        <td>
+								            <table>
+								                <tr>
+								                    <td>Title</td>
+								                    <td>
+								                        <select id="user_title" name="user_title">
+								                            {# first option should be blank to ensure user selects an option #}
+								                            <option></option>
+								                            {% if title_list %}
+								                                {% for title in title_list %}
+								                                    <option {%ifequal user.get_profile.Title|stringformat:"s" title|stringformat:"s"%}
+								                                        selected="selected"{%endifequal%} value ="{{title}}">
+								                                        {{title}}
+								                                    </option>
+								                                {% endfor %}
+								                            {% endif %}
+								                        </select>
+								                    </td>
+								                </tr>
+								            </table>
+								        </td>
+								    </tr>
+								    <tr><td>&nbsp;</td></tr>
+								    <tr>
+								        <td>
+								            <table>
+								                <tr>
+								                    <td>First name</td>
+								                    <td>
+								                        <input type="text" name="firstname" value="{{user.first_name}}" id="firstname" class="required" minlength="2" />
+								                    </td>
+								                    <td>Last Name</td>
+								                    <td>
+								                        <input type="text" name="lastname" value="{{user.last_name}}" id="lastname" class="required" minlength="2"/>
+								                    </td>
+								                </tr>
+								                <tr><td>&nbsp;</td></tr>
+								                <tr>
+								                    <td>Phone No.</td>
+								                    <td>
+								                        <input type="text" name="user_phone" value="{{user.get_profile.Phone}}" id="user_phone" 
+								                            class="required phone" minlength="8" maxlength="25"/>
+								                    </td>
+								                    <td>Mobile</td>
+								                    <td>
+								                        <input type="text" name="user_mobile" value="{{user.get_profile.Mobile}}" id="user_mobile" 
+								                            class="phone" minlength="10" maxlength="25"/>
+								                    </td>
+								                </tr>
+								                <tr><td>&nbsp;</td></tr>
+								                <tr>
+								                    <td>Email</td>
+								                    <td colspan="3">
+								                        <input type="text" name="user_email" value="{{user.email}}" id="user_email" 
+								                            class="required email" style="width:250px"/>
+								                    </td>
+								                </tr>
+								                {% if email_exist %}
+								                    <tr>
+								                        <td colspan="4">
+								                            <div class="ui-widget" style="width:75%;">
+								                                <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+								                                    <p class="errorMessage">
+								                                    <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+								                                        The email specified already exist please check your email is correct or speficiy a different email.
+								                                    </p>
+								                                </div>
+								                            </div>
+								                        </td>
+								                    </tr>
+								                {% endif %}
+								                <tr><td>&nbsp;</td></tr>
+								                <tr>
+								                	<td colspan="4">
+								                		<!-- <a id="password" href='#passform'>Change Password</a> -->
+								                		<input type="button" id="password" value="Change Password"
+								                			class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+								                	</td>
+								                </tr>
+								                {% if old_password_error %}
+								                	<tr>
+									                    <td colspan="4">
+									                        <div class="ui-widget" style="width:75%;">
+									                            <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+									                                <p class="errorMessage">
+									                                <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+									                                    Your current password is incorrect. Please enter in your current password correctly.
+									                                </p>
+									                            </div>
+									                        </div>
+									                    </td>
+									                </tr>
+								                {% endif %}
+								                {% if confirm_password_error %}
+									                <tr>
+									                    <td colspan="4">
+									                        <div class="ui-widget" style="width:75%;">
+									                            <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+									                                <p class="errorMessage">
+									                                <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+									                                    Confirmed password was not the same as the first Password entered. Please try again.
+									                                </p>
+									                            </div>
+									                        </div>
+									                    </td>
+									                </tr>
+								                {% endif %}
+								                {% if password_changed %}
+								                	<tr>
+								                		<td colspan="4">
+								                			<div class="ui-widget" style="width:65%;">
+													            <div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">
+													                <p class="errorMessage">
+													                <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+																		Password changed!
+													                </p>
+													            </div>
+														    </div>
+								                		</td>
+								                	</tr>
+								                {% endif %}
+								                {% if saved_changes %}
+								                	<tr>
+								                		<td colspan="4">
+								                			<div class="ui-widget" style="width:65%;">
+													            <div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">
+													                <p class="errorMessage">
+													                <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+																		Changes saved!
+													                </p>
+													            </div>
+														    </div>
+														</td>
+													</tr>
+												{% endif %}
+												<tr><td>&nbsp;</td></tr>
+								            </table>
+								        </td>
+								    </tr>
+								</table>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4" align="center">
+							<input type="submit" name="update" value="Update changes" 
+								class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<!-- 
+				Institution Details
+			 -->
+			<div id="fragment-2">
+				<table>
+		            <tr>
+		            	<td>
+			            	<div class="cbb">
+				            	<table>
+				            		<tr>
+						                <td colspan="4"><h3>Institution Details</h3></td>
+						            </tr>
+						            <tr>
+						                <td>
+						                    <table>
+						                        <tr>
+						                            <td colspan="4">
+						                                Name of Institution
+						                                <input type="text" name="org_name" style="width:250px" value="{{institution.Name}}" 
+						                                    id="org_name"/>
+						                            </td>
+						                        </tr>
+						                        <tr><td>&nbsp;</td></tr>
+						                        <tr>
+						                            <td colspan="4">
+						                                Department/Lab
+						                                <input type="text" name="org_dept" style="width:250px" value="{{institution.Department}}" 
+						                                    id="org_dept" />
+						                            </td>
+						                        </tr>
+						                        <tr><td>&nbsp;</td></tr>
+						                        <tr>
+						                            <td colspan="4">
+						                                <table>
+						                                    <tr>
+						                                        <td>Address</td>
+						                                        <td>
+						                                            <textarea name="org_address" rows="3" cols="55" >{{institution.Address}}</textarea>
+						                                        </td>
+						                                    </tr>
+						                                </table>
+						                            </td>
+						                        </tr>
+						                        <tr><td>&nbsp;</td></tr>
+						                        <tr>
+						                            <td>City</td> 
+						                            <td><input type="text" name="org_city" value="{{institution.City}}" 
+						                                id="org_city"/>
+						                            </td>
+						                        </tr>
+						                        <tr><td>&nbsp;</td></tr>
+						                        <tr>
+						                            <td>Post Code</td> 
+						                            <td><input type="text" name="org_post" value="{{institution.PostCode}}" 
+						                                id="org_post"/>
+						                            </td>
+						                            <td>
+						                                State/Territory
+						                            </td>
+						                            <td>
+						                                <select id="org_state" name="org_state" >
+						                                    {# first option should be blank to ensure user selects an option #}
+						                                    <option></option>
+						                                    {% if state_list %}
+						                                        {% for state in state_list %}
+						                                            <option {%ifequal institution.State|stringformat:"s" state|stringformat:"s"%}
+						                                                selected="selected"{%endifequal%} value ="{{state}}">
+						                                                {{state}}
+						                                            </option>
+						                                        {% endfor %}
+						                                    {% endif %}
+						                                </select>
+						                            </td>
+						                        </tr>
+						                        <tr><td>&nbsp;</td></tr>
+						                        <tr>
+						                            <td>Phone</td>
+						                            <td>
+						                                <input type="text" name="org_phone" value="{{institution.Phone}}" id="org_phone" />
+						                            </td>
+						                            <td>Fax</td>
+						                            <td>
+						                                <input type="text" name="org_fax" value="{{institution.Fax}}" id="org_fax" />
+						                            </td>
+						                        </tr>
+						                        <tr><td>&nbsp;</td></tr>
+						                    </table>
+						                </td>
+						                <td valign="bottom">
+							                <div class="cbb">
+							                	<table>
+							                		<tr>
+										                <td><h4>Person to contact (Contact for verification)</h4></td>
+										            </tr>
+										            <tr>
+										                <td>
+										                    <table>
+										                        <tr>
+										                            <td>Title</td>
+										                            <td>
+										                                <select id="contact_title" name="contact_title" >
+										                                    {# first option should be blank to ensure user selects an option #}
+										                                    <option></option>
+										                                    {% if title_list %}
+										                                        {% for title in title_list %}
+										                                            <option {%ifequal contact.ContactTitle|stringformat:"s" title|stringformat:"s"%}
+										                                                selected="selected"{%endifequal%} value="{{title}}">
+										                                                {{title}}
+										                                            </option>
+										                                        {% endfor %}
+										                                    {% endif %}
+										                                </select>
+										                            </td>
+										                        </tr>
+										                    </table>
+										                </td>
+										            </tr>
+										            <tr><td>&nbsp;</td></tr>
+										            <tr>
+										                <td>
+										                    <table>
+										                        <tr>
+										                            <td>First Name</td>
+										                            <td><input type="text" name="contact_firstname" value="{{contact.ContactFirstName}}" 
+										                                id="contact_firstname" /></td>
+										                        </tr>
+										                        <tr><td>&nbsp;</td></tr>
+										                        <tr>
+										                            <td>Last Name</td>
+										                            <td><input type="text" name="contact_lastname" value="{{contact.ContactLastName}}" 
+										                                id="contact_lastname" /></td>
+										                        </tr>
+										                        <tr><td>&nbsp;</td></tr>
+										                        <tr>
+										                            <td>Phone</td>
+										                            <td><input type="text" name="contact_phone" value="{{contact.ContactPhone}}" 
+										                                id="contact_phone" /></td>
+										                        </tr>
+										                        <tr><td>&nbsp;</td></tr>
+										                        <tr>
+										                            <td>Email</td>
+										                            <td colspan="3"><input type="text" name="contact_email" value="{{contact.ContactEmail}}" 
+										                                id="contact_email" style="width:250px" /></td>
+										                        </tr>
+										                    </table>
+										                </td>
+										            </tr>
+							                	</table>
+						                	</div>
+						                </td>
+						            </tr>
+				            	</table>
+			            	</div>
+		            	</td>
+		            </tr>
+				            
+		            <tr><td>&nbsp;</td></tr>
+										            
+		            {# {% endif %} #}
+		            <tr>
+						<td colspan="4" align="center">
+							<input type="submit" name="update" value="Update changes" 
+								class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</form>
+	
+	<!-- popup NB: this should be moved outside the form for the popup to work -->
+	<div style="display: none;">
+		<div id="passform" style="width:320px;height:230px;overflow:auto;">
+			<form id="passForm" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+				<table>
+					<tr>                                                
+						<td colspan="2"><h3>Change password</h3></td>
+					</tr>
+					<tr>
+						<td>Old password</td>
+	                    <td>
+	                        <input type="password" name="old_password" value="" id="old_password" class="required error" minlength="8" maxlength="25"/>
+	                        <span style="color: red;">*</span>
+	                    </td>
+					</tr>
+					<tr>
+						<td colspan="2" align="right">
+							&nbsp;<label class="error" generated="true" for="old_password"></label>
+						</td>
+					</tr>
+					
+					<tr>
+	                    <td>New password</td>
+	                    <td>
+	                        <input type="password" name="new_password" value="" id="new_password" class="required" minlength="8" maxlength="25"/>
+	                        <span style="color: red;">*</span>
+	                    </td>
+	                </tr>
+	                <tr>
+						<td colspan="2" align="right">
+							&nbsp;<label class="error" generated="true" for="new_password"></label>
+						</td>
+					</tr>
+	                
+	                <tr>
+	                    <td>Confirm new password</td>
+	                    <td>
+	                        <input type="password" name="confirm_new_password" value="" id="confirm_new_password" class="required" minlength="8" maxlength="25"/>
+	                        <span style="color: red;">*</span>
+	                    </td>
+	                </tr>
+	                <tr>
+						<td colspan="2" align="right">
+							&nbsp;<label class="error" generated="true" for="confirm_new_password"></label>
+						</td>
+					</tr>
+	                <tr><td>&nbsp;</td></tr>
+	                <tr>
+	                	<td colspan="2" align="center">
+	                		<input type="submit" name="password" value="Change Password" style="width:120px"
+	                			class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+	                		<input type="button" value="Cancel" onClick="jQuery.fancybox.close();" style="width:120px;"
+	                			class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+	                	</td>
+	                </tr>
+				</table>
+			</form>
+		</div>
+	</div>
+{% endblock %}

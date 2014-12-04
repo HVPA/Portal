@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+<!-- Breadcrumb -->
+{% block breadcrumb %} 
+    <a href="/" class="pathway">Home</a> 
+    <img src="/img/arrow.png" alt=""> 
+    Send Test Email
+{% endblock %}
+
+<!-- Content Heading -->
+{% block contentheader %} Send Test Email {% endblock %}
+
+<!-- Javascript -->
+{% block extra_js %}
+    
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+    <form id="emailForm" action="/admin_email/" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+        <table width="500px">
+            <tr>
+                <td>Sent from: <b>{{ sender }}</b></td>
+            </tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr><td>To: </td></tr>
+            <tr>
+                <td>
+                    <input type="text" name="recipient" value="{{ recipient }}" id="recipient" maxlength="500" size="80px"/>
+                </td>
+            </tr>
+            <tr><td><span style="font-size:10px;">For multiple recipients put a space between each email address (e.g: john@smith.com jane@doe.com)</span></td></tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr><td>Subject:</td></tr>
+            <tr>
+                <td>
+                    <input type="text" name="subject" value="{{ subject }}" id="subject" maxlength="80" size="80px"/>
+                </td>
+            </tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr><td>Message:</td></tr>
+            <tr>
+                <td>
+                    <textarea name="message" rows="7" cols="70" >{{ message }}</textarea>
+                </td>
+            </tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr>
+                <td align="right">
+                    <input type="submit" value="Send" 
+						class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"/>
+                </td>
+            </tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr>
+                <td>
+                    {% if sent %}
+                    <div class="ui-widget" >
+                        <div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">
+                            <p class="errorMessage">
+                            <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+                                Message sent to: {{ sent }}
+                            </p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if error %}
+                        <div class="ui-widget">
+                            <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+                                <p class="errorMessage">
+                                    <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+                                        An error has occured sending email : {{ error_msg }}
+                                </p>
+                            </div>
+                        </div>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+    </form>
+{% endblock %}

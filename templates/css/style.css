@@ -1,0 +1,159 @@
+h1, h2, h3, h4, h5, h6 {
+   font-family: Trebuchet MS, sans-serif;
+   color: #263186;
+   margin: 0 0 .6em 0;
+}
+
+h1 {
+   font-size: 180%;
+   clear: right;
+   border-bottom: 1px solid #263186;
+}
+
+td.contentheading, div.componentheading {
+   font-family: Trebuchet MS, sans-serif;
+   color: #263186;
+   margin: 0 0 .6em 0;
+   padding:0;
+   clear: right;
+   font-size: 22px;
+   font-weight: bold;
+}
+
+p {
+   margin: 0 0 .9em 0;
+   line-height: 1.5;
+}
+
+a:link {
+   color: #1b43bc;
+}
+
+a:hover, a:active {
+   color: red;
+   text-decoration: none;
+}
+
+a:visited {
+   color: #0d1d68;
+}
+
+#content ul, #content ol, #content dl {
+   margin: 0 0 .8em 32px;
+}
+
+#content ul {
+   list-style-type: circle;
+}
+
+#content dt {
+   font-weight: bold;
+   margin-right: 32px;
+}
+
+#content dd {
+   margin-left: 32px;
+}
+
+#content li {
+   line-height: 1.5;
+}
+
+hr {
+   margin: 32px 200px;
+}
+
+
+
+/* images */
+img {
+  border: none;
+  vertical-align: middle;
+}
+
+div.image_right {
+  float: right;
+  position: relative;
+  margin: .8em 0 .8em .8em;
+}
+
+div.image_left {
+  clear: left;
+  position: relative;
+  margin: 0.8em .8em .8em 0;
+}
+
+div.thumb_right {
+  text-align:center;
+  margin: .8em 0 .8em .8em;
+  border: 1px solid silver;
+  padding: 5px;
+  width: auto;
+  float: right;
+  background:#ffffff;
+}
+
+div.thumb_left {
+  text-align: center;
+  margin: .8em .8em .8em 0;
+  border: 1px solid silver;
+  padding: 5px;
+  width: auto;
+  float: left;
+  background:#ffffff;
+}
+
+div.thumb_caption {
+  text-align: center;
+  margin-top: 5px;
+  max-width: 250px;
+  border-top: 1px solid #ebebeb;
+}
+
+/* TABLES */
+
+table{
+   margin: 0;
+   padding: 0;
+   border: 0px solid silver;
+}
+
+
+th {
+   border-bottom: 1px solid silver;
+   padding: 0em;
+}
+
+td {
+   padding: 0em;
+}
+
+tr.sectiontableentry2 td, tr.sectiontableentry1 td {
+   padding: 0.3em;
+}
+
+blockquote {
+   display: block;
+   margin: 0.8em 200px;
+   clear: both;
+   padding: 1em;
+   background: #dbe2ec;
+}
+
+
+.news_date {
+   font-weight: bold;
+   font-size: 65%;
+}
+
+.news_tagline {
+   padding: 0.3em 0 1.5em 0;
+   font-size: 75%;
+}
+
+div.loginfield {
+   font-size: 75%;
+   margin: 0.5em;
+}
+
+

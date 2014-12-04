@@ -1,0 +1,308 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-gb" xmlns="http://www.w3.org/1999/xhtml" lang="en-gb">
+	<head>
+		<!-- base href="http://www.humanvariomeproject.org/" -->
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta name="robots" content="index, follow">
+		<meta name="keywords" content="variome, genetics, genome, genome 
+			project, mutation, variation, variation database, lsdb, gene">
+		<meta name="description" content="The Human Variome Project is the 
+			global initiative to collect and curate all human genetic variation 
+			affecting human health.">	
+		<title>The Human Variome Project Australian Node</title>
+		
+		<!-- Javascript -->
+        <!-- Dajax -->
+        <script type="text/javascript" src="/js/jquery.dajax.core.js"></script>
+
+		<!-- jQuery -->
+		<script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="/js/jquery-ui-1.8.custom.min.js"></script>
+
+		<!-- Raphael svg -->
+        {% comment %}
+		<script type="text/javascript" src="/js/raphael-min.js"></script>
+		<script type="text/javascript" src="/js/raphael-pie.js"></script>
+		<script type="text/javascript" src="/js/raphael.path.methods.js"></script>
+        {% endcomment %}
+		<!-- Google Analytics  -->		
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-20563690-1']);
+			_gaq.push(['_setDomainName', '.hvpaustralia.org.au']);
+			_gaq.push(['setAllowHash', false]);
+			_gaq.push(['trackPageview']);
+
+			(function(){
+				var ga = document.createElement('script'); 
+				ga.type = 'text/javascript';
+				ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(ga, s);
+			})();
+		</script>		
+
+		<!-- dataTables -->
+		<script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+		<link rel="stylesheet" href="/css/demo_page.css" type="text/css">
+		<link rel="stylesheet" href="/css/demo_table.css" type="text/css">
+		
+		{% block extra_js %}{% endblock %}
+		
+		<script src="/js/ga.js" type="text/javascript"></script>
+		<script type="text/javascript" src="/js/vision_files/caption.js"></script>
+		
+		<!-- CSS -->
+		<link rel="stylesheet" href="/css/system.css" type="text/css">
+		<link rel="stylesheet" href="/css/general.css" type="text/css">
+		<link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen,projection">
+		<link rel="stylesheet" href="/css/print.css" type="text/css" media="print">
+		<link rel="stylesheet" href="/css/style.css" type="text/css">
+		<link rel="stylesheet" href="/css/portal.css" type="text/css">
+
+		<link rel="stylesheet" href="/css/redmond/jquery-ui-1.8.custom.css" type="text/css">
+
+		<script type="text/javascript">
+			var sideBarVisible = true;
+			function runEffect() {
+				var options = {};
+				if (sideBarVisible == false) {
+					$('#content').css('margin-left', '220px');
+				}
+				$('#left_menu').toggle('slide', options, 500, function() {
+					if (sideBarVisible) {
+						$('#btnHide').switchClass('ui-icon-triangle-1-w', 'ui-icon-triangle-1-e');
+						$('#content').css('margin-left', '20px');
+					}
+					else {
+						$('#btnHide').switchClass('ui-icon-triangle-1-e', 'ui-icon-triangle-1-w');
+					}
+
+					sideBarVisible = !sideBarVisible;
+				});
+			}
+			$(function() {
+				$('#btnHide').click(function() {
+					runEffect();
+					return false;
+				});
+			});
+		</script>
+	</head>
+	<div firebugversion="1.5.3" style="display: none;" id="_firebugConsole"></div>
+	<body>
+	   <div id="print_notice"><img class="print_notice" src="/img/Print_logo.jpg" alt="The Human Variome Project" 
+			width="350px" height="100px"></div>
+	   <div id="wrapper">
+			<div id="header">
+				<div id="site_id">
+					<a href="/">
+						&nbsp;
+					</a>
+				</div>
+				<!-- Top right hand corner links -->
+				<div id="navigation">
+					<ul class="menu">
+						<li>
+							<a href="{{ BASE_URL }}/"><span>Home</span></a>
+						</li>
+						<li>
+							<a href="http://hvpaustralia.org.au/what-is-the-australian-node"><span>About</span></a>
+						</li>
+						<li>
+							<a href="{{ BASE_URL }}/policy/"><span>Usage Policy</span></a>
+						</li>
+						<li>
+							<a href="http://hvpaustralia.org.au/contact-us"><span>Contact us</span></a>
+						</li>
+						{% if user.is_authenticated %}
+						<li>
+							<a href="{{ BASE_URL }}/logout/">
+								<span class="ui-icon ui-icon-circle-arrow-e" style="float: left; margin-right: .3em;"></span>
+								<span>Logout</span>
+							</a>
+						</li>
+						{% endif %}
+					</ul>
+				</div>
+			</div>
+			<!-- Side Bar Links -->
+			<div id="content_wrapper">
+				<div id="left_menu" class="column">
+					<ul class="menu">
+						<!-- Following links should only appear if user is authenticated -->
+						{% if user.is_authenticated %}
+							<li>
+								<a href="{{ BASE_URL }}/"><span>Home</span></a>
+							</li>
+							{% if user.get_profile.AccessStatus.ID == 2 %}
+								<li>
+									<a href="{{ BASE_URL }}/search/searchgene/"><span>Search</span></a>
+								</li>
+							{% endif %}
+							<li>
+								<a href="{{ BASE_URL }}/user/"><span>My Account</span></a>
+							</li>
+							{% if user.get_profile.IsHVPAdmin %}
+								<li>
+                                    <a href="{{ BASE_URL }}/admin_email"><span>Send Test Email</span></a>
+                                </li>
+                                <li>
+									<a href="{{ BASE_URL }}/user_management/"><span>User Management</span></a>
+								</li>
+								{% comment %}
+								<li>
+									<a href="{{ BASE_URL }}/user_org/"><span>User Organisations</span></a>
+								</li>
+								{% endcomment %}
+								<li>
+									<a href="{{ BASE_URL }}/pending/"><span>View Pending User Applications</span></a>
+								</li>
+								<li>
+									<a href="{{ BASE_URL }}/request/"><span>View Lab Request Applications</span></a>								
+								</li>
+							{% else %}{% if user.get_profile.IsLabLeader %}
+								<li>
+									<a href="{{ BASE_URL }}/user_management/"><span>Lab Management</span></a>
+								</li>
+							{% endif %}{% endif %}
+							<li>
+								<a href="{{ BASE_URL }}/logout/"><span>Logout</span></a>
+							</li>
+						{% else %}
+							<li>
+								<a href="{{ BASE_URL }}/"><span>Login</span></a>
+							</li>
+							<li>
+								<a href="{{ BASE_URL }}/signup/"><span>Sign up</span></a>
+							</li>
+						{% endif %}
+					</ul>
+				</div>
+				{% if user.is_authenticated %}
+				<div class="column" style="float:left; width:20px;">
+					<a href="#" 
+						id="btnHide" 
+						title="Show/Hide side bar" 
+						class="ui-icon ui-icon-triangle-1-w" 
+						style="float: left"> </a>
+				</div>
+				{% endif %}
+				<div id="content" class="column">
+					<div id="breadcrumb_row">
+						<!-- Breadcrumb links -->
+						<div id="breadcrumbs">
+							<span>
+								{% block breadcrumb %} {% endblock %}
+							</span>
+						</div>
+						<!-- Login/out info -->
+						<div id="login">
+							{% if user.is_authenticated %}
+								You are currently logged in as: <strong>{{user.username}}</strong>.
+								Click <a href="{{ BASE_URL }}/logout/" >here</a> to logout.
+							{% else %}
+								You are currently <strong>not</strong> logged in.
+								Click <a href="{{ BASE_URL }}/login/" >here</a> to login.
+							{% endif %}
+						</div>
+					</div>
+					<!-- pdf, print, email -->
+					<table class="contentpaneopen">
+						<tbody>
+							<tr>
+								<!-- Page heading goes here -->
+								<td class="contentheading" width="100%">{% block contentheader %} {% endblock %}</td>
+								<td class="buttonheading" align="right" width="100%">
+									&nbsp; 
+								</td>
+								<!-- dont need these for now so just comment them out for now
+								<td class="buttonheading" align="right" width="100%">
+									<a href="http://www.humanvariomeproject.org/index.php/about/vision?format=pdf" title="PDF" 
+										onclick="window.open(this.href,'win2','status=no,toolbar=no,scrollbars=yes,
+											titlebar=no,menubar=no,resizable=yes,width=640,height=480,directories=no,location=no');
+											return false;" rel="nofollow"><img src="/img/pdf_button.png" alt="PDF">
+									</a>		
+								</td>
+								<td class="buttonheading" align="right" width="100%">
+									<a href="http://www.humanvariomeproject.org/index.php/about/vision?tmpl=component&amp;print=1&amp;page=" title="Print" 
+										onclick="window.open(this.href,'win2','status=no,toolbar=no,scrollbars=yes,
+											titlebar=no,menubar=no,resizable=yes,width=640,height=480,directories=no,location=no');
+											return false;" rel="nofollow"><img src="/img/printButton.png" alt="Print">
+									</a>
+								</td>
+								<td class="buttonheading" align="right" width="100%">
+									<a href="http://www.humanvariomeproject.org/index.php/component/mailto/?tmpl=component&amp;link=aHR0cDovL3d3dy5odW1hbnZhcmlvbWVwcm9qZWN0Lm9yZy9pbmRleC5waHAvYWJvdXQvdmlzaW9u"
+										title="E-mail" onclick="window.open(this.href,'win2','width=400,height=350,menubar=yes,resizable=yes');
+										return false;"><img src="/img/emailButton.png" alt="E-mail">
+									</a>
+								</td>
+								-->
+							</tr>
+						</tbody>
+					</table>
+					<table class="contentpaneopen" width="100%">
+						<tbody>
+							<tr>
+								<td valign="top">
+									{% block content %} {% endblock %}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				<span class="article_separator">&nbsp;</span>
+			</div>
+		</div>            
+		<div id="footer">
+			<div id="text_nav">
+                <ul class="menu">
+                    <li class="item1">
+                        <a href="http://portal.hvpaustralia.org.au/">
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="item2">
+                        <a href="http://hvpaustralia.org.au/the-node/">
+                            <span>The Node</span>
+                        </a>
+                    </li>
+                    <li class="item3">
+                        <a href="http://hvpaustralia.org.au/the-data/">
+                            <span>The Data</span>
+                        </a>
+                    </li>
+                    <li class="item4">
+                        <a href="http://hvpaustralia.org.au/the-system/">
+                            <span>The System</span>
+                        </a>
+                    </li>
+                    <li class="item5">
+                        <a href="http://hvpaustralia.org.au/information-for-patients/">
+                            <span>Information for Patients</span>
+                        </a>
+                    </li>
+                    <li class="item6">
+                        <a href="http://hvpaustralia.org.au/blog/">
+                            <span>Blog</span>
+                        </a>
+                    </li>
+                    <li class="item7">
+                        <a href="http://hvpaustralia.org.au/sitemap/">
+                            <span>Sitemap</span>
+                        </a>
+                    </li>
+                </ul>
+			</div>
+			<div id="legals">
+				<div>Copyright © {% now "Y" %} Human Variome Project Australian Node. All Rights Reserved.</div>
+				{% if debug %}
+				<div style="border: solid 1px black; background-color: silver; margin:10px; padding: 10px; text-align: left;">
+					{{ debug_message }}
+				</div>
+				{% endif %}
+			</div>
+		</div>
+		</div>
+	</body>
+</html>

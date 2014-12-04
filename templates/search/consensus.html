@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+<!-- Breadcrumb -->
+{% block breadcrumb %} 
+	<a href="/" class="pathway">Home</a> 
+	<img src="/img/arrow.png" alt="">
+	<a href="/search/searchgene/" class="pathway">Gene search</a>
+	<img src="/img/arrow.png" alt=""> 
+	<a href="/search/gene/9/searchvariant/path_all/path_all/" class="pathway">Variant search</a>
+{% endblock %}
+
+<!-- Content Heading -->
+{% block contentheader %}Variant Consensus{% endblock %}
+
+<!-- Content -->
+{% block content %}
+	<h3>
+		From Gene / Variant - &nbsp; {{ gene.GeneName }} / {{variant.cDNA|default:""}}
+		{{variant.mRNA|default:""}}{{variant.Genomic|default:""}}{{variant.Protein|default:""}}
+	</h3> 
+	<p>
+		<h4>Consensus Details</h4>
+	</p>
+	{% if page_error %}
+    	<div class="ui-widget" style="width:65%;">
+			<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+				<p class="errorMessage">
+				<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+					Please check that you have selected the level pathogenicity.
+				</p>
+			</div>
+		</div>
+    {% endif %}
+    {% if consensus_saved %}
+		<div class="ui-widget" style="width:65%;">
+            <div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">
+                <p class="errorMessage">
+                <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+					Consensus Saved!
+                </p>
+            </div>
+	    </div>
+	{% endif %}
+	<p>
+		<form method="post" enctype="multipart/form-data" accept-charset="utf-8">
+			<table>
+				<tr>
+					<td><b>Date: &nbsp;&nbsp;</b>{% now "jS M Y" %}</td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+					<td>
+						<b>Level of Pathogenicity: &nbsp;&nbsp;</b>
+						<select id="path" name="path">
+							{# first option should be blank to ensure user selects an option #}
+							<option></option>
+							{%if path_list%}
+								{%for path in path_list%}
+									<option {%ifequal saved_path|stringformat:"s" path|stringformat:"s"%}selected="selected"{%endifequal%} value="{{path}}">{{path}}</option>
+								{%endfor%}
+							{%endif%}
+						</select>
+					</td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+					<td>
+						<b>Comments: </b>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<textarea name="comments" rows="10" cols="75">{{ consensus.Comments }}</textarea>
+					</td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+					<td align="center">
+						<input type="submit" name="submit" value="Submit Consensus" style="width: 150px;"
+							class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+						<input type="button" onclick="location.href='/search/gene/{{ gene.ID }}/searchvariant/path_all/path_all/'" 
+							value="Back to search results" style="width: 150px;"
+							class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</p>
+{% endblock %}

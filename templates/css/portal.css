@@ -1,0 +1,264 @@
+
+/* CSS from joomla previously was in the base page moved here */
+/* Multithumb 2.1 alpha 3 for Joomla 1.5 BK fix 02 */
+/*
+The comments below are to help you understanding and modifying the look and feel of thumbnails. Borders can be set using the border fields above. You can safely delete these comments.
+*/
+
+/*
+Use for nested numbering an ordered list used n Data Access Policy
+*/
+ol.Numbering {
+	counter-reset: item;
+}
+ol.Numbering li {
+	display: block;
+}
+ol.Numbering li:before {
+	counter-increment: item;
+	content: counters(item, ".") ". ";
+}
+
+li.Heading {
+	font-family: Trebuchet MS, sans-serif;
+	font-weight: bold;
+	font-size: 14pt;
+	color: #263186;
+}
+
+li.SubHeading {
+	font-family: Trebuchet MS, sans-serif;
+	font-size: 11pt;
+	color: #000000;
+}
+
+li.Body {
+	font-family: Georgia,Times New Roman,Times,serif;
+	font-size: 11pt;
+	font-weight: normal;
+	color: #000000;
+	
+}
+
+/*
+Styles for the DIV surrounding the image.
+*/
+div.mtImgBoxStyle {
+	margin:5px;
+}
+
+/* 
+Styles for the caption box below/above the image.
+Change font family and text color etc. here.
+*/
+div.mtCapStyle {
+	font-weight: bold;
+	color: black;
+	background-color: #ddd;
+	padding: 2px;
+	text-align:center;
+	overflow:hidden;
+}
+/* 
+Styles for the table based Multithumb gallery
+*/
+table.multithumb {			
+	width: auto;
+}
+
+.errorMessage {
+	font-size: x-small;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+label.error 
+{ 
+	float: none; 
+	color: red; 
+	padding-left: .5em; 
+	vertical-align: top; 
+}
+
+/* 
+	Use to divide content into 2 columns
+	div1 for column 1 and div2 for column 2	
+*/
+#div1
+{
+	float: left; width:60%;
+	margin-top: 1em; 
+}
+
+#div2
+{
+	margin-left:50%; 
+	width:50%;
+}
+
+.tableBorder
+{
+	border-collapse: separate;
+  	border-width: 1px;
+  	border-color: #d8d8d8;
+  	border-style: solid;
+  
+  	background-color: #f8f8f8;
+}
+
+#login
+{
+	float: right;
+	font-size: 75%;
+}
+
+.search-item-alt
+{
+	background-color:#F0F7F9;
+	border: solid 1px white;
+}
+.search-item-alt:hover
+{
+	background-color:silver;
+	border: solid 1px black;
+}
+.search-item-div
+{
+	border: solid 1px white; /* Make the space so that the hover doesn't bump the box with the border */
+}
+.search-item-div:hover
+{
+	background-color:silver;
+	border: solid 1px black;
+}
+
+.search-item
+{
+	text-docoration: none;
+}
+.search-item:link
+{
+	color: black;
+}
+.search-item:visited
+{
+	color: black;
+}
+.search-item:active
+{
+	color: black;
+}
+.search-item:hover
+{
+	color: black;
+}
+
+.refseq-icon
+{
+	background-image:url(../../../img/refseq.png);
+	width:138px;
+	height:89px;
+	background-repeat: no-repeat;
+	background-position: 0 20px;
+	text-align:center;
+	font-weight: bold;
+	float: left;
+}
+
+.variant-icon
+{
+/*
+	float:left;
+*/
+	font-size: 90%;
+	font-weight: bold;
+	text-align: center;
+	
+	
+	width: 75px;
+	height: 100px;
+	background-image:url(../../../../img/variant.png);
+	background-repeat: no-repeat;
+
+	background-position: 0 12px;
+
+	border: solid 1px silver;
+}
+
+.gene-icon
+{
+/*
+	float:left;
+*/
+	font-size: 80%;
+	font-weight: bold;
+	text-align: center;
+
+	width: 75px;
+	height: 100px;
+	background-image:url(../../../../img/dna.gif);
+	background-repeat: no-repeat;
+
+	background-position: 0 12px;
+
+	border: solid 1px silver;
+}
+
+.variant-icon
+{
+/*
+	float:left;
+*/
+	font-size: 80%;
+	font-weight: bold;
+	text-align: center;
+
+	width: 167px;
+	height: 90px;
+	background-image:url(../../../../img/variant.png);
+	background-repeat: no-repeat;
+
+	border: solid 1px silver;
+}
+
+.tableHeading1
+{
+	 float:left; 
+	 font-weight: bold; 
+	 padding: 0em 1em 0em 1em;
+}
+
+.tableHeading2
+{
+	/*float:right;*/
+	font-weight: bold; 
+	padding: 0em 1em 0em 1em;
+}
+
+.tableText
+{
+	margin-left: 1em; 
+	font-style: italic; 
+	text-align:left;
+}
+
+.tableTextColumn
+{
+	margin-left: 2px; 
+	margin-right: 2px; 
+	border-top: solid 1px silver;
+}
+
+.tableMinorText
+{
+	font-size:75%; 
+	margin-left:1.5em;
+}
+
+
+#div_showVisual
+{
+    text-align: center; 
+    background-color: lightgray;
+    font-color: black;
+}

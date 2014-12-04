@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+<!-- Breadcrumb -->
+{% block breadcrumb %} 
+	<a href="/" class="pathway">Home</a> 
+	<img src="/img/arrow.png" alt=""> 
+	Request Applications
+{% endblock %}
+
+<!-- Content Heading -->
+{% block contentheader %}Request Applications{% endblock %}
+
+<!-- Content -->
+{% block content %}
+		<script type="text/javascript">
+				jQuery(document).ready(function() {
+					jQuery('#pendingtable').dataTable();
+				} );
+		</script>
+
+		<form action="/pending/" method="post" enctype="multipart/form-data" accept-charset="utf-8" id="pending_form">
+
+		<div id="dt_example">
+		<div id="demo">
+		<table id="pendingtable" class="display">
+			<thead>
+				<tr>
+					<th>View</th>
+					<th>Application Date</th>
+					<th>Status</th>
+					<th>Status Update</th>
+					<th>Request</th>
+					<th>Username</th>
+					<th>Full Name</th>
+					<th>Institution</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for lab_request in lab_requests %}
+				<tr>
+					<td><input type="button" onclick="location.href='/request/{{lab_request.id}}/'" value="View/Edit"/> </td>
+					<td>{{ lab_request.ApplicationDate }}</td>
+					<td>{{ lab_request.LabRequestStatus.RequestStatus }}</td>
+					<td>{{ lab_request.StatusDateUpdated|default:"<center>-</center>" }}</td>
+					<td>
+						{% if lab_request.VariantInstance %}
+							Request for Variant Instance from Variant ID: {{ lab_request.Variant.ID }}
+						{% else %}
+							Request on results from Variant ID: {{ lab_request.Variant.ID }}
+						{% endif %}
+					</td>
+					<td>{{ lab_request.User.username }}</td>
+					<td>{{ lab_request.User.first_name }} {{ lab_request.User.last_name }}</td>
+					<td>{{ lab_request.User.get_profile.LaboratoryGroup.Name }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+		</div>
+		</div>
+
+		</form>
+{% endblock %}

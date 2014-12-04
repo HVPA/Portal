@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+<!-- Breadcrumb -->
+{% block breadcrumb %} 
+	<a href="{{ BASE_URL }}/" class="pathway">Home</a> 
+	<img src="/img/arrow.png" alt=""> 
+	Gene/Disease
+{% endblock %}
+
+<!-- Content Heading -->
+{% block contentheader %} Gene/Disease {% endblock %}
+
+<!-- Content -->
+{% block content %}
+	
+	<form action="/search/searchgene/results/" method="post" accept-charset="utf-8">
+        <table>
+			<tr>
+				<td>
+					<input type="text" name="searched_gene" value="" id="searched_gene" style="width:700px"/>
+				</td>
+				<td>
+					<input type="submit" value="Search" name="search"
+						class="ui-button ui-state-default ui-corner-all ui-button-text-only" />
+				</td>
+			</tr>
+<!--
+			<tr>
+				<td colspan="2" align="right">
+					Display number of results
+					<select id="paginate_results" name="paginate_results">
+						<option value="5">5</option>
+						<option value="10">10</option>
+						<option value="20">20</option>
+						<option value="50">50</option>
+					</select>
+				</td>
+			</tr>
+-->
+		</table>
+
+        <p>
+            To search for a specific gene or disease type in key words/phrases in the search above. (e.g: BRCA, NM_000059.3, Breast Cancer) <br/>
+            If searching genomic variant please put in the Genomic RefSeq or Chromosome. (e.g: NC_000017.10:12345678 or Chr13:12345678)
+        </p>
+		{% if page_error %}
+	        <div class="ui-widget">
+				<div class="ui-state-error ui-corner-all" style="padding: 0 .7em; width: 300px;">
+		            <p class="errorMessage">
+		            <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+						{% ifequal searched_gene|length 0 %}
+							You did not enter in a search query.
+						{% else %}
+							The search query &#147;{{ searched_gene }}&#147; is too short, please enter minimum of 2 characters or more.
+						{% endifequal %}
+		            </p>
+		        </div>
+	        </div>
+		{% endif %}
+
+        <!-- Results -->
+			<p>
+                <h3>Top 5 Current Gene sorted by number of Variants</h3>
+
+				<table cellspacing="10">
+					{% for gene in gene_list %}
+						<tr>
+							<td>
+								<div class="{% if forloop.counter|divisibleby:2 %}search-item-alt{% else %}search-item-div{% endif %}">
+										<table class="fakeLink" onclick="window.location = '{{ BASE_URL }}/search/gene/{{ gene.ID }}/searchvariant/1/path_all/path_all/'">
+											<tr>
+												<td style="vertical-align: top;">
+													{% comment %}<div class="refseq-icon">{{ gene.RefSeqName }}{% if gene.RefSeqVer %}.{{ gene.RefSeqVer }}{% endif %}</div>{% endcomment %}
+												</td>
+												<td>
+													<table>
+													<tr>
+													<td>
+														<!--<div style="float:left; font-weight: bold; padding: 0em 1em 0em 1em;">-->
+														<div class="tableHeading1">
+															Gene Name: {{ gene.GeneName }}
+														</div>
+													</td>
+													<td>
+														<!--<div style="font-weight: bold; padding: 0em 1em 0em 1em;">  -->
+														<div class="tableHeading1">
+															Alternate Symbols: {{ gene.AlternateSymbols }}
+														</div>
+													</td>
+													</tr>
+													<tr>
+														<!--<td colspan="2" style="margin-left: 2px; margin-right: 2px; border-top: solid 1px silver;">-->
+														<td colspan="2" class="tableTextColumn">
+															<!--<div style="margin-left: 1em; font-style: italic; text-align:left;">-->
+															<div class="tableText">
+															{{ gene.GeneDescription }}
+															</div>
+														</td>
+													</tr>
+													<tr>
+														<td colspan="2">
+														<!--<div style="font-size:75%; margin-left:1.5em;">-->
+														<div class="tableMinorText">
+															Chromosome: {{ gene.Chromosome }}<br/>
+															Alternate Names: {{ gene.AlternateNamess }}<br/>
+															Previous Symbols: {{ gene.PreviousSymbols }}<br/>
+															Previous Names: {{ gene.PreviousNames }}
+														</div>
+														</td>
+													</tr>
+                                                    <tr>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="tableHeading1">
+                                                                Number of unique variants: {{ gene.Variants }} <br/>
+                                                                Total number of variant instances: {{ gene.VariantInstances }}<br/>
+                                                                Date of last submission: {% if gene.DateSubmitted %}{{ gene.DateSubmitted }}{% else %}-{% endif %}
+                                                            </div>
+                                                        <td>
+                                                    </tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</a>
+									<div class="tableMinorText" style="text-align: right;">
+                                        <a href="http://genome.ucsc.edu/cgi-bin/hgTracks?Submit=Submit&position={{ gene.UCSC_ID }}" target="_blank">
+                                            UCSC Genome Browser
+                                        </a></br>
+										<a href="http://www.genenames.org/data/hgnc_data.php?hgnc_id={{ gene.HGNC_ID }}" target="_blank">
+											HGNC Gene Symbol Report
+										</a>
+									</div>
+								</div>
+							</td>
+						</tr>
+					{% endfor %}
+				</table>
+			</p>		
+	</form>
+	
+{% endblock %}

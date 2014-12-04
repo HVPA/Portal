@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+<!-- Breadcrumb -->
+{% block breadcrumb %} 
+	<a href="/" class="pathway">Home</a> 
+	{% if select_org %}
+		<img src="/img/arrow.png" alt=""> 
+		<a href="/user_management/{{user_object.id}}/" class="pathway">User Details</a>
+	{% endif %}
+	<img src="/img/arrow.png" alt=""> 
+	Organisations
+{% endblock %}
+
+<!-- Content Heading -->
+{% block contentheader %} Organisations/Institutes {% endblock %}
+
+<!-- Javascript -->
+{% block extra_js %}	
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+			jQuery('#usertable').dataTable({
+				"sPaginationType": "full_numbers",
+				"aaSorting": [[1, "asc"]],
+			});
+		});
+		
+		function button_onclick(labGroupID) {
+			jQuery('#labGroupID').val(labGroupID);
+			jQuery('#userForm').submit();
+		}
+	</script>
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+	{% if select_org %}
+		<p>
+			Set the user's organisation for: <b>{{ user_object.username }}</b>, {{ user_object.first_name }} {{ user_object.last_name }}
+		</p>
+	{% else %}
+		<br>
+	{% endif %}
+	
+	<form id="userForm" method="post" accept-charset="utf-8" enctype="multipart/form-data" id="userForm">
+		<!-- Used for selecting labGroupID -->
+		<input type="hidden" id="labGroupID" name="labGroupID" />
+		
+		{% if select_org %}
+			<input type="button" onclick="location.href='/user_org/user/{{user_object.id}}/add/'" value="Add and save user to new Organisation" 
+				class="ui-button ui-state-default ui-corner-all ui-button-text-only" />
+		{% else %}
+			<input type="button" onclick="location.href='/user_org/add/'" value="Add a new Organisation" 
+				class="ui-button ui-state-default ui-corner-all ui-button-text-only" />
+		{% endif %}
+		<br>
+		<div id="dt_example">
+		<div id="demo">
+		<table id="usertable" class="display">
+			<thead>
+				<tr>
+					<th>View/Edit</th>
+					<th>ID</th>
+					<th>Organisation</th>
+					<th>State</th>
+					<th>Phone No.</th>
+					{% if select_org %}
+						<th>Select</th>
+					{% endif %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for lab_group in lab_group_list %}
+					<tr>
+						{% if select_org %}
+							<td><input type="button" onclick="location.href='/user_org/user/{{user_object.id}}/lab/{{lab_group.id}}/'" value="View/Edit"/></td>
+						{% else %}
+							<td><input type="button" onclick="location.href='/user_org/{{lab_group.id}}/'" value="View/Edit"/></td>
+						{% endif %}
+						<td>{{ lab_group.id }}</td>
+						<td>{{ lab_group.Name }}</td>
+						<td>{{ lab_group.State }}</td>
+						<td>{{ lab_group.Phone }}</td>
+						{% if select_org %}
+							<td>
+								<input type="button" onclick="button_onclick('{{lab_group.id}}');" value="Select"/>
+								<!-- <input type="button" onclick="location.href='/user/admin/{{user_object.id}}/org/{{lab_group.id}}/add/'" value="Select"/> -->
+							</td>
+						{% endif %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		</div>
+		</div>
+	</form>
+{% endblock %}

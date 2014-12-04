@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+<!-- Breadcrumb -->
+{% block breadcrumb %} 
+	<a href="/" class="pathway">Home</a> 
+	<img src="/img/arrow.png" alt=""> 
+	User management
+{% endblock %}
+
+<!-- Content Heading -->
+{% block contentheader %}User Management{% endblock %}
+
+<!-- Content -->
+{% block content %}
+		<script type="text/javascript">
+				jQuery(document).ready(function() {
+					jQuery('#usertable').dataTable();
+				} );
+
+				function usertable_checkbox_clicked(userID, action, value) {
+					jQuery('#userID').val(userID);
+					jQuery('#action').val(action);
+					jQuery('#action_value').val(value);
+
+					jQuery('#user_management_form').submit();
+				}
+		</script>
+
+		<form action="/user_management/" method="post" enctype="multipart/form-data" accept-charset="utf-8" id="user_management_form">
+
+		<input type="hidden" id="userID" name="userID" />
+		<input type="hidden" id="action" name="action" />
+		<input type="hidden" id="action_value" name="action_value" />
+
+		<div id="dt_example">
+		<div id="demo">
+		<table id="usertable" class="display">
+			<thead>
+				<tr>
+					<th>Edit</th>
+					{% if isAdmin %}
+					<th>HVP Admin</th>
+					{% endif %}
+					<th>Lab Leader</th>
+					<th>Username</th>
+					<th>Full Name</th>
+					<th>Organisation</th>
+					{% if isAdmin %}
+					<th>Status</th>
+					{% endif %}
+					<th>Account Activated</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for user in userlist %}
+				<tr>
+					<td><input type="button" onclick="location.href='/user_management/{{user.id}}/'" value="View/Edit"/> </td>
+
+					{% if isAdmin %}
+					<td>
+						<input 
+							type="checkbox" 
+							onclick="usertable_checkbox_clicked('{{ user.id }}', 'hvpadmin', this.checked);"
+							{% if user.get_profile.IsHVPAdmin %} checked="checked" {% endif %}
+						/>
+					</td>
+					{% endif %}
+
+					<td>
+						<input 
+							type="checkbox" 
+							onclick="usertable_checkbox_clicked('{{ user.id }}', 'lableader', this.checked);"
+							{% if user.get_profile.IsLabLeader %} checked="checked" {% endif %}
+						/>
+					</td>
+					<td>{{ user.username }}</td>
+					<td>{{ user.first_name }} {{ user.last_name }}</td>
+					<td>{{ user.get_profile.AdminOrganisation.Name|default:'(Not assigned)' }}</td>
+					
+					{% if isAdmin %}
+					<td>{{ user.get_profile.AccessStatus }}</td>
+					{% endif %}
+					
+					<td>
+						<input 
+							type="checkbox" 
+							onclick="usertable_checkbox_clicked('{{ user.id }}', 'active', this.checked);" 
+							{% if user.is_active %} checked="checked" {% endif %}
+						/>
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+		</div>
+		</div>
+
+		</form>
+{% endblock %}

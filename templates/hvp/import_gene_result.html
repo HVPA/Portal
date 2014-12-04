@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+<!-- Content Heading -->
+{% block contentheader %} GENE IMPORT {% endblock %}
+
+{% block content %}
+<table style="border: 1px solid #000000">
+    {% for row in blah %}
+    <tr style="border: 1px solid #000000">
+        <td style="border: 1px solid #000000">{{ row.HGNC_ID }}</td>
+        <td style="border: 1px solid #000000">{{ row.ApprovedSymbol }}</td>
+        <td style="border: 1px solid #000000">{{ row.ApprovedName }}</td>
+        <td style="border: 1px solid #000000">{{ row.Status }}</td>
+        <td style="border: 1px solid #000000">{{ row.PreviousSymbols }}</td>
+        <td style="border: 1px solid #000000">{{ row.PreviousNames }}</td>
+        <td style="border: 1px solid #000000">{{ row.AliasSymbols }}</td>
+        <td style="border: 1px solid #000000">{{ row.AliasNames }}</td>
+        <td style="border: 1px solid #000000">{{ row.Chromosome }}</td>
+        <td style="border: 1px solid #000000">{{ row.RefSeqID }}</td>
+        <td style="border: 1px solid #000000">{{ row.RefSeqIDNCBI }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

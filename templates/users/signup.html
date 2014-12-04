@@ -1,0 +1,400 @@
+{% extends "base.html" %}
+
+<!-- Breadcrumb -->
+{% block breadcrumb %} 
+	<a href="/" class="pathway">Home</a> 
+	<img src="/img/arrow.png" alt=""> 
+	Sign up
+{% endblock %}
+
+<!-- Content Heading -->
+{% block contentheader %} Sign up {% endblock %}
+
+<!-- Javascript -->
+{% block extra_js %}
+	<script type="text/javascript" src="/js/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="/js/jQueryValidatorPhoneNo.js"></script>
+    
+    <link rel="stylesheet" href="/css/cb/cb.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="/js/cb.js"></script>
+    
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+            jQuery("#signupForm").validate();
+        });
+    </script>
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+	<p>
+	Fill in the following fields to sign up for an account, but please be aware your access will need <br> 
+	to be verified based on your nominated Organisation/Institue before your account will be active. <br>
+	</p>
+	<p><span style="color: red;">* Denotes a required field</span></p>
+	<form id="signupForm" action="/signup/" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+		<table>
+		    <tr>
+		        <td><h3>Personal Details</h3></td>
+		    </tr>
+		    {% if upload_format_error %}
+                <tr>
+                    <td colspan="4">
+                        <div class="ui-widget" style="width:75%;">
+                            <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+                                <p class="errorMessage">
+                                <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+                                    The file you have uploaded is an incorrect file format please ensure that you upload only .pdf and .doc and .docx files.
+                                </p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
+            <tr>
+                <td>
+                    Title
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select id="user_title" name="user_title">
+                        {# first option should be blank to ensure user selects an option #}
+                        <option></option>
+                        {% if title_list %}
+                            {% for title in title_list %}
+                                <option {%ifequal user_title|stringformat:"s" title|stringformat:"s"%}
+                                    selected="selected"{%endifequal%} value ="{{title}}">
+                                    {{title}}
+                                </option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td width="275px">First name</td>
+                <td>Last Name</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" name="firstname" value="{{firstName}}" id="firstname" 
+                        class="required" minlength="2" maxlength="30" size="30"/>
+                    <span style="color: red;">*</span>
+                </td>
+                <td>
+                    <input type="text" name="lastname" value="{{lastName}}" id="lastname" 
+                        class="required" minlength="2" maxlength="30" size="30"/>
+                    <span style="color: red;">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td>Phone No.</td>
+                <td>Mobile </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" name="user_phone" value="{{user_phone}}" id="user_phone" 
+                        class="required phone" minlength="8" maxlength="25" size="30"/>
+                    <span style="color: red;">*</span>
+                </td>
+                <td>                
+                    <input type="text" name="user_mobile" value="{{user_mobile}}" id="user_mobile" 
+                        class="phone" minlength="10" maxlength="25" size="30"/>
+                </td>
+            </tr>
+            {% if email_exist %}
+                <tr>
+                    <td colspan="2">
+                        <div class="ui-widget" style="width:75%;">
+                            <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+                                <p class="errorMessage">
+                                <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+                                    The email specified already exist please check your email is correct or speficiy a different email.
+                                </p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
+            <tr>
+                <td>Email</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="text" name="user_email" value="{{user_email}}" id="user_email" 
+                        class="required email" size="60"/>
+                    <span style="color: red;">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="ui-widget" style="width:50%;">
+                        <div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;"> 
+                            <p class="errorMessage">
+                                <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+                                If you are an AAF user and wish to be able to login via your AAF account, please ensure
+                                that your email is the same as your AAF email.
+                            </p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% if username_exist %}
+            	<tr>
+                    <td colspan="4">
+                        <div class="ui-widget" style="width:75%;">
+                            <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+                                <p class="errorMessage">
+                                <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+                                    The username: "{{username}}", already exist please speficiy a different username.
+                                </p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
+            <tr>
+                <td>Username</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="username" name="username" value="{{username}}" id="username" 
+                        class="required" minlength="8" maxlength="30" size="30"/>
+                    <span style="color: red;">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td>Confirm Password</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="password" name="password" value="" id="password" 
+                        class="required" minlength="8" maxlength="128" size="30"/>
+                    <span style="color: red;">*</span>
+                </td>
+                <td>
+                    <input type="password" name="confirm_password" value="" id="confirm_password" 
+                        class="required" minlength="8" maxlength="128" size="30"/>
+                    <span style="color: red;">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="ui-widget" style="width:50%;">
+                        <div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;"> 
+                            <p class="errorMessage">
+                                <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+                                    If you are an AAF user, this password will be separate from your AAF account password. If you wish to 
+                                    login into portal using your portal account password instead of your AAF acount then use this password.
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% if password_error %}
+            <tr>
+                <td colspan="4">
+                    <div class="ui-widget" style="width:75%;">
+                        <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+                            <p class="errorMessage">
+                            <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+                                Confirmed password was not the same as the first Password entered. Please try again.
+                            </p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% endif %}
+            <tr><td>&nbsp;</td></tr>
+			<tr>
+				<td colspan="2"><h3>Organisation/Institute Details</h3></td>
+			</tr>
+			<tr>
+				<td colspan="2">Name of Organisation/Institute</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="text" name="org_name" value="{{org_name}}" id="org_name" 
+						class="required" minlength="2" maxlength="50" size="50"/>
+					<span style="color: red;">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">Department/Lab</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="text" name="org_dept" value="{{org_dept}}" id="org_dept"
+						minlength="2" maxlength="255" size="50"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Address</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <textarea name="org_address" rows="3" cols="55" class="required">{{org_address}}</textarea>
+					<span style="color: red;">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td>City</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" name="org_city" value="{{org_city}}" id="org_city" 
+    					class="required" maxlength="25" size="30"/>
+					<span style="color: red;">*</span>	
+                </td>            
+            <tr>
+            <tr>
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td width="100px">Post Code</td>
+                            <td>State/Territory</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" name="org_post" value="{{org_post}}" id="org_post" 
+					                class="required digit" minlength="4" maxlength="4" size="6"/>
+					            <span style="color: red;">*</span>	
+				            </td>
+                            <td>
+				                <select id="org_state" name="org_state" class="required">
+					                {# first option should be blank to ensure user selects an option #}
+					                <option></option>
+					                {% if state_list %}
+						                {% for state in state_list %}
+							                <option {%ifequal org_state|stringformat:"s" state|stringformat:"s"%}
+								                selected="selected"{%endifequal%} value ="{{state}}">
+								                {{state}}
+							                </option>
+						                {% endfor %}
+					                {% endif %}
+				                </select>
+				                <span style="color: red;">*</span>
+			                </td>
+                        </tr>
+                    </table>
+                </td>
+            <tr>
+                <td>Phone</td>
+                <td>Fax</td>
+            </tr>
+            <tr>
+                <td>
+					<input type="text" name="org_phone" value="{{org_phone}}" id="org_phone" 
+						class="required phone" minlength="8" maxlength="25" size="30"/>
+					<span style="color: red;">*</span>
+				</td>
+                <td>
+					<input type="text" name="org_fax" value="{{org_fax}}" id="org_fax" 
+						class="phone" minlength="8" maxlength="25" size="30"/>
+				</td>
+            </tr>
+            <tr><td>&nbsp;</td></tr>
+			<tr>
+				<td colspan="2"><h4>Person to contact (Contact for verification)</h4></td>
+			</tr>
+            <tr>
+                <td>Title</td>
+            </tr>
+            <tr>
+                <td>
+					<select id="contact_title" name="contact_title">
+						{# first option should be blank to ensure user selects an option #}
+						<option></option>
+						{% if title_list %}
+							{% for title in title_list %}
+								<option {%ifequal contact_title|stringformat:"s" title|stringformat:"s"%}
+									selected="selected"{%endifequal%} value="{{title}}">
+									{{title}}
+								</option>
+							{% endfor %}
+						{% endif %}
+					</select>
+				</td>
+            </tr>
+            <tr>
+                <td>First name</td>
+                <td>Last name</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" name="contact_firstname" value="{{contact_firstname}}" id="contact_firstname" 
+					    class="required" minlength="2" size="30"/>
+					<span style="color: red;">*</span>
+                </td>
+                <td>
+                    <input type="text" name="contact_lastname" value="{{contact_lastname}}" id="contact_lastname" 
+    					class="required" minlength="2" size="30"/>
+					<span style="color: red;">*</span>
+				</td>
+            </tr>
+            <tr>
+                <td>Phone</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" name="contact_phone" value="{{contact_phone}}" id="contact_phone" 
+						class="required phone" minlength="8" maxlength="25" size="30"/>
+					<span style="color: red;">*</span>
+				</td>
+            </tr>            
+            <tr>
+                <td>Email</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="text" name="contact_email" value="{{contact_email}}" 
+					    id="contact_email" class="required email" size="60"/>
+					<span style="color: red;">*</span>
+				</td>
+            </tr>
+            {% comment %}
+            <--! Not using this yet -->
+			<tr><td>&nbsp;</td></tr>
+			<tr>
+				<td colspan="2"><h3>Submission</h3></td>
+			</tr>
+			<tr>
+				<td>
+					Upload a letter or referral for verification. NB: Only '.pdf' and '.doc' files will be acceptable. 
+					<br/><br/>
+					<!-- <input type="file" name="datafile" size="45"> -->
+					{{ form.as_p }}
+				<td>
+			</tr>
+	    {% endcomment %}
+			<tr><td>&nbsp;</td></tr>
+			<tr>
+				<td>
+					Usage Intention
+					<select id="usage" name="usage">
+						{# first option should be blank to ensure user selects an option #}
+						<option></option>
+						{% if usage_list %}
+							{% for usage_int in usage_list %}
+								<option {%ifequal usage|stringformat:"s" usage_int|stringformat:"s"%} 
+									selected="selected"{%endifequal%} value ="{{usage_int}}">
+									{{usage_int}}
+								</option>
+							{% endfor %}
+						{% endif %}
+					</select>
+				</td>
+			</tr>
+			<tr><td>&nbsp;</td></tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input type="submit" value="Sign up" 
+						class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"/>
+				</td>
+			</tr>
+		</table>
+	</form>
+{% endblock %}

@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+{# {% load pagination_tags %} #}
+
+<!-- Breadcrumb -->
+{% block breadcrumb %} 
+	<a href="{{ BASE_URL }}/" class="pathway">Home</a> 
+	<img src="/img/arrow.png" alt=""> 
+	<a href="{{ BASE_URL }}/search/searchgene/" class="pathway">Gene/Disease</a>
+	<img src="/img/arrow.png" alt=""> 
+	Gene Search Result
+<!--
+	<img src="/img/arrow.png" alt=""> 
+	Gene search result
+-->
+{% endblock %}
+
+<!-- Content Heading -->
+{% block contentheader %}Gene Search{% endblock %}
+
+<!-- Content -->
+{% block content %}
+	<!-- Search Bar -->
+		<form action="" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+			<table>
+				<tr>
+					<td colspan="2">
+						<input type="text" name="searched_gene" value="{% ifequal searched_gene '0' %}{% else %}{{ searched_gene }}{% endifequal%}" id="searched_gene" style="width:700px" />
+					</td>
+					<td>
+						<input type="submit" value="Search" name="search"
+							class="ui-button ui-state-default ui-corner-all ui-button-text-only" />
+					</td>
+                </tr>
+<!--
+				<tr>
+					<td>
+					</td>
+					<td align="right">
+						Display number of results
+						<select id="paginate_results" name="paginate_results">
+							<option {%ifequal paginate_results 5%}selected="selected"{%endifequal%} value="5">
+								5</option>
+							<option {%ifequal paginate_results 10%}selected="selected"{%endifequal%} value="10">
+								10</option>
+							<option {%ifequal paginate_results 20%}selected="selected"{%endifequal%} value="20">
+								20</option>
+							<option {%ifequal paginate_results 50%}selected="selected"{%endifequal%} value="50">
+								50</option>
+						</select>
+					</td>
+				</tr>
+-->
+			</table>
+            <p>
+                To search for a specific gene or disease type in key words/phrases in the search above. (e.g: BRCA, NM_000059.3, Breast Cancer) <br/>
+                If searching genomic variant please put in the Genomic RefSeq or Chromosome. (e.g: NC_000017.10:12345678 or Chr13:12345678)
+            </p>
+		</form>
+
+	{# if search query string is too short display this message #}
+	{% if search_name_tooshort %}
+		<div class="ui-widget">
+		    <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+				<p class="errorMessage">
+					<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+				    {% ifequal gene|length 0 %}
+						You did not enter in a search query.
+					{% else %}
+						The search query &#147;{{ searched_gene }}&#147; is too short, please enter minimum of 2 characters or more.
+					{% endifequal %}
+				</p>
+			</div>
+		</div>
+	{% else %}
+		{# {% if gene_list %} #}
+        {% if genes %}
+			<div style="width:800px; background-color:#F0F7F9; border-top: solid 1px #6B90DA; padding: 0.3em">
+                {% ifequal searched_gene "0" %}
+                    Showing <strong>{{ result_low }} - {{ result_high }}</strong> of <strong>{{ gene_count }}</strong> results                
+                {% else %}
+                    Showing <strong>{{ result_low }} - {{ result_high }}</strong> of <strong>{{ gene_count }}</strong> results matched your search for <strong>{{ searched_gene }}</strong>
+                {% endifequal %}
+			</div>
+			<p>
+				<div align="center">
+					{# Sets how many results to display per page, currently at 10 #}
+					{# {% autopaginate gene_list paginate_results %} #}
+				</div>
+			</p>
+            <p>
+				<div style="padding-left: 300px;">
+					{# {% paginate %} #}
+                    {% if genes.has_previous %}
+                        <a href="?page={{ genes.previous_page_number }}">&lt;&lt;Previous</a>
+                    {% else %}
+                        &lt;&lt;Previous
+                    {% endif %}
+                    
+                    Page {{ genes.number }} of {{ genes.paginator.num_pages }}
+
+                    {% if genes.has_next %}
+                        <a href="?page={{ genes.next_page_number }}">Next&gt;&gt;</a>
+                    {% else %}
+                        Next&gt;&gt;
+                    {% endif %}
+				</div>
+			</p>
+			<!-- Results -->
+			<p>
+				<table cellspacing="10">
+					{# {% for gene in gene_list %} #}
+					{% for gene in genes %}
+						<tr>
+							<td>
+								<div class="{% if forloop.counter|divisibleby:2 %}search-item-alt{% else %}search-item-div{% endif %}">
+									{#<a class="search-item" href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/searchvariant/path_all/path_all/">#}
+										<table class="fakeLink" onclick="window.location='{{ BASE_URL }}/search/gene/{{ gene.ID }}/searchvariant/1/path_all/path_all/'">
+											<tr>
+												<td style="vertical-align: top;">
+													{% comment %}<div class="refseq-icon">{{ gene.RefSeqName }}{% if gene.RefSeqVer %}.{{ gene.RefSeqVer }}{% endif %}</div>{% endcomment %}
+												</td>
+												<td>
+													<table>
+													<tr>
+													<td>
+														<!--<div style="float:left; font-weight: bold; padding: 0em 1em 0em 1em;">-->
+														<div class="tableHeading1">
+															Gene Name: {{ gene.GeneName }}
+														</div>
+													</td>
+													<td>
+															<!--<div style="font-weight: bold; padding: 0em 1em 0em 1em;">  -->
+															<div class="tableHeading1">
+																Alternate Symbols: {{ gene.AlternateSymbols }}
+															</div>
+													</td>
+													</tr>
+													<tr>
+														<!--<td colspan="2" style="margin-left: 2px; margin-right: 2px; border-top: solid 1px silver;">-->
+														<td colspan="2" class="tableTextColumn">
+															<!--<div style="margin-left: 1em; font-style: italic; text-align:left;">-->
+															<div class="tableText">
+															{{ gene.GeneDescription }}
+															</div>
+														</td>
+													</tr>
+													<tr>
+														<td colspan="2">
+														<!--<div style="font-size:75%; margin-left:1.5em;">-->
+														<div class="tableMinorText">
+															Chromosome: {{ gene.Chromosome }}<br/>
+															Alternate Names: {{ gene.AlternateNamess }}<br/>
+															Previous Symbols: {{ gene.PreviousSymbols }}<br/>
+															Previous Names: {{ gene.PreviousNames }}
+														</div>
+														</td>
+													</tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="tableHeading1">
+                                                                Number of unique variants: {{ gene.Variants }} <br/>
+                                                                Total number of variant instances: {{ gene.VariantInstances }}<br/>
+                                                                Date of last submission: {% if gene.DateSubmitted %}{{ gene.DateSubmitted }}{% else %}-{% endif %}
+                                                            </div>
+                                                        <td>
+                                                    </tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</a>
+									<div class="tableMinorText" style="text-align: right;">
+                                        <a href="http://genome.ucsc.edu/cgi-bin/hgTracks?Submit=Submit&position={{ gene.UCSC_ID }}" target="_blank">
+                                            UCSC Genome Browser
+                                        </a></br>
+										<a href="http://www.genenames.org/data/hgnc_data.php?hgnc_id={{ gene.HGNC_ID }}" target="_blank">
+											HGNC Gene Symbol Report
+										</a>
+									</div>
+								</div>
+							</td>
+						</tr>
+					{% endfor %}
+				</table>
+			</p>
+			<p>
+				<div style="padding-left: 300px;">
+					{# {% paginate %} #}
+                    {% if genes.has_previous %}
+                        <a href="?page={{ genes.previous_page_number }}">&lt;&lt;Previous</a>
+                    {% else %}
+                        &lt;&lt;Previous
+                    {% endif %}
+                    
+                    Page {{ genes.number }} of {{ genes.paginator.num_pages }}
+
+                    {% if genes.has_next %}
+                        <a href="?page={{ genes.next_page_number }}">Next&gt;&gt;</a>
+                    {% else %}
+                        Next&gt;&gt;
+                    {% endif %}
+				</div>
+			</p>
+		{% else %}
+            {% if error %}
+                <div class="ui-widget">
+        			<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+        	            <p class="errorMessage">
+        	            <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+        				    For genome variants please specify the RefSeq or Chromosome. e.g: nc_000017.10:12345678, chr13:12345678
+        	            </p>
+        	        </div>
+                </div>
+            {% else %}
+				<div class="ui-widget">
+					<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;"> 
+						<p class="errorMessage">
+    						<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span> 
+    						No match found for {{ searched_gene }}
+						</p>
+					</div>
+				</div>
+            {% endif %}
+		{% endif %}
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+
+<!-- Breadcrumb -->
+{% block breadcrumb %} 
+	<a href="/" class="pathway">Home</a> 
+	<img src="/img/arrow.png" alt=""> 
+	<a href="/request/" class="pathway">Request Applications</a>
+{% endblock %}
+
+<!-- Content Heading -->
+{% block contentheader %}
+	Request Application 
+	{% if lab_request.VariantInstance %}
+		for Variant Instance
+	{% else %}
+		for Variant
+	{% endif %}
+{% endblock %}
+
+<!-- Javascript -->
+{% block extra_js %}
+	<script type="text/javascript" src="/js/jquery.fancybox-1.3.1.pack.js"></script>
+	<link rel="stylesheet" href="/css/fancybox/jquery.fancybox-1.3.1.css" type="text/css" media="screen" />
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+            // grant message
+            jQuery("#grant").click(function() {
+                jQuery.fancybox({'href': '#grantForm'});
+            });
+            
+            // reject message
+            jQuery("#reject").click(function() {
+                jQuery.fancybox({'href': '#rejectForm'});
+            });
+        });
+    </script>
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+	<form action="/pending/" method="post" enctype="multipart/form-data" accept-charset="utf-8" id="pending_form">
+		<p>
+			<table>
+				<tr>
+					<td colspan="4"><h3>Request Status</h3></td>
+				</tr>
+				<tr>
+					<td>Current status: <b>{{ lab_request.LabRequestStatus.RequestStatus }}</b></td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+					<td colspan="4" align="center">
+						<input type="button" id="grant" value="Grant Request Application"
+							class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+						<input type="button" id="reject" value="Reject Request Application"
+							class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+					</td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+			</table>
+            {% if error %}
+                <div class="ui-widget" style="width:500px;">
+                    <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+                        <p class="errorMessage">
+                            <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+                                An error has occured sending email to : {{ lab_request.User.email }}
+                                <br/>
+                                {{ error|safe }}
+                        </p>
+                    </div>
+                </div>
+            {% endif %}
+			<br/>
+			
+			<div style="float: left">
+			<h3>Applicant</h3>
+			<table>
+				<tr>
+					<td><b>Application Date</b></td>
+					<td>{{ lab_request.ApplicationDate }}</td>
+				</tr>
+				<tr>
+					<td><b>Username</b></td>
+					<td>{{ lab_request.User.username }}</td>
+				</tr>
+				<tr>
+					<td><b>Name</b></td>
+					<td>{{ lab_request.User.first_name }} {{ lab_request.User.last_name }}</td>
+				</tr>
+				<tr>
+					<td><b>Justification</b></td>
+					<td>{{ lab_request.Justification }}</td>
+				<tr>
+			</table>
+			<br/>
+			<h3>Request Information</h3>
+			<table>
+				<tr>
+					<th>Gene: {{ lab_request.Gene.GeneName }}</th>
+				</tr>
+				<tr>
+					<td><b>Variant:</b></td>
+					<td>
+					</td>
+				</tr>
+				<tr>
+					<td><b>cDNA</b></td>
+					<td>{{ lab_request.Variant.cDNA|default_if_none:"-" }}</td>
+				</tr>
+				<tr>
+					<td><b>mRNA</b></td>
+					<td>{{ lab_request.Variant.mRNA|default_if_none:"-" }}</td>
+				</tr>
+				<tr>
+					<td><b>Genomic</b></td>
+					<td>{{ lab_request.Variant.Genomic|default_if_none:"-" }}</td>
+				</tr>
+				<tr>
+					<td><b>Protein</b></td>
+					<td>{{ lab_request.Variant.Protein|default_if_none:"-" }}</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<table>
+							<tr>
+								<td>
+									<input type="button" id="variant" value="Go to Variant"
+							class="ui-button ui-state-default ui-corner-all ui-button-text-only"
+							onclick="window.open('/search/gene/{{lab_request.Gene.ID}}/variant/{{lab_request.Variant.ID}}/instance/')"/>
+								</td>
+								<td>
+									<input type="button" id="variantinstance" value="Go to Instance"
+							class="ui-button ui-state-default ui-corner-all ui-button-text-only"
+							onclick="window.open('/search/gene/{{lab_request.Gene.ID}}/variant/{{lab_request.Variant.ID}}/instance/{{lab_request.VariantInstance.ID}}/')"/>
+								</td>
+							</tr>
+						</table
+					</td>
+				</tr>
+			</table>
+			<br/>
+			</div>
+			<h3>Lab Contact Information</h3>
+			<table>
+				<tr>
+					<th>Lab Details</th>
+				</tr>
+				<tr>
+					<td>{{ lab_details.Org_Name }}</td>
+				</tr>
+				<tr>
+					<td>{{ lab_details.Lab_Name }}</td>
+				</tr>
+				<tr>
+					<td>{{ lab_details.Address_1 }}</td>
+				</tr>
+				<tr>
+					<td>{{ lab_details.Address_2 }}</td>
+				</tr>
+				<tr>
+					<td>{{ lab_details.City }}, {{ lab_details.Post }}</td>
+				</tr>
+				<tr>
+					<td>{{ lab_details.State.State }}</td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+					<th>Contact Details</th>
+				</tr>
+				{% for contact in lab_contacts %}
+					<tr>
+						<td>{{ contact.Title.Title }} {{ contact.First_Name }} {{ contact.Last_Name }}</td>
+					</tr>
+					<tr>
+						<td>Phone: {{ contact.Phone }}</td>
+					</tr>
+					<tr>
+						<td>Mobile: {{ contact.Mobile }}</td>
+					</tr>
+					<tr>
+						<td>Fax: {{ contact.Fax }}</td>
+					</tr>
+					<tr>
+						<td>Email: <a href="mailto:{{ contact.Email }}">{{ contact.Email }}<a/></td>
+					</tr>
+				{% endfor %}
+			</table>
+		</p>
+	</form>
+	
+	<!-- Grant -->
+    <div style="display: none;">
+        <div id="grantForm" style="width:340px;height:170px;overflow:auto;">
+            <form id="grantForm" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+                <h3>Grant Request Application</h3>
+                <p>
+                    You are about to <b>Grant this Request Application</b> to the current user, the requested 
+                    labs contact details will be emailed to the user. Are you sure you want to continue?
+                </p>
+                <p>
+                    <center>
+                        <input type="submit" name="grant" value="Yes" 
+                            class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+                        <input type="button" value="No" onClick="jQuery.fancybox.close();" 
+                            class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+                    </center>
+                </p>
+            </form>
+        </div>
+    </div>
+	
+	<!-- Reject -->
+    <div style="display: none;">
+        <div id="rejectForm" style="width:340px;height:170px;overflow:auto;">
+            <form id="rejectForm" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+                <h3>Reject Request Application</h3>
+                <p>
+                    You are about to <b>Reject this Request Application</b> to the current user, an email will
+                    be sent to notify the user. Are you sure you want to continue?
+                </p>
+                <p>
+                    <center>
+                        <input type="submit" name="reject" value="Yes" 
+                            class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+                        <input type="button" value="No" onClick="jQuery.fancybox.close();" 
+                            class="ui-button ui-state-default ui-corner-all ui-button-text-only"/>
+                    </center>
+                </p>
+            </form>
+        </div>
+    </div>
+{% endblock %}

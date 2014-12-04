@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+<!-- Breadcrumb -->
+{% block breadcrumb %} 
+	<a href="/" class="pathway">Home</a> 
+	<img src="/img/arrow.png" alt=""> 
+	Pending Applications
+{% endblock %}
+
+<!-- Content Heading -->
+{% block contentheader %}Pending Applications{% endblock %}
+
+<!-- Content -->
+{% block content %}
+		<script type="text/javascript">
+				jQuery(document).ready(function() {
+					jQuery('#pendingtable').dataTable();
+				} );
+		</script>
+
+		<form action="/pending/" method="post" enctype="multipart/form-data" accept-charset="utf-8" id="pending_form">
+
+		<div id="dt_example">
+		<div id="demo">
+		<table id="pendingtable" class="display">
+			<thead>
+				<tr>
+					<th>View</th>
+					<th>Username</th>
+					<th>Full Name</th>
+					<th>Current Institution</th>
+					<th>New Institution</th>
+					<th>Status</th>
+					<th>Application Date</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for user in pending_list %}
+				<tr>
+					<td><input type="button" onclick="location.href='/user_management/{{user.id}}/'" value="View/Edit"/> </td>
+					<td>{{ user.username }}</td>
+					<td>{{ user.first_name }} {{ user.last_name }}</td>
+					<td>{{ user.CurrentInstitution.Name|default:'(new user)' }}</td>
+					<td>{{ user.PendingInstitution.Name }}</td>
+					<td>{{ user.get_profile.AccessStatus }}</td>
+					<td>{{ user.PendingInstitution.ApplicationDate|date:"l dS, F Y" }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+		</div>
+		</div>
+
+		</form>
+{% endblock %}

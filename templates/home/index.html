@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+<!-- Breadcrumb -->
+{% block breadcrumb %} 
+	Home 
+{% endblock %}
+
+<!-- Content Heading -->
+{% block contentheader %}
+Welcome to the Human Variome Project Australian Node
+{% endblock %}
+
+<!-- Javascript -->
+{% block extra_js %}
+    <script type="text/javascript" src="/js/jquery.watermark.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function () {
+		    $("#username").watermark("Username or Email");
+            $("#password").watermark("Password");
+	    });
+    </script>
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+	<div id="div1">
+		{% if user.is_authenticated%}
+			<p>
+				Welcome {{ user.first_name }} {{ user.last_name }}, to begin searching the Human Variome database 
+				click on the search button on the left tab. From there you will need to search and select a gene 
+				first then you can search for all the available variants of that gene.
+			</p>
+		{% else %}
+			<p>
+				Please login:
+			</p>
+			<!-- Login Module -->
+			<p>
+				<form action="{{ BASE_URL }}/login/" method="post" accept-charset="utf-8">
+                    <table>
+						<tr>
+							<td>
+								<div class="ui-widget loginfield">
+								<label for="username">Username</label>
+								</div>
+							</td>
+							<td>
+								<div class="ui-widget loginfield">
+								<input type="text" name="username" value="{{ username|default:"" }}" id="username" />
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="ui-widget loginfield">
+								<label for="password">Password</label>
+								</div>
+							</td>
+							<td>
+								<div class="ui-widget loginfield">
+								<input type="password" name="password" value="" id="password" />
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" align="right" style="padding-top:1em">
+								<input type="submit" value="Login" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" />	
+							</td>
+						</tr>
+					</table>
+                    <div class="ui-widget ui-widget-content ui-corner-all" style="position: absolute; width: 200px; height: 150px;left: 600px; top: 180px; padding: 10px;">
+                        <img src="/img/aaf_white.png" />
+                        <p align="center">
+                            <input type="button" value="Login via AAF" onclick="window.location.href='https://rapid.test.aaf.edu.au/jwt/authnrequest/research/gmZmzcn1l7ylbhFE'" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"/>
+                        </p>
+                    </div>
+				</form>
+				{% if error_message %}
+					<br/>
+					<div class="ui-widget">
+						<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
+							<p class="errorMessage">
+							<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+							<strong>Error:</strong> {{ error_message }}
+							</p>
+						</div>
+					</div>
+				{% endif %}
+			</p>
+			<p>
+				<br/>
+				Not a member? Click here <a href="{{ BASE_URL }}/signup/">here</a> to sign up for an account.
+			</p>
+		{% endif %}
+	</div>
+	
+	<!-- Node status -->
+	<div id="div2" align="right">
+		<table class="ui-widget ui-dialog-content ui-widget-content ui-corner-all" style="font-size:small">
+			<tr>
+				<th colspan="2">Node Status</th>
+			</tr>
+			{% for stat in node_stats %}
+				<tr>
+					{% for key_val in stat.items %}
+					<td align="right"><b>{{ key_val.1 }}</b></td>
+					<td>{{ key_val.0 }}</td>
+					{% endfor %}
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+
+{% endblock %}
