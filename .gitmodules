@@ -1,0 +1,3 @@
+[submodule "search/hgvs_parser"]
+	path = search/hgvs_parser
+	url = https://hvpa@bitbucket.org/hvpa/hgvs_nomenclatureparser.git
