@@ -52,7 +52,7 @@ def variant_view(request, geneID, path_filter, path_filter_ratio, datatype_filte
             #search_type = request.POST['search_type']
             search_type = "variantType"            
             searched_variant = request.POST['searched_variant']
-            return HttpResponseRedirect(settings.BASE_URL + '/search/gene/' + geneID + 
+            return HttpResponseRedirect('/search/gene/' + geneID + 
                                         '/searchvariant/' + urllib.quote(searched_variant) +
                                         '/' + search_type + '/results/' + str(datatype_filter_id) + 
                                         '/' + path_filter + '/' + path_filter_ratio + '/')
@@ -165,13 +165,13 @@ def variant_results_view(request, geneID, searched_variant, search_type, path_fi
             #search_type = request.POST['search_type']
             search_type = "variantType"            
             searched_variant = request.POST['searched_variant']
-            return HttpResponseRedirect(settings.BASE_URL + '/search/gene/' + geneID + 
+            return HttpResponseRedirect('/search/gene/' + geneID + 
                                         '/searchvariant/' +  urllib.quote(searched_variant) +
                                         '/' + search_type + '/results/' + str(datatype_filter_id) + 
                                         '/' + path_filter + '/' + path_filter_ratio + '/')
         else:
             # go back to the default variant page that lists all variants
-            return HttpResponseRedirect(settings.BASE_URL + '/search/gene/' + geneID +
+            return HttpResponseRedirect('/search/gene/' + geneID +
                                         '/searchvariant/path_all/path_all/')
     
     gene = get_object_or_404(Gene, pk = geneID)
@@ -288,7 +288,6 @@ def variant_results_view(request, geneID, searched_variant, search_type, path_fi
                                'variants': variants,
                                'results': results, 
                                'search_tooShort': search_tooShort,
-                               'BASE_URL': settings.BASE_URL,
                                'refdatatypes': refdatatypes,
                                'datatype_filter_id': long(datatype_filter_id),
                                'path_filter': path_filter,
@@ -412,7 +411,6 @@ def variant_patient_view(request, geneID, variantID, instanceID, path_filter, pa
                             {
                                 'user': request.user,
                                 'template': template,
-                                'BASE_URL': settings.BASE_URL,
                                 'dict_path': dict_path,
                                 'datatype_filter_id': long(datatype_filter_id),
                                 'refdatatypes': refdatatypes,

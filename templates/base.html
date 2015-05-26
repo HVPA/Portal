@@ -105,20 +105,20 @@
 				<div id="navigation">
 					<ul class="menu">
 						<li>
-							<a href="{{ BASE_URL }}/"><span>Home</span></a>
+							<a href="/"><span>Home</span></a>
 						</li>
 						<li>
 							<a href="http://hvpaustralia.org.au/what-is-the-australian-node"><span>About</span></a>
 						</li>
 						<li>
-							<a href="{{ BASE_URL }}/policy/"><span>Usage Policy</span></a>
+							<a href="/policy/"><span>Usage Policy</span></a>
 						</li>
 						<li>
 							<a href="http://hvpaustralia.org.au/contact-us"><span>Contact us</span></a>
 						</li>
 						{% if user.is_authenticated %}
 						<li>
-							<a href="{{ BASE_URL }}/logout/">
+							<a href="/logout/">
 								<span class="ui-icon ui-icon-circle-arrow-e" style="float: left; margin-right: .3em;"></span>
 								<span>Logout</span>
 							</a>
@@ -134,48 +134,48 @@
 						<!-- Following links should only appear if user is authenticated -->
 						{% if user.is_authenticated %}
 							<li>
-								<a href="{{ BASE_URL }}/"><span>Home</span></a>
+								<a href="/"><span>Home</span></a>
 							</li>
 							{% if user.get_profile.AccessStatus.ID == 2 %}
 								<li>
-									<a href="{{ BASE_URL }}/search/searchgene/"><span>Search</span></a>
+									<a href="/search/searchgene/"><span>Search</span></a>
 								</li>
 							{% endif %}
 							<li>
-								<a href="{{ BASE_URL }}/user/"><span>My Account</span></a>
+								<a href="/user/"><span>My Account</span></a>
 							</li>
 							{% if user.get_profile.IsHVPAdmin %}
 								<li>
-                                    <a href="{{ BASE_URL }}/admin_email"><span>Send Test Email</span></a>
+                                    <a href="/admin_email"><span>Send Test Email</span></a>
                                 </li>
                                 <li>
-									<a href="{{ BASE_URL }}/user_management/"><span>User Management</span></a>
+									<a href="/user_management/"><span>User Management</span></a>
 								</li>
 								{% comment %}
 								<li>
-									<a href="{{ BASE_URL }}/user_org/"><span>User Organisations</span></a>
+									<a href="/user_org/"><span>User Organisations</span></a>
 								</li>
 								{% endcomment %}
 								<li>
-									<a href="{{ BASE_URL }}/pending/"><span>View Pending User Applications</span></a>
+									<a href="/pending/"><span>View Pending User Applications</span></a>
 								</li>
 								<li>
-									<a href="{{ BASE_URL }}/request/"><span>View Lab Request Applications</span></a>								
+									<a href="/request/"><span>View Lab Request Applications</span></a>								
 								</li>
 							{% else %}{% if user.get_profile.IsLabLeader %}
 								<li>
-									<a href="{{ BASE_URL }}/user_management/"><span>Lab Management</span></a>
+									<a href="/user_management/"><span>Lab Management</span></a>
 								</li>
 							{% endif %}{% endif %}
 							<li>
-								<a href="{{ BASE_URL }}/logout/"><span>Logout</span></a>
+								<a href="/logout/"><span>Logout</span></a>
 							</li>
 						{% else %}
 							<li>
-								<a href="{{ BASE_URL }}/"><span>Login</span></a>
+								<a href="/"><span>Login</span></a>
 							</li>
 							<li>
-								<a href="{{ BASE_URL }}/signup/"><span>Sign up</span></a>
+								<a href="/signup/"><span>Sign up</span></a>
 							</li>
 						{% endif %}
 					</ul>
@@ -201,10 +201,10 @@
 						<div id="login">
 							{% if user.is_authenticated %}
 								You are currently logged in as: <strong>{{user.username}}</strong>.
-								Click <a href="{{ BASE_URL }}/logout/" >here</a> to logout.
+								Click <a href="/logout/" >here</a> to logout.
 							{% else %}
 								You are currently <strong>not</strong> logged in.
-								Click <a href="{{ BASE_URL }}/login/" >here</a> to login.
+								Click <a href="/login/" >here</a> to login.
 							{% endif %}
 						</div>
 					</div>

@@ -87,7 +87,6 @@ def default_view(request, geneID, variantID, instanceID, template):
                                'page_error': page_error, 
                                'lab_request': lab_request, 
                                'variant_instance': variant_instance,
-                               'BASE_URL': settings.BASE_URL
                                })
     
 def lab_request_view(request, geneID, variantID, instanceID):

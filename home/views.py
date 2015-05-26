@@ -115,7 +115,6 @@ def index_view(request):
                                'username': username,
                                'error_message': error_message,
                                'node_stats': node_stats,
-                               'BASE_URL': settings.BASE_URL,
                                })
 
 def logout_view(request):
@@ -124,25 +123,19 @@ def logout_view(request):
 
 def about_view(request):
     if request.user.is_authenticated():
-        return render_to_response('home/about.html', {'user': request.user,
-                                                      'BASE_URL': settings.BASE_URL,
-                                                      })
+        return render_to_response('home/about.html', {'user': request.user,})
     else:
-        return render_to_response('home/about.html', {'BASE_URL': settings.BASE_URL})
+        return render_to_response('home/about.html')
 
 def policy_view(request):
     if request.user.is_authenticated():
-        return render_to_response('home/policy.html', {'user': request.user,
-                                                       'BASE_URL': settings.BASE_URL,
-                                                       })
+        return render_to_response('home/policy.html', {'user': request.user,})
     else:
-        return render_to_response('home/policy.html', {'BASE_URL': settings.BASE_URL})
+        return render_to_response('home/policy.html')
     
 def contact_view(request):
     if request.user.is_authenticated():
-        return render_to_response('home/contact.html', {'user': request.user,
-                                                        'BASE_URL': settings.BASE_URL,
-                                                        })
+        return render_to_response('home/contact.html', {'user': request.user,})
     else:
-        return render_to_response('home/contact.html', {'BASE_URL': settings.BASE_URL,})
+        return render_to_response('home/contact.html')
 

@@ -40,7 +40,7 @@ class VariantInstance( models.Model ):
     VariantSegregatesWithDisease = models.NullBooleanField( 'Variant Segregates with Disease', null = True )
     HistologyStored = models.NullBooleanField( 'Histology Stored', null = True )
     DateSubmitted = models.DateField( 'Date Submitted', blank = False, null = True )
-    DataType = models.ForeignKey( ref.RefDataType, blank = True, null = True )
+    #DataType = models.ForeignKey( ref.RefDataType, blank = True, null = True )
     Patient = models.ForeignKey( Patient )
     Organisation = models.ForeignKey( Organisation )
     

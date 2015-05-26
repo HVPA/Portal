@@ -114,7 +114,6 @@ def variant_instance_view(request, geneID, variantID, path_filter, sort_filter, 
                                 'order_filter': order_filter,
                                 'sort_filter': sort_filter,
                                 'consensus': consensus,
-                                'BASE_URL': settings.BASE_URL,
                                 'last_date_submitted': last_date_submitted,
                                 'last_date_submitted_ID': last_date_submitted_ID,
                             },
@@ -142,7 +141,6 @@ def variant_instance_detail_view(request, geneID, variantID, instanceID):
                                'gene': gene, 
                                'variant': variant, 
                                'variant_instance': variant_instance,
-                               'BASE_URL': settings.BASE_URL,
                            })
     
 # shows all other variant instance for a selected patientID     
@@ -207,7 +205,6 @@ def variant_instance_patient_view(request, geneID, variantID, instanceID, path_f
                             {
                                 'user': request.user,
                                 'template': template,
-                                'BASE_URL': settings.BASE_URL,
                                 'gene': gene,
                                 'datatype_filter_id': long(datatype_filter_id),
                                 'refdatatypes': refdatatypes,
@@ -244,7 +241,6 @@ def variant_instance_detail_patient_view(request, geneID, variantID, instanceID)
                                'gene': gene, 
                                'variant': variant, 
                                'variant_instance': variant_instance,
-                               'BASE_URL': settings.BASE_URL,
                            })
                            
                            
@@ -309,7 +305,6 @@ def variant_instance_lab_view(request, geneID, variantID, instanceID, path_filte
                                 {
                                     'user': request.user,
                                     'template': template,
-                                    'BASE_URL': settings.BASE_URL,
                                     'datatype_filter_id': long(datatype_filter_id),
                                     'refdatatypes': refdatatypes,
                                     'dict_path_filter': dict_path_filter,
@@ -347,7 +342,6 @@ def variant_instance_detail_lab_view(request, geneID, variantID, instanceID):
                                'gene': gene, 
                                'variant': variant, 
                                'variant_instance': variant_instance,
-                               'BASE_URL': settings.BASE_URL,
                            })
                                 
 

@@ -3,9 +3,9 @@
 
 <!-- Breadcrumb -->
 {% block breadcrumb %} 
-	<a href="{{ BASE_URL }}/" class="pathway">Home</a> 
+	<a href="/" class="pathway">Home</a> 
 	<img src="/img/arrow.png" alt="">
-	<a href="{{ BASE_URL }}/search/searchgene/" class="pathway">Gene/Disease</a>
+	<a href="/search/searchgene/" class="pathway">Gene/Disease</a>
 	<img src="/img/arrow.png" alt=""> 
 	    {% if template == "variant_patient" %}Variant Patient{% else %}Variant{% endif %}
 {% endblock %}
@@ -325,9 +325,9 @@
 							<td>
 								<div class="{% if forloop.counter|divisibleby:2 %}search-item-alt{% else %}search-item-div{% endif %}">
                                     {% if template == "variant_patient" %}
-                                        <table class="fakeLink" onclick="window.location='{{ BASE_URL }}/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instance.ID }}/instance_result/{{ datatype_filter_id }}/path_all/sort_date/order_desc/'">
+                                        <table class="fakeLink" onclick="window.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instance.ID }}/instance_result/{{ datatype_filter_id }}/path_all/sort_date/order_desc/'">
                                     {% else %}
-                                        <table class="fakeLink" onclick="window.location='{{ BASE_URL }}/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/{{ datatype_filter_id }}/path_all/sort_date/order_desc/'">
+                                        <table class="fakeLink" onclick="window.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/{{ datatype_filter_id }}/path_all/sort_date/order_desc/'">
                                     {% endif %}
                                             <tr>
                                                 <td>
@@ -373,23 +373,25 @@
 												<td>
 													<div class="tableMinorText">
 														<table>
-                                                            <tr>
-                                                                <td>Data Type:</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    {% for dataType, count in variant.count_dataType_list %}
-                                                                        <b>{{ count }}</b> - {{ dataType }} {% if dataType != 'Unknown' %}|{% endif %}
-                                                                    {% endfor %}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
+                              <tr>
+                                  <td>Data Type:</td>
+                              </tr>
+                              <tr>
+                                  <td>
+                                      {# comment #}
+																			{% for dataType, count in variant.count_dataType_list %}
+                                          <b>{{ count }}</b> - {{ dataType }} {% if dataType != 'Unknown' %}|{% endif %}
+                                      {% endfor %}
+																			{# endcomment #}
+                                  </td>
+                              </tr>
+                              <tr>
 																<td>A Total of <b>{{ variant.count_total_instance }}</b> instances</td>		
 															</tr>
 															<tr>
 																<td>
 																	
-                                                                    <b>{{ variant.count_instance_not_path }}</b> - Not Pathogenic |
+																	<b>{{ variant.count_instance_not_path }}</b> - Not Pathogenic |
 																	<b>{{ variant.count_instance_likely_path }}</b> - Likely Pathogenic |
 																	<b>{{ variant.count_instance_unlikely_path }}</b> - Unlikely Pathogenic |
 																	<b>{{ variant.count_instance_path }}</b> - Certainly Pathogenic |
@@ -419,7 +421,7 @@
 									</a>
 									{% if user.get_profile.IsHVPAdmin %}
 										<div class="tableMinorText" style="text-align: right;">
-											<a href="{{ BASE_URL }}/search/gene/{{geneID}}/searchvariant/variant/{{variant.ID}}/consensus">
+											<a href="/search/gene/{{geneID}}/searchvariant/variant/{{variant.ID}}/consensus">
 												Click here to set the consensus
 											</a>
 										</div>

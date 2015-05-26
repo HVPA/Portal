@@ -43,7 +43,6 @@ def gene_view(request):
         
     page_error = False
     #user = request.user
-    BASE_URL = settings.BASE_URL # for locals
     
     query = """
         select g1.*, max(hvp_variantinstance.DateSubmitted) as DateSubmitted,
@@ -121,7 +120,7 @@ def gene_results_view(request):
             if variant_list >= 1:
                 gene = variant_list[0].Gene
                 
-            return HttpResponseRedirect(settings.BASE_URL + '/search/gene/' + str(gene.ID) + '/searchvariant/' + 
+            return HttpResponseRedirect('/search/gene/' + str(gene.ID) + '/searchvariant/' + 
                 urllib.quote(searched_gene) + '/variantType/results/1/path_all/path_all/')
         except:
             error = True
@@ -252,7 +251,6 @@ def gene_results_view(request):
                 'paginate_results': paginate_results,
                 #'result_low': result_low,
                 #'result_high': result_high,
-                'BASE_URL': settings.BASE_URL,
             },
         context_instance=RequestContext(request))
 
