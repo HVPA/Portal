@@ -1,6 +1,8 @@
 Prerequisite:
 - Python 2.4+
 - Django 1.4+*
+- django-taggit
+- jwt
 - MySQL 
 - Apache 2
 - WSGI
