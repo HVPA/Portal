@@ -14,10 +14,6 @@
 {% block extra_js %}
 	<script type="text/javascript" src="/js/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="/js/jQueryValidatorPhoneNo.js"></script>
-    
-    <link rel="stylesheet" href="/css/cb/cb.css" type="text/css" media="screen" />
-    <script type="text/javascript" src="/js/cb.js"></script>
-    
     <script type="text/javascript">
         jQuery(document).ready(function(){
             jQuery("#signupForm").validate();
@@ -127,19 +123,6 @@
                     <span style="color: red;">*</span>
                 </td>
             </tr>
-            <tr>
-                <td colspan="2">
-                    <div class="ui-widget" style="width:50%;">
-                        <div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;"> 
-                            <p class="errorMessage">
-                                <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
-                                If you are an AAF user and wish to be able to login via your AAF account, please ensure
-                                that your email is the same as your AAF email.
-                            </p>
-                        </div>
-                    </div>
-                </td>
-            </tr>
             {% if username_exist %}
             	<tr>
                     <td colspan="4">
@@ -178,20 +161,6 @@
                     <input type="password" name="confirm_password" value="" id="confirm_password" 
                         class="required" minlength="8" maxlength="128" size="30"/>
                     <span style="color: red;">*</span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <div class="ui-widget" style="width:50%;">
-                        <div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;"> 
-                            <p class="errorMessage">
-                                <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
-                                    If you are an AAF user, this password will be separate from your AAF account password. If you wish to 
-                                    login into portal using your portal account password instead of your AAF acount then use this password.
-                                </span>
-                            </p>
-                        </div>
-                    </div>
                 </td>
             </tr>
             {% if password_error %}

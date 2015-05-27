@@ -2,7 +2,7 @@
 
 <!-- Breadcrumb -->
 {% block breadcrumb %} 
-	<a href="{{ BASE_URL }}/" class="pathway">Home</a> 
+	<a href="/" class="pathway">Home</a> 
 	<img src="/img/arrow.png" alt=""> 
 	Gene/Disease
 {% endblock %}
@@ -24,25 +24,11 @@
 						class="ui-button ui-state-default ui-corner-all ui-button-text-only" />
 				</td>
 			</tr>
-<!--
-			<tr>
-				<td colspan="2" align="right">
-					Display number of results
-					<select id="paginate_results" name="paginate_results">
-						<option value="5">5</option>
-						<option value="10">10</option>
-						<option value="20">20</option>
-						<option value="50">50</option>
-					</select>
-				</td>
-			</tr>
--->
 		</table>
-
-        <p>
-            To search for a specific gene or disease type in key words/phrases in the search above. (e.g: BRCA, NM_000059.3, Breast Cancer) <br/>
-            If searching genomic variant please put in the Genomic RefSeq or Chromosome. (e.g: NC_000017.10:12345678 or Chr13:12345678)
-        </p>
+    <p>
+        To search for a specific gene or disease type in key words/phrases in the search above. (e.g: BRCA, NM_000059.3, Breast Cancer) <br/>
+        If searching genomic variant please put in the Genomic RefSeq or Chromosome. (e.g: NC_000017.10:12345678 or Chr13:12345678)
+    </p>
 		{% if page_error %}
 	        <div class="ui-widget">
 				<div class="ui-state-error ui-corner-all" style="padding: 0 .7em; width: 300px;">
@@ -60,14 +46,14 @@
 
         <!-- Results -->
 			<p>
-                <h3>Top 5 Current Gene sorted by number of Variants</h3>
+        <h3>Top 5 Current Gene sorted by number of Variants</h3>
 
 				<table cellspacing="10">
 					{% for gene in gene_list %}
 						<tr>
 							<td>
 								<div class="{% if forloop.counter|divisibleby:2 %}search-item-alt{% else %}search-item-div{% endif %}">
-										<table class="fakeLink" onclick="window.location = '{{ BASE_URL }}/search/gene/{{ gene.ID }}/searchvariant/1/path_all/path_all/'">
+										<table class="fakeLink" onclick="window.location = '/search/gene/{{ gene.ID }}/searchvariant/path_all/path_all/'">
 											<tr>
 												<td style="vertical-align: top;">
 													{% comment %}<div class="refseq-icon">{{ gene.RefSeqName }}{% if gene.RefSeqVer %}.{{ gene.RefSeqVer }}{% endif %}</div>{% endcomment %}
@@ -108,27 +94,27 @@
 														</div>
 														</td>
 													</tr>
-                                                    <tr>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="tableHeading1">
-                                                                Number of unique variants: {{ gene.Variants }} <br/>
-                                                                Total number of variant instances: {{ gene.VariantInstances }}<br/>
-                                                                Date of last submission: {% if gene.DateSubmitted %}{{ gene.DateSubmitted }}{% else %}-{% endif %}
-                                                            </div>
-                                                        <td>
-                                                    </tr>
+                          <tr>
+                              <td></td>
+                          </tr>
+                          <tr>
+                              <td>
+                                  <div class="tableHeading1">
+                                      Number of unique variants: {{ gene.Variants }} <br/>
+                                      Total number of variant instances: {{ gene.VariantInstances }}<br/>
+                                      Date of last submission: {% if gene.DateSubmitted %}{{ gene.DateSubmitted }}{% else %}-{% endif %}
+                                  </div>
+                              <td>
+                          </tr>
 													</table>
 												</td>
 											</tr>
 										</table>
 									</a>
 									<div class="tableMinorText" style="text-align: right;">
-                                        <a href="http://genome.ucsc.edu/cgi-bin/hgTracks?Submit=Submit&position={{ gene.UCSC_ID }}" target="_blank">
-                                            UCSC Genome Browser
-                                        </a></br>
+                    <a href="http://genome.ucsc.edu/cgi-bin/hgTracks?Submit=Submit&position={{ gene.UCSC_ID }}" target="_blank">
+                        UCSC Genome Browser
+                    </a></br>
 										<a href="http://www.genenames.org/data/hgnc_data.php?hgnc_id={{ gene.HGNC_ID }}" target="_blank">
 											HGNC Gene Symbol Report
 										</a>

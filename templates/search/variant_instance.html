@@ -1,24 +1,23 @@
 {% extends "base.html" %}
-{# {% load pagination_tags %} #}
 
 <!-- Breadcrumb -->
 {% block breadcrumb %} 
-	<a href="{{ BASE_URL }}/" class="pathway">Home</a> 
+	<a href="/" class="pathway">Home</a> 
 	<img src="/img/arrow.png" alt="">
-	<a href="{{ BASE_URL }}/search/searchgene/" class="pathway">Gene/Disease</a>
+	<a href="/search/searchgene/" class="pathway">Gene/Disease</a>
 	<img src="/img/arrow.png" alt=""> 
     {% if template == "variant_instance" %}
-    	<a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/searchvariant/1/path_all/path_all/" class="pathway">Variant</a>
+    	<a href="/search/gene/{{ gene.ID }}/searchvariant/path_all/path_all/" class="pathway">Variant</a>
     	<img src="/img/arrow.png" alt="">
     	Variant Instance Results
     {% endif %}
     {% if template == "variant_instance_patient" %}
-    	<a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/1/path_all/path_all/" class="pathway">Variant Patient</a>
+    	<a href="/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/path_all/path_all/" class="pathway">Variant Patient</a>
     	<img src="/img/arrow.png" alt="">
     	Variant Instance Patient Results
     {% endif %}
     {% if template == "variant_instance_lab" %}
-    	<a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/searchvariant/1/path_all/path_all/" class="pathway">Variant</a>
+    	<a href="/search/gene/{{ gene.ID }}/searchvariant/path_all/path_all/" class="pathway">Variant</a>
     	<img src="/img/arrow.png" alt="">
     	Variant Instance Lab Results
     {% endif %}
@@ -35,7 +34,6 @@
 {% block extra_js %}
 <script type="text/javascript">
     $(function() {
-        $( "#data_filter" ).buttonset();
         $( "#path_filter" ).buttonset();
         $( "#sort_filter" ).buttonset();
         $( "#order_filter" ).buttonset();
@@ -47,71 +45,49 @@
 {% block content %}
 	<table>
 		<tr>
-			<!-- 
-			<td>
-				<div class="gene-icon">
-        	        {{ gene.GeneName }}
-                </div>
-			</td>
-			 -->
 			<td valign="top">
-                <table class="ui-widget ui-dialog-content ui-widget-content ui-corner-all" style="font-size:small">
+      	<table class="ui-widget ui-dialog-content ui-widget-content ui-corner-all" style="font-size:small">
 			        <tr>
 				        <th align="center" colspan="2"><h4>{{ gene.GeneName }}</h4></th>
 			        </tr>
-                    <tr>
-                        <td width="80px">RefSeq</td>
-                        <td>{{ gene.RefSeqName }}{% if gene.RefSeqVer != "" %}.{{ gene.RefSeqVer }}{% endif %}</td>
-                    </tr>
-                    <tr>
-                        <td>(Calc Pos)</td>
-                        <td>
-                            {% if variant.GenomicRefSeq %} 
-                                {{ variant.GenomicRefSeq|default:"-" }}.{{ variant.GenomicRefSeqVer|default:"-" }}:{{ variant.GenomicPosition|default:"-" }}
-                            {% else %}
-                                -
-                            {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>cDNA</td>
-                        <td>{{ variant.cDNA }}</td>
-                    </tr>
-                    <tr>
-                        <td>genomic</td>
-                        <td>{% if variant.Genomic != "None" %}{{ variant.Genomic }}{% else %}-{% endif %}</td>
-                    </tr>
-                    <tr>
-                        <td>Protein</td>
-                        <td>{% if variant.Protein != "None" %}{{ variant.Protein }}{% else %}-{% endif %}</td>
-                    </tr>
-                    <tr>
-                        <td>mRNA</td>
-                        <td>{% if variant.mRNA != "None" %}{{ variant.mRNA }}{% else %}-{% endif %}</td>
-                    </tr>
-		        </table>
-                {% comment %}
-				<div class="variant-icon">
-					Gene : {{ gene.GeneName }} <br>
-					Variant : {{ variant.cDNA|default:"" }} <br/>
-					{{ variant.mRNA|default:"" }} <br/>
-					{{ variant.Genomic|default:"" }} <br/>
-					{{ variant.Protein|default:"" }}
-				</div>
-                {% endcomment %}
+              <tr>
+                  <td width="80px">RefSeq</td>
+                  <td>{{ gene.RefSeqName }}{% if gene.RefSeqVer != "" %}.{{ gene.RefSeqVer }}{% endif %}</td>
+              </tr>
+              <tr>
+                  <td>(Calc Pos)</td>
+                  <td>{{ variant.GenomicRefSeq }}.{{ variant.GenomicRefSeqVer }}:{{ variant.GenomicPosition }}</td>
+              </tr>
+              <tr>
+                  <td>cDNA</td>
+                  <td>{{ variant.cDNA }}</td>
+              </tr>
+              <tr>
+                  <td>genomic</td>
+                  <td>{% if variant.Genomic != "None" %}{{ variant.Genomic }}{% else %}-{% endif %}</td>
+              </tr>
+              <tr>
+                  <td>Protein</td>
+                  <td>{% if variant.Protein != "None" %}{{ variant.Protein }}{% else %}-{% endif %}</td>
+              </tr>
+              <tr>
+                  <td>mRNA</td>
+                  <td>{% if variant.mRNA != "None" %}{{ variant.mRNA }}{% else %}-{% endif %}</td>
+              </tr>
+	        </table>
 			</td>
             {% if template == "variant_instance" %}
     			<td width="400px">
     				<h3>Community Consensus:</h3>
     				<b>{{ consensus|default:"No community consensus has been reached" }} </b>
-                    <div class="tableMinorText">                
-                            <h4>Instance Path Breakdown: (Total - {{ variant.count_total_instance }})</h4>
-                            {{ variant.count_instance_not_path }} - Not Pathogenic <br/>
-                            {{ variant.count_instance_unlikely_path }} - Unlikely Pathogenic<br/>
-                            {{ variant.count_instance_likely_path }} - Likely Pathogenic<br/>
-                            {{ variant.count_instance_path }} - Pathogenic<br/>
-                            {{ variant.count_instance_unknown }} - Unknown
-    				</div>
+            <div class="tableMinorText">                
+              <h4>Instance Path Breakdown: (Total - {{ variant.count_total_instance }})</h4>
+              {{ variant.count_instance_not_path }} - Not Pathogenic <br/>
+              {{ variant.count_instance_unlikely_path }} - Unlikely Pathogenic<br/>
+              {{ variant.count_instance_likely_path }} - Likely Pathogenic<br/>
+              {{ variant.count_instance_path }} - Pathogenic<br/>
+              {{ variant.count_instance_unknown }} - Unknown
+  					</div>
     			</td>
             {% endif %}
 		</tr>
@@ -120,280 +96,122 @@
 				<form action="" method="post" enctype="multipart/form-data" accept-charset="utf-8">
 					<table>
 						<!-- Sort results -->
-                        <tr>
-                            <td align="left" colspan="2">
-                                <h5>Filter results by Data Type:</h5>
-                                <div id="data_filter">
-                                    {% for dt in refdatatypes %}
-                                        <input type="radio" id="{{ dt.ID }}" name="datatype_filter" value="{{ dt.ID }}"
-                                            {% ifequal dt.ID datatype_filter_id %}
-                                                checked="checked"
-                                            {% endifequal %} 
-                                            {% if template == "variant_instance" %}
-                                                onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/{{ dt.ID }}/{{ path_filter }}/{{ sort_filter }}/{{ order_filter }}/';"
-                                            {% endif %}
-                                            {% if template == "variant_instance_patient" %}
-                                                onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/{{ dt.ID }}/{{ path_filter }}/{{ sort_filter }}/{{ order_filter }}/';"
-                                            {% endif %}
-                                            {% if template == "variant_instance_lab" %}
-                                                onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/{{ dt.ID }}/{{ path_filter }}/{{ sort_filter }}/{{ order_filter }}/';"
-                                            {% endif %}
-                                            >
-                                            <label for="{{ dt.ID }}" style="font-size:10px">{{ dt.DataType }}</label>
-                                    {% endfor %}
-                                </div>
-                            </td>
-                        </tr>
-                        {% if template == "variant_instance" %}
-                            <tr>
-                                <td>
-                                    <h5>Filter results by pathogenicity:</h5>
-                                    <div id="path_filter">
-                                        <input type="radio" id="path_all" name="path_filter" value="path_all" {{ dict_path_filter.path_all }} 
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/{{ datatype_filter_id }}/path_all/{{ sort_filter }}/{{ order_filter }}/';">
-                                            <label for="path_all" style="font-size:10px">Show All</label>
-                                        <input type="radio" id="path" name="path_filter" value="path" {{ dict_path_filter.path }} 
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/{{ datatype_filter_id }}/path/{{ sort_filter }}/{{ order_filter }}/';">
-                                            <label for="path" style="font-size:10px">Pathogenic</label>
-                                        <input type="radio" id="not_path" name="path_filter" value="not_path" {{ dict_path_filter.not_path }} 
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/{{ datatype_filter_id }}/not_path/{{ sort_filter }}/{{ order_filter }}/';">
-                                            <label for="not_path" style="font-size:10px">Not Pathogenic</label>
-                                        <input type="radio" id="likely_not_path" name="path_filter" value="likely_not_path" {{ dict_path_filter.likely_not_path }} 
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/{{ datatype_filter_id }}/likely_not_path/{{ sort_filter }}/{{ order_filter }}/';">
-                                            <label for="likely_not_path" style="font-size:10px">Unlikely Path</label>
-                                        <input type="radio" id="likely_path" name="path_filter" value="likely_path" {{ dict_path_filter.likely_path }} 
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/{{ datatype_filter_id }}/likely_path/{{ sort_filter }}/{{ order_filter }}/';">
-                                            <label for="likely_path" style="font-size:10px">Likely Path</label>
-                                        <input type="radio" id="unknown_path" name="path_filter" value="unknown_path" {{ dict_path_filter.unknown_path }} 
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/{{ datatype_filter_id }}/unknown_path/{{ sort_filter }}/{{ order_filter }}/';">
-                                            <label for="unknown_path" style="font-size:10px">Unknown</label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td>
-                                                <h5>Sort by:</h5>
-                                                <div id="sort_filter">
-                                                    <input type="radio" id="sort_date" name="sort_filter" value="sort_date" {{ dict_sort_filter.sort_date }} 
-                                                        onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/{{ datatype_filter_id }}/{{ path_filter }}/sort_date/{{ order_filter }}/';">
-                                                        <label for="sort_date" style="font-size:10px">Instance Date</label>
-                                                    <input type="radio" id="sort_subdate" name="sort_filter" value="sort_subdate" {{ dict_sort_filter.sort_subdate }} 
-                                                        onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/{{ datatype_filter_id }}/{{ path_filter }}/sort_subdate/{{ order_filter }}/';">
-                                                        <label for="sort_subdate" style="font-size:10px">Submission Date</label>
-                                                    <input type="radio" id="sort_age" name="sort_filter" value="sort_age" {{ dict_sort_filter.sort_age }} 
-                                                        onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/{{ datatype_filter_id }}/{{ path_filter }}/sort_age/{{ order_filter }}/';">
-                                                        <label for="sort_age" style="font-size:10px">Patient Age</label>
-                                                    <input type="radio" id="sort_path" name="sort_filter" value="sort_path" {{ dict_sort_filter.sort_path }} 
-                                                        onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/{{ datatype_filter_id }}/{{ path_filter }}/sort_path/{{ order_filter }}/';">
-                                                        <label for="sort_path" style="font-size:10px">Pathogenicity</label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <h5>Order by:</h5>
-                                                <div id="order_filter">
-                                                    <input type="radio" id="order_desc" name="order_filter" value="order_desc" {{ dict_order_filter.order_desc }} 
-                                                        onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/{{ datatype_filter_id }}/{{ path_filter }}/{{ sort_filter }}/order_desc/';">
-                                                        <label for="order_desc" style="font-size:10px">Descending</label>
-                                                    <input type="radio" id="order_asc" name="order_filter" value="order_asc" {{ dict_order_filter.order_asc }} 
-                                                        onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/{{ datatype_filter_id }}/{{ path_filter }}/{{ sort_filter }}/order_asc/';">
-                                                        <label for="order_asc" style="font-size:10px">Ascending</label>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </td>
-                                </table>
-                            </td>
-                        </tr>
-                        {% endif %}
-                        {% if template == "variant_instance_patient" %}
-                            <tr>
-                                <td align="left" colspan="2">
-                                    <h5>Filter results by pathogenicity:</h5>
-                                    <div id="path_filter">
-                                        <input type="radio" id="path_all" name="path_filter" value="path_all" {{ dict_path_filter.path_all }} 
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/{{ datatype_filter_id }}/path_all/{{ sort_filter }}/{{ order_filter }}/';">
-                                            <label for="path_all" style="font-size:10px">Show All</label>
-                                        <input type="radio" id="path" name="path_filter" value="path" {{ dict_path_filter.path }}
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/{{ datatype_filter_id }}/path/{{ sort_filter }}/{{ order_filter }}/';">
-                                            <label for="path" style="font-size:10px">Pathogenic</label>
-                                        <input type="radio" id="not_path" name="path_filter" value="not_path" {{ dict_path_filter.not_path }}
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/{{ datatype_filter_id }}/not_path/{{ sort_filter }}/{{ order_filter }}/';">
-                                            <label for="not_path" style="font-size:10px">Not Pathogenic</label>
-                                        <input type="radio" id="likely_not_path" name="path_filter" value="likely_not_path" {{ dict_path_filter.likely_not_path }}
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/{{ datatype_filter_id }}/likely_not_path/{{ sort_filter }}/{{ order_filter }}/';">
-                                            <label for="likely_not_path" style="font-size:10px">Unlikely Path</label>
-                                        <input type="radio" id="likely_path" name="path_filter" value="likely_path" {{ dict_path_filter.likely_path }}
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/{{ datatype_filter_id }}/likely_path/{{ sort_filter }}/{{ order_filter }}/';">
-                                            <label for="likely_path" style="font-size:10px">Likely Path</label>
-                                        <input type="radio" id="unknown_path" name="path_filter" value="unknown_path" {{ dict_path_filter.unknown_path }}
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/{{ datatype_filter_id }}/unknown_path/{{ sort_filter }}/{{ order_filter }}/';">
-                                            <label for="unknown_path" style="font-size:10px">Unknown</label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h5>Sort by:</h5>
-                                    <div id="sort_filter">
-                                        <input type="radio" id="sort_date" name="sort_filter" value="sort_date" {{ dict_sort_filter.sort_date }} 
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/{{ datatype_filter_id }}/{{ path_filter }}/sort_date/{{ order_filter }}/';">
-                                            <label for="sort_date" style="font-size:10px">Instance Date</label>
-                                        <input type="radio" id="sort_subdate" name="sort_filter" value="sort_subdate" {{ dict_sort_filter.sort_subdate }}
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/{{ datatype_filter_id }}/{{ path_filter }}/sort_subdate/{{ order_filter }}/';">
-                                            <label for="sort_subdate" style="font-size:10px">Submission Date</label>
-                                        <input type="radio" id="sort_age" name="sort_filter" value="sort_age" {{ dict_sort_filter.sort_age }}
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/{{ datatype_filter_id }}/{{ path_filter }}/sort_age/{{ order_filter }}/';">
-                                            <label for="sort_age" style="font-size:10px">Patient Age</label>
-                                        <input type="radio" id="sort_path" name="sort_filter" value="sort_path" {{ dict_sort_filter.sort_path }}
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/{{ datatype_filter_id }}/{{ path_filter }}/sort_path/{{ order_filter }}/';">
-                                            <label for="sort_path" style="font-size:10px">Pathogenicity</label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>Order by:</h5>
-                                    <div id="order_filter">
-                                        <input type="radio" id="order_desc" name="order_filter" value="order_desc" {{ dict_order_filter.order_desc }} 
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/{{ datatype_filter_id }}/{{ path_filter }}/{{ sort_filter }}/order_desc/';">
-                                            <label for="order_desc" style="font-size:10px">Descending</label>
-                                        <input type="radio" id="order_asc" name="order_filter" value="order_asc" {{ dict_order_filter.order_asc }} 
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/{{ datatype_filter_id }}/{{ path_filter }}/{{ sort_filter }}/order_asc/';">
-                                            <label for="order_asc" style="font-size:10px">Ascending</label>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endif %}
-                        {% if template == "variant_instance_lab" %}
-                            <tr>
-                                <td align="left" colspan="2">
-                                    <h5>Filter results by pathogenicity:</h5>
-                                    <div id="path_filter">
-                                        <input type="radio" id="path_all" name="path_filter" value="path_all" {{ dict_path_filter.path_all }} 
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/{{ datatype_filter_id }}/path_all/{{ sort_filter }}/{{ order_filter }}/';">
-                                            <label for="path_all" style="font-size:10px">Show All</label>
-                                        <input type="radio" id="path" name="path_filter" value="path" {{ dict_path_filter.path }}
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/{{ datatype_filter_id }}/path/{{ sort_filter }}/{{ order_filter }}/';">
-                                            <label for="path" style="font-size:10px">Pathogenic</label>
-                                        <input type="radio" id="not_path" name="path_filter" value="not_path" {{ dict_path_filter.not_path }}
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/{{ datatype_filter_id }}/not_path/{{ sort_filter }}/{{ order_filter }}/';">
-                                            <label for="not_path" style="font-size:10px">Not Pathogenic</label>
-                                        <input type="radio" id="likely_not_path" name="path_filter" value="likely_not_path" {{ dict_path_filter.likely_not_path }}
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/{{ datatype_filter_id }}/likely_not_path/{{ sort_filter }}/{{ order_filter }}/';">
-                                            <label for="likely_not_path" style="font-size:10px">Unlikely Path</label>
-                                        <input type="radio" id="likely_path" name="path_filter" value="likely_path" {{ dict_path_filter.likely_path }}
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/{{ datatype_filter_id }}/likely_path/{{ sort_filter }}/{{ order_filter }}/';">
-                                            <label for="likely_path" style="font-size:10px">Likely Path</label>
-                                        <input type="radio" id="unknown_path" name="path_filter" value="unknown_path" {{ dict_path_filter.unknown_path }}
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/{{ datatype_filter_id }}/unknown_path/{{ sort_filter }}/{{ order_filter }}/';">
-                                            <label for="unknown_path" style="font-size:10px">Unknown</label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h5>Sort by:</h5>
-                                    <div id="sort_filter">
-                                        <input type="radio" id="sort_date" name="sort_filter" value="sort_date" {{ dict_sort_filter.sort_date }} 
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/{{ datatype_filter_id }}/{{ path_filter }}/sort_date/{{ order_filter }}/';">
-                                            <label for="sort_date" style="font-size:10px">Instance Date</label>
-                                        <input type="radio" id="sort_subdate" name="sort_filter" value="sort_subdate" {{ dict_sort_filter.sort_subdate }}
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/{{ datatype_filter_id }}/{{ path_filter }}/sort_subdate/{{ order_filter }}/';">
-                                            <label for="sort_subdate" style="font-size:10px">Submission Date</label>
-                                        <input type="radio" id="sort_age" name="sort_filter" value="sort_age" {{ dict_sort_filter.sort_age }}
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/{{ datatype_filter_id }}/{{ path_filter }}/sort_age/{{ order_filter }}/';">
-                                            <label for="sort_age" style="font-size:10px">Patient Age</label>
-                                        <input type="radio" id="sort_path" name="sort_filter" value="sort_path" {{ dict_sort_filter.sort_path }}
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/{{ datatype_filter_id }}/{{ path_filter }}/sort_path/{{ order_filter }}/';">
-                                            <label for="sort_path" style="font-size:10px">Pathogenicity</label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>Order by:</h5>
-                                    <div id="order_filter">
-                                        <input type="radio" id="order_desc" name="order_filter" value="order_desc" {{ dict_order_filter.order_desc }} 
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/{{ datatype_filter_id }}/{{ path_filter }}/{{ sort_filter }}/order_desc/';">
-                                            <label for="order_desc" style="font-size:10px">Descending</label>
-                                        <input type="radio" id="order_asc" name="order_filter" value="order_asc" {{ dict_order_filter.order_asc }} 
-                                            onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/{{ datatype_filter_id }}/{{ path_filter }}/{{ sort_filter }}/order_asc/';">
-                                            <label for="order_asc" style="font-size:10px">Ascending</label>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endif %}
-                        {% if template == "variant_instance" %}
-                            <tr><td>&nbsp;</td></tr>
-                            <tr>
-                                <td colspan="2">
-                                    <div class="tableMinorText">
-                                        Date of last submission:
-                                        {% if last_date_submitted %} 
-                                            <a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/instance/{{ last_date_submitted_ID }}"> 
-                                                {{ last_date_submitted|date:"d M Y" }} 
-                                            </a>
-                                        {% else %}
-                                            -
-                                        {% endif %}
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endif %}
-                        {% comment %}
-						<tr>
-							<td align="left" colspan="2">
-								Sort by: &nbsp;
-								<select id="sort" name="sort_type">
-									<option {%ifequal sort_type 'date'%}selected="selected"{%endifequal%} value="date">
-										Date</option>
-									<option {%ifequal sort_type 'path'%}selected="selected"{%endifequal%} value="path">
-										Pathogenic</option>
-									<option {%ifequal sort_type 'age'%}selected="selected"{%endifequal%} value="age">
-										Age at Test</option>
-								</select>
-								 &nbsp;
-								Order by: &nbsp;
-								<select id="order_by" name="order_by">
-									<option {%ifequal order_by 'asc'%}selected="selected"{%endifequal%} value="asc">
-										Ascending</option>
-									<option {%ifequal order_by 'desc'%}selected="selected"{%endifequal%} value="desc">
-										Descending</option>
-								</select>
-								<input type="submit" name ="sort_submit" value="Sort"
-									 class="ui-button ui-state-default ui-corner-all ui-button-text-only" />
-							</td>
-							<td>
-								&nbsp;
-							</td>
-							<!-- <td align="right">
-								Display number of results
-								<select id="paginate_results" name="paginate_results">
-									<option {%ifequal paginate_results 5%}selected="selected"{%endifequal%} value="5">
-										5</option>
-									<option {%ifequal paginate_results 10%}selected="selected"{%endifequal%} value="10">
-										10</option>
-									<option {%ifequal paginate_results 20%}selected="selected"{%endifequal%} value="20">
-										20</option>
-									<option {%ifequal paginate_results 50%}selected="selected"{%endifequal%} value="50">
-										50</option>
-								</select>
-							-->
-							</td>
-						</tr>
-						<!-- Filter results -->
-						<tr>
-							<td colspan="2"> 
-								Filter by: &nbsp;
-								<input type="text" name="filter_text" value="{{ filter_text }}" id="filter_text" style="width:250px"/>
-								<select id="filter_type" name="filter_type">
-									<option {%ifequal filter_type 'path'%}selected="selected"{%endifequal%} value="path">Pathogenicity</option>
-									<option {%ifequal filter_type 'age'%}selected="selected"{%endifequal%} value="age">Age at Test</option>
-								</select>
-								<input type="submit" name="filter_submit" value="Filter"
-									 class="ui-button ui-state-default ui-corner-all ui-button-text-only" />
-							</td>
-						</tr>
-                        {% endcomment %}
+            {% if template == "variant_instance" %}
+                <tr>
+                    <td align="left" colspan="2">
+                        <h5>Filter results by pathogenicity:</h5>
+                        <div id="path_filter">
+                            <input type="radio" id="path_all" name="path_filter" value="path_all" {{ dict_path_filter.path_all }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/path_all/{{ sort_filter }}/{{ order_filter }}/';"><label for="path_all" style="font-size:10px">Show All</label>
+                            <input type="radio" id="path" name="path_filter" value="path" {{ dict_path_filter.path }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/path/{{ sort_filter }}/{{ order_filter }}/';"><label for="path" style="font-size:10px">Pathogenic</label>
+                            <input type="radio" id="not_path" name="path_filter" value="not_path" {{ dict_path_filter.not_path }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/not_path/{{ sort_filter }}/{{ order_filter }}/';"><label for="not_path" style="font-size:10px">Not Pathogenic</label>
+                            <input type="radio" id="likely_not_path" name="path_filter" value="likely_not_path" {{ dict_path_filter.likely_not_path }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/likely_not_path/{{ sort_filter }}/{{ order_filter }}/';"><label for="likely_not_path" style="font-size:10px">Unlikely Path</label>
+                            <input type="radio" id="likely_path" name="path_filter" value="likely_path" {{ dict_path_filter.likely_path }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/likely_path/{{ sort_filter }}/{{ order_filter }}/';"><label for="likely_path" style="font-size:10px">Likely Path</label>
+                            <input type="radio" id="unknown_path" name="path_filter" value="unknown_path" {{ dict_path_filter.unknown_path }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/unknown_path/{{ sort_filter }}/{{ order_filter }}/';"><label for="unknown_path" style="font-size:10px">Unknown</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h5>Sort by:</h5>
+                        <div id="sort_filter">
+                            <input type="radio" id="sort_date" name="sort_filter" value="sort_date" {{ dict_sort_filter.sort_date }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/{{ path_filter }}/sort_date/{{ order_filter }}/';"><label for="sort_date" style="font-size:10px">Instance Date</label>
+                            <input type="radio" id="sort_subdate" name="sort_filter" value="sort_subdate" {{ dict_sort_filter.sort_subdate }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/{{ path_filter }}/sort_subdate/{{ order_filter }}/';"><label for="sort_subdate" style="font-size:10px">Submission Date</label>
+                            <input type="radio" id="sort_age" name="sort_filter" value="sort_age" {{ dict_sort_filter.sort_age }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/{{ path_filter }}/sort_age/{{ order_filter }}/';"><label for="sort_age" style="font-size:10px">Patient Age</label>
+                            <input type="radio" id="sort_path" name="sort_filter" value="sort_path" {{ dict_sort_filter.sort_path }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/{{ path_filter }}/sort_path/{{ order_filter }}/';"><label for="sort_path" style="font-size:10px">Pathogenicity</label>
+                        </div>
+                    </td>
+                    <td>
+                        <h5>Order by:</h5>
+                        <div id="order_filter">
+                            <input type="radio" id="order_desc" name="order_filter" value="order_desc" {{ dict_order_filter.order_desc }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/{{ path_filter }}/{{ sort_filter }}/order_desc/';"><label for="order_desc" style="font-size:10px">Descending</label>
+                            <input type="radio" id="order_asc" name="order_filter" value="order_asc" {{ dict_order_filter.order_asc }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/{{ path_filter }}/{{ sort_filter }}/order_asc/';"><label for="order_asc" style="font-size:10px">Ascending</label>
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
+            {% if template == "variant_instance_patient" %}
+                <tr>
+                    <td align="left" colspan="2">
+                        <h5>Filter results by pathogenicity:</h5>
+                        <div id="path_filter">
+                            <input type="radio" id="path_all" name="path_filter" value="path_all" {{ dict_path_filter.path_all }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/path_all/{{ sort_filter }}/{{ order_filter }}/';"><label for="path_all" style="font-size:10px">Show All</label>
+                            <input type="radio" id="path" name="path_filter" value="path" {{ dict_path_filter.path }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/path/{{ sort_filter }}/{{ order_filter }}/';"><label for="path" style="font-size:10px">Pathogenic</label>
+                            <input type="radio" id="not_path" name="path_filter" value="not_path" {{ dict_path_filter.not_path }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/not_path/{{ sort_filter }}/{{ order_filter }}/';"><label for="not_path" style="font-size:10px">Not Pathogenic</label>
+                            <input type="radio" id="likely_not_path" name="path_filter" value="likely_not_path" {{ dict_path_filter.likely_not_path }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/likely_not_path/{{ sort_filter }}/{{ order_filter }}/';"><label for="likely_not_path" style="font-size:10px">Unlikely Path</label>
+                            <input type="radio" id="likely_path" name="path_filter" value="likely_path" {{ dict_path_filter.likely_path }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/likely_path/{{ sort_filter }}/{{ order_filter }}/';"><label for="likely_path" style="font-size:10px">Likely Path</label>
+                            <input type="radio" id="unknown_path" name="path_filter" value="unknown_path" {{ dict_path_filter.unknown_path }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/unknown_path/{{ sort_filter }}/{{ order_filter }}/';"><label for="unknown_path" style="font-size:10px">Unknown</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h5>Sort by:</h5>
+                        <div id="sort_filter">
+                            <input type="radio" id="sort_date" name="sort_filter" value="sort_date" {{ dict_sort_filter.sort_date }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/{{ path_filter }}/sort_date/{{ order_filter }}/';"><label for="sort_date" style="font-size:10px">Instance Date</label>
+                            <input type="radio" id="sort_subdate" name="sort_filter" value="sort_subdate" {{ dict_sort_filter.sort_subdate }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/{{ path_filter }}/sort_subdate/{{ order_filter }}/';"><label for="sort_subdate" style="font-size:10px">Submission Date</label>
+                            <input type="radio" id="sort_age" name="sort_filter" value="sort_age" {{ dict_sort_filter.sort_age }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/{{ path_filter }}/sort_age/{{ order_filter }}/';"><label for="sort_age" style="font-size:10px">Patient Age</label>
+                            <input type="radio" id="sort_path" name="sort_filter" value="sort_path" {{ dict_sort_filter.sort_path }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/{{ path_filter }}/sort_path/{{ order_filter }}/';"><label for="sort_path" style="font-size:10px">Pathogenicity</label>
+                        </div>
+                    </td>
+                    <td>
+                        <h5>Order by:</h5>
+                        <div id="order_filter">
+                            <input type="radio" id="order_desc" name="order_filter" value="order_desc" {{ dict_order_filter.order_desc }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/{{ path_filter }}/{{ sort_filter }}/order_desc/';"><label for="order_desc" style="font-size:10px">Descending</label>
+                            <input type="radio" id="order_asc" name="order_filter" value="order_asc" {{ dict_order_filter.order_asc }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/patient/{{ instanceID }}/instance_result/{{ path_filter }}/{{ sort_filter }}/order_asc/';"><label for="order_asc" style="font-size:10px">Ascending</label>
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
+            {% if template == "variant_instance_lab" %}
+                <tr>
+                    <td align="left" colspan="2">
+                        <h5>Filter results by pathogenicity:</h5>
+                        <div id="path_filter">
+                            <input type="radio" id="path_all" name="path_filter" value="path_all" {{ dict_path_filter.path_all }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/path_all/{{ sort_filter }}/{{ order_filter }}/';"><label for="path_all" style="font-size:10px">Show All</label>
+                            <input type="radio" id="path" name="path_filter" value="path" {{ dict_path_filter.path }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/path/{{ sort_filter }}/{{ order_filter }}/';"><label for="path" style="font-size:10px">Pathogenic</label>
+                            <input type="radio" id="not_path" name="path_filter" value="not_path" {{ dict_path_filter.not_path }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/not_path/{{ sort_filter }}/{{ order_filter }}/';"><label for="not_path" style="font-size:10px">Not Pathogenic</label>
+                            <input type="radio" id="likely_not_path" name="path_filter" value="likely_not_path" {{ dict_path_filter.likely_not_path }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/likely_not_path/{{ sort_filter }}/{{ order_filter }}/';"><label for="likely_not_path" style="font-size:10px">Unlikely Path</label>
+                            <input type="radio" id="likely_path" name="path_filter" value="likely_path" {{ dict_path_filter.likely_path }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/likely_path/{{ sort_filter }}/{{ order_filter }}/';"><label for="likely_path" style="font-size:10px">Likely Path</label>
+                            <input type="radio" id="unknown_path" name="path_filter" value="unknown_path" {{ dict_path_filter.unknown_path }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/unknown_path/{{ sort_filter }}/{{ order_filter }}/';"><label for="unknown_path" style="font-size:10px">Unknown</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h5>Sort by:</h5>
+                        <div id="sort_filter">
+                            <input type="radio" id="sort_date" name="sort_filter" value="sort_date" {{ dict_sort_filter.sort_date }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/{{ path_filter }}/sort_date/{{ order_filter }}/';"><label for="sort_date" style="font-size:10px">Instance Date</label>
+                            <input type="radio" id="sort_subdate" name="sort_filter" value="sort_subdate" {{ dict_sort_filter.sort_subdate }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/{{ path_filter }}/sort_subdate/{{ order_filter }}/';"><label for="sort_subdate" style="font-size:10px">Submission Date</label>
+                            <input type="radio" id="sort_age" name="sort_filter" value="sort_age" {{ dict_sort_filter.sort_age }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/{{ path_filter }}/sort_age/{{ order_filter }}/';"><label for="sort_age" style="font-size:10px">Patient Age</label>
+                            <input type="radio" id="sort_path" name="sort_filter" value="sort_path" {{ dict_sort_filter.sort_path }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/{{ path_filter }}/sort_path/{{ order_filter }}/';"><label for="sort_path" style="font-size:10px">Pathogenicity</label>
+                        </div>
+                    </td>
+                    <td>
+                        <h5>Order by:</h5>
+                        <div id="order_filter">
+                            <input type="radio" id="order_desc" name="order_filter" value="order_desc" {{ dict_order_filter.order_desc }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/{{ path_filter }}/{{ sort_filter }}/order_desc/';"><label for="order_desc" style="font-size:10px">Descending</label>
+                            <input type="radio" id="order_asc" name="order_filter" value="order_asc" {{ dict_order_filter.order_asc }} onclick="document.location='/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ instanceID }}/{{ path_filter }}/{{ sort_filter }}/order_asc/';"><label for="order_asc" style="font-size:10px">Ascending</label>
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
+            {% if template == "variant_instance" %}
+                <tr><td>&nbsp;</td></tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="tableMinorText">
+                            Date of last submission:
+                            {% if last_date_submitted %} 
+                                <a href="/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/instance/{{ last_date_submitted_ID }}"> 
+                                    {{ last_date_submitted|date:"d M Y" }} 
+                                </a>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
 						<tr>
 							<td>
 								&nbsp;
@@ -416,20 +234,21 @@
 	</table>
 	{% if variant_instances %}
 		<p>
-            <div style="padding-left: 200px;">
-                {% if variant_instances.has_previous %}
-                    <a href="?page={{ variant_instances.previous_page_number }}">&lt;&lt;Previous</a>
-                {% else %}
-                    &lt;&lt;Previous
-                {% endif %}
-                
-                Page {{ variant_instances.number }} of {{ variant_instances.paginator.num_pages }}
+      <div style="padding-left: 200px;">
+          {# Sets how many results to display per page, currently at 10 #}
+          {% if variant_instances.has_previous %}
+              <a href="?page={{ variant_instances.previous_page_number }}">&lt;&lt;Previous</a>
+          {% else %}
+              &lt;&lt;Previous
+          {% endif %}
+          
+          Page {{ variant_instances.number }} of {{ variant_instances.paginator.num_pages }}
 
-                {% if variant_instances.has_next %}
-                    <a href="?page={{ variant_instances.next_page_number }}">Next&gt;&gt;</a>
-                {% else %}
-                    Next&gt;&gt;
-                {% endif %}
+          {% if variant_instances.has_next %}
+              <a href="?page={{ variant_instances.next_page_number }}">Next&gt;&gt;</a>
+          {% else %}
+              Next&gt;&gt;
+          {% endif %}
 			</div>
 		</p>
 		<!-- Results -->
@@ -440,18 +259,17 @@
 						<td>
 							<div class="{% if forloop.counter|divisibleby:2 %}search-item-alt{% else %}search-item-div{% endif %}">
 								{% if template == "variant_instance" %}
-                                    {#<a class="search-item" id="searchResult" href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/instance/{{ variant_instance.ID }}">#}
-                                    <table class="fakeLink" onclick="window.location='{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/instance/{{ variant_instance.ID }}'">
+	                {#<a class="search-item" id="searchResult" href="/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/instance/{{ variant_instance.ID }}">#}
+	                <table class="fakeLink" onclick="window.location='/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/instance/{{ variant_instance.ID }}'">
 								{% endif %}
-                                {% if template == "variant_instance_patient" %}
-                                    {#<a class="search-item" id="searchResult" href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/patient/instance_detail/{{ variant_instance.ID }}/">#}
-                                    <table class="fakeLink" onclick="window.location='{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/patient/instance_detail/{{ variant_instance.ID }}/'">
-                                {% endif %}
-                                {% if template == "variant_instance_lab" %}
-                                    {#<a class="search-item" id="searchResult" href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/lab/instance_detail/{{ variant_instance.ID }}/">#}
-                                    <table class="fakeLink" onclick="window.location='{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/lab/instance_detail/{{ variant_instance.ID }}/'">
-                                {% endif %}
-                                    {#<table >#}
+                {% if template == "variant_instance_patient" %}
+                    {#<a class="search-item" id="searchResult" href="/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/patient/instance_detail/{{ variant_instance.ID }}/">#}
+                    <table class="fakeLink" onclick="window.location='/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/patient/instance_detail/{{ variant_instance.ID }}/'">
+                {% endif %}
+                {% if template == "variant_instance_lab" %}
+                    {#<a class="search-item" id="searchResult" href="/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/lab/instance_detail/{{ variant_instance.ID }}/">#}
+                    <table class="fakeLink" onclick="window.location='/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/lab/instance_detail/{{ variant_instance.ID }}/'">
+                {% endif %}
 										<tr>
 											<td style="vertical-align: top;">
 												<div class="tableHeading1">
@@ -466,13 +284,6 @@
 												</div>
 											</td>
 										</tr>
-                                        <tr>
-                                            <td>
-												<div class="tableText">
-													Data Type: <strong>{{ variant_instance.DataType.DataType|default:"-" }}</strong>
-												</div>
-                                            </td>
-                                        </tr>
 										<tr>
 											<td>
 												<div class="tableText">
@@ -488,13 +299,13 @@
 												</div>
 											</td>
 										</tr>
-                                        <tr>
-                                            <td>
-                                                <div class="tableText">
-                                                    Date of Submission: <strong>{{ variant_instance.DateSubmitted|date:"d M Y"|default:"-" }}</strong>
-                                                </div>
-                                            <td>
-                                        </tr>
+                    <tr>
+                        <td>
+                            <div class="tableText">
+                                Date of Submission: <strong>{{ variant_instance.DateSubmitted|date:"d M Y"|default:"-" }}</strong>
+                            </div>
+                        <td>
+                    </tr>
 									</table>
 								</a>
 							</div>					
@@ -504,29 +315,22 @@
 			</table>
 		</p>
 		<p>
-            <div style="padding-left: 200px;">
-                {# Sets how many results to display per page, currently at 10 #}
-				{# {% autopaginate variant_instance_list paginate_results %} #}
-				{# {% paginate %} #}
-                {% if variant_instances.has_previous %}
-                    <a href="?page={{ variant_instances.previous_page_number }}">&lt;&lt;Previous</a>
-                {% else %}
-                    &lt;&lt;Previous
-                {% endif %}
-                
-                Page {{ variant_instances.number }} of {{ variant_instances.paginator.num_pages }}
+      <div style="padding-left: 200px;">
+          {# Sets how many results to display per page, currently at 10 #}
+          {% if variant_instances.has_previous %}
+              <a href="?page={{ variant_instances.previous_page_number }}">&lt;&lt;Previous</a>
+          {% else %}
+              &lt;&lt;Previous
+          {% endif %}
+          
+          Page {{ variant_instances.number }} of {{ variant_instances.paginator.num_pages }}
 
-                {% if variant_instances.has_next %}
-                    <a href="?page={{ variant_instances.next_page_number }}">Next&gt;&gt;</a>
-                {% else %}
-                    Next&gt;&gt;
-                {% endif %}
+          {% if variant_instances.has_next %}
+              <a href="?page={{ variant_instances.next_page_number }}">Next&gt;&gt;</a>
+          {% else %}
+              Next&gt;&gt;
+          {% endif %}
 			</div>
 		</p>
-    {% comment %}
-	{% else %}
-		There are no variant instances for 
-		<strong>{{ variant.cDNA|default:"" }} {{ variant.mRNA|default:"" }} {{ variant.Genomic|default:"" }} {{ variant.Protein|default:"" }}</strong>
-    {% endcomment %}	
     {% endif %}
 {% endblock %}

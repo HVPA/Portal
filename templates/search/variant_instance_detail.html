@@ -2,28 +2,28 @@
 
 <!-- Breadcrumb -->
 {% block breadcrumb %} 
-	<a href="{{ BASE_URL }}/" class="pathway">Home</a> 
+	<a href="/" class="pathway">Home</a> 
 	<img src="/img/arrow.png" alt="">
-	<a href="{{ BASE_URL }}/search/searchgene/" class="pathway">Gene/Disease</a>
+	<a href="/search/searchgene/" class="pathway">Gene/Disease</a>
     <img src="/img/arrow.png" alt=""> 
     {% if template == "variant_instance" %}
-    	<a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/searchvariant/1/path_all/path_all/" class="pathway">Variant</a>
+    	<a href="/search/gene/{{ gene.ID }}/searchvariant/path_all/path_all/" class="pathway">Variant</a>
     	<img src="/img/arrow.png" alt="">
-    	<a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/instance_result/1/path_all/sort_date/order_desc/" class="pathway">Variant Instance Results</a>
+    	<a href="/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/instance_result/path_all/sort_date/order_desc/" class="pathway">Variant Instance Results</a>
     	<img src="/img/arrow.png" alt="">
 	    Variant Instance Detail
     {% endif %}
     {% if template == "variant_instance_patient" %}
-    	<a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/patient/{{ variant_instance.ID }}/1/path_all/path_all/" class="pathway">Variant Patient</a>
+    	<a href="/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/patient/{{ variant_instance.ID }}/path_all/path_all/" class="pathway">Variant Patient</a>
     	<img src="/img/arrow.png" alt="">
-    	<a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/patient/{{ variant_instance.ID }}/instance_result/1/path_all/sort_date/order_desc/" class="pathway">Variant Instance Patient Results</a>
+    	<a href="/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/patient/{{ variant_instance.ID }}/instance_result/path_all/sort_date/order_desc/" class="pathway">Variant Instance Patient Results</a>
     	<img src="/img/arrow.png" alt="">
     	Variant Patient Instance Detail
     {% endif %}
     {% if template == "variant_instance_lab" %}
-        <a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/searchvariant/1/path_all/path_all/" class="pathway">Variant</a>
+        <a href="/search/gene/{{ gene.ID }}/searchvariant/path_all/path_all/" class="pathway">Variant</a>
         <img src="/img/arrow.png" alt="">
-        <a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ variant_instance.ID }}/1/path_all/sort_date/order_desc/" class="pathway">Variant Instance Lab Results</a>
+        <a href="/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ variant_instance.ID }}/path_all/sort_date/order_desc/" class="pathway">Variant Instance Lab Results</a>
         <img src="/img/arrow.png" alt="">
         Variant Lab Instance Detail
     {% endif %}
@@ -45,159 +45,140 @@
 <!-- Content -->
 {% block content %}
 	<p>
-        <table>
-            <tr >
-                <td valign="top">
-                    <table class="ui-widget ui-dialog-content ui-widget-content ui-corner-all" style="font-size:small">
-	                    <tr>
-		                    <th align="center" colspan="2"><h4>{{ gene.GeneName }}</h4></th>
-	                    </tr>
-                        <tr>
-                            <td width="60px">RefSeq</td>
-                            <td>{{ gene.RefSeqName }}{% if gene.RefSeqVer != "" %}.{{ gene.RefSeqVer }}{% endif %}</td>
-                        </tr>
-                        <tr>
-                            <td>cDNA</td>
-                            <td>{{ variant.cDNA }}</td>
-                        </tr>
-                        <tr>
-                            <td>genomic</td>
-                            <td>{% if variant.Genomic != "None" %}{{ variant.Genomic }}{% else %}-{% endif %}</td>
-                        </tr>
-                        <tr>
-                            <td>Protein</td>
-                            <td>{% if variant.Protein != "None" %}{{ variant.Protein }}{% else %}-{% endif %}</td>
-                        </tr>
-                        <tr>
-                            <td>mRNA</td>
-                            <td>{% if variant.mRNA != "None" %}{{ variant.mRNA }}{% else %}-{% endif %}</td>
-                        </tr>
-                    </table>
+    <table>
+        <tr >
+            <td valign="top">
+                <table class="ui-widget ui-dialog-content ui-widget-content ui-corner-all" style="font-size:small">
+                  <tr>
+                    <th align="center" colspan="2"><h4>{{ gene.GeneName }}</h4></th>
+                  </tr>
+                    <tr>
+                        <td width="60px">RefSeq</td>
+                        <td>{{ gene.RefSeqName }}{% if gene.RefSeqVer != "" %}.{{ gene.RefSeqVer }}{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td>cDNA</td>
+                        <td>{{ variant.cDNA }}</td>
+                    </tr>
+                    <tr>
+                        <td>genomic</td>
+                        <td>{% if variant.Genomic != "None" %}{{ variant.Genomic }}{% else %}-{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td>Protein</td>
+                        <td>{% if variant.Protein != "None" %}{{ variant.Protein }}{% else %}-{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td>mRNA</td>
+                        <td>{% if variant.mRNA != "None" %}{{ variant.mRNA }}{% else %}-{% endif %}</td>
+                    </tr>
+                </table>
+            </td>
+            {% if template == "variant_instance" %}
+                <td>
+                    <p>
+						<h4>Related links:</h4>
+                        <a href="/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/patient/{{ variant_instance.ID }}/path_all/path_all/">See other variants from the same patient</a> <br/>
+						<a href="/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ variant_instance.ID }}/path_all/sort_date/order_desc/">See all instances of this variant from the same lab</a>
+                    </p>
                 </td>
-                {% if template == "variant_instance" %}
-                    <td>
-                        <p>
-    						<h4>Related links:</h4>
-                            <a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/patient/{{ variant_instance.ID }}/1/path_all/path_all/">See other variants from the same patient</a> <br/>
-    						<a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ variant_instance.ID }}/1/path_all/sort_date/order_desc/">See all instances of this variant from the same lab</a>
-                        </p>
-                    </td>
-                {% endif %}
-            </tr>
-        </table>
-        {% comment %}		
-        <div class="variant-icon">
-			Gene : {{ gene.GeneName }} <br>
-			Variant : {{ variant.cDNA|default:"" }} <br/>
-			{{ variant.mRNA|default:"" }} <br/>
-			{{ variant.Genomic|default:"" }} <br/>
-			{{ variant.Protein|default:"" }}
-		</div>
-        {% endcomment %}
-		{% comment %}
-			<h3>
-				From Gene / Variant - &nbsp; {{ gene.GeneName }} / {{variant.cDNA|default:""}}
-				{{variant.mRNA|default:""}}{{variant.Genomic|default:""}}{{variant.Protein|default:""}}
-			</h3>
-		{% endcomment %}
+            {% endif %}
+        </tr>
+    </table>
 	</p>
 	{% if variant_instance %}
 		<p>
-            <table>
-                <tr>
-                    <td>
-                        <div class="cbb">			
-                            <table cellspacing="10">
-				                <tr>
-					                <th><h3>Detail</h3></th>
-					                <th><h3>Value</h3></th>
-				                </tr>
-                                <tr>
-                                    <td><b>Data Type: </b></td>
-                                    <td>{{ variant_instance.DataType.DataType }}</td>
-                                </tr>
-				                <tr>
-					                <td><b>Date of Test: </b></td>
-					                <td>{{ variant_instance.InstanceDate|date:"d M Y" }}</td>
-				                </tr>
-                                <tr>
-                                    <td><b>Date of submission: </b></td>
-                                    <td>{{ variant_instance.DateSubmitted|date:"d M Y" }}</td>
-                                </tr>
-				                <tr>
-					                <td><b>Pathogenicity: </b></td>
-					                <td>{{ variant_instance.Pathogenicity.Pathogenicity }}</td>
-				                </tr>
-				                <tr>
-					                <td><b>Patient Age: </b></td>
-					                <td>{{ variant_instance.PatientAge|default:"-" }}</td>
-				                </tr>
-				                <tr>
-					                <td><b>Justification: </b></td>
-					                <td>{{ variant_instance.Justification|default:"-" }}</td>
-				                </tr>
-                                <tr>
-                                    <td><b>SIFT Score: </b></td>
-                                    <td>{{ variant_instance.SIFTScore|default:"-" }}</td>
-                                </tr>
-				                <tr>
-					                <td><b>Test Method: </b></td>
-					                <td>{{ variant_instance.TestMethod.TestMethod|default:"-" }}</td>
-				                </tr>
-				                <tr>
-					                <td><b>Sample Tissue: </b></td>
-					                <td>{{ variant_instance.SampleTissue.SampleTissue|default:"-" }}
-				                </tr>
-				                <tr>
-					                <td><b>Sample Source: </b></td>
-					                <td>{{ variant_instance.SampleSource.SampleSource|default:"-" }}</td>
-				                </tr>
-				                <tr>
-					                <td><b>PubMed: </b></td>
-					                <td>{{ variant_instance.PubMed|default:"-" }}</td>
-				                </tr>
-				                <tr>
-					                <td><b>Recorded In Database: </b></td>
-					                <td>{{ variant_instance.RecordedInDataBase|yesno:"Yes,No" }}</td>
-				                </tr>
-				                <tr>
-					                <td><b>Sample Stored: </b></td>
-					                <td>{{ variant_instance.SampleStored|yesno:"Yes,No" }}</td>
-				                </tr>
-				                <tr>
-					                <td><b>Pedigree Available: </b></td>
-					                <td>{{ variant_instance.PedigreeAvailable|yesno:"Yes,No" }}</td>
-				                </tr>
-				                <tr>
-					                <td><b>Variant Segregates with Disease</b></td>
-					                <td>{{ variant_instance.VariantSegregatesWithDisease|yesno:"Yes,No" }}</td>
-				                </tr>
-				                <tr>
-					                <td><b>Histology Stored</b></td>
-					                <td>{{ variant_instance.HistologyStored|yesno:"Yes,No" }}</td>
-				                </tr>
-			                </table>
-                        </div>
-                    </td>
-                </tr>
-            <table>
+      <table>
+          <tr>
+              <td>
+                  <div class="cbb">			
+                      <table cellspacing="10">
+	                <tr>
+		                <th><h3>Detail</h3></th>
+		                <th><h3>Value</h3></th>
+	                </tr>
+	                <tr>
+		                <td><b>Date of Test: </b></td>
+		                <td>{{ variant_instance.InstanceDate|date:"d M Y" }}</td>
+	                </tr>
+                          <tr>
+                              <td><b>Date of submission: </b></td>
+                              <td>{{ variant_instance.DateSubmitted|date:"d M Y" }}</td>
+                          </tr>
+	                <tr>
+		                <td><b>Pathogenicity: </b></td>
+		                <td>{{ variant_instance.Pathogenicity.Pathogenicity }}</td>
+	                </tr>
+	                <tr>
+		                <td><b>Patient Age: </b></td>
+		                <td>{{ variant_instance.PatientAge|default:"-" }}</td>
+	                </tr>
+	                <tr>
+		                <td><b>Justification: </b></td>
+		                <td>{{ variant_instance.Justification|default:"-" }}</td>
+	                </tr>
+                          <tr>
+                              <td><b>SIFT Score: </b></td>
+                              <td>{{ variant_instance.SIFTScore|default:"-" }}</td>
+                          </tr>
+	                <tr>
+		                <td><b>Test Method: </b></td>
+		                <td>{{ variant_instance.TestMethod.TestMethod|default:"-" }}</td>
+	                </tr>
+	                <tr>
+		                <td><b>Sample Tissue: </b></td>
+		                <td>{{ variant_instance.SampleTissue.SampleTissue|default:"-" }}
+	                </tr>
+	                <tr>
+		                <td><b>Sample Source: </b></td>
+		                <td>{{ variant_instance.SampleSource.SampleSource|default:"-" }}</td>
+	                </tr>
+	                <tr>
+		                <td><b>PubMed: </b></td>
+		                <td>{{ variant_instance.PubMed|default:"-" }}</td>
+	                </tr>
+	                <tr>
+		                <td><b>Recorded In Database: </b></td>
+		                <td>{{ variant_instance.RecordedInDataBase|yesno:"Yes,No" }}</td>
+	                </tr>
+	                <tr>
+		                <td><b>Sample Stored: </b></td>
+		                <td>{{ variant_instance.SampleStored|yesno:"Yes,No" }}</td>
+	                </tr>
+	                <tr>
+		                <td><b>Pedigree Available: </b></td>
+		                <td>{{ variant_instance.PedigreeAvailable|yesno:"Yes,No" }}</td>
+	                </tr>
+	                <tr>
+		                <td><b>Variant Segregates with Disease</b></td>
+		                <td>{{ variant_instance.VariantSegregatesWithDisease|yesno:"Yes,No" }}</td>
+	                </tr>
+	                <tr>
+		                <td><b>Histology Stored</b></td>
+		                <td>{{ variant_instance.HistologyStored|yesno:"Yes,No" }}</td>
+	                </tr>
+                </table>
+                  </div>
+              </td>
+          </tr>
+      <table>
 		</p>
 		<p>
-            {% if template == "variant_instance" %}
-    			<a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/instance/{{ variant_instance.ID }}/lab_request/">
-            {% endif %}
-            {% if template == "variant_instance_patient" %}
-                <a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/patient/instance_detail/{{ variant_instance.ID }}/lab_request/">
-            {% endif %}
-            {% if template == "variant_instance_lab" %}
-                <a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/lab/instance_detail/{{ variant_instance.ID }}/lab_request/">
-            {% endif %}
-				Request for lab contacts
-			</a>
+    	{% if template == "variant_instance" %}
+				<a href="/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/instance/{{ variant_instance.ID }}/lab_request/">
+	        {% endif %}
+	        {% if template == "variant_instance_patient" %}
+	            <a href="/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/patient/instance_detail/{{ variant_instance.ID }}/lab_request/">
+	        {% endif %}
+	        {% if template == "variant_instance_lab" %}
+	            <a href="/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/lab/instance_detail/{{ variant_instance.ID }}/lab_request/">
+	        {% endif %}
+					Request for lab contacts
+				</a>
 		</p>
-	{% else %}
-		<p>
-			Error! Could not find the instance your looking for.
-		</p>
-	{% endif %}	
+		{% else %}
+			<p>
+				Error! Could not find the instance your looking for.
+			</p>
+		{% endif %}	
 {% endblock %}

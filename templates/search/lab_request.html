@@ -2,30 +2,30 @@
 
 <!-- Breadcrumb -->
 {% block breadcrumb %} 
-	<a href="{{ BASE_URL }}/" class="pathway">Home</a> 
+	<a href="/" class="pathway">Home</a> 
 	<img src="/img/arrow.png" alt="">
-	<a href="{{ BASE_URL }}/search/searchgene/" class="pathway">Gene/Disease</a>
+	<a href="/search/searchgene/" class="pathway">Gene/Disease</a>
 	<img src="/img/arrow.png" alt=""> 
     {% if template == "lab_request" %}
-    	<a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/searchvariant/path_all/path_all/" class="pathway">Variant</a>
+    	<a href="/search/gene/{{ gene.ID }}/searchvariant/path_all/path_all/" class="pathway">Variant</a>
     	<img src="/img/arrow.png" alt="">
-    	<a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/instance_result/path_all/sort_date/order_desc/" class="pathway">Variant Instance Result</a>
+    	<a href="/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/instance_result/path_all/sort_date/order_desc/" class="pathway">Variant Instance Result</a>
     	<img src="/img/arrow.png" alt="">
-    	<a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/instance/{{ variant_instance.ID }}/" class="pathway">Variant Instance Detail</a>
+    	<a href="/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/instance/{{ variant_instance.ID }}/" class="pathway">Variant Instance Detail</a>
     {% endif %}
     {% if template == "lab_request_patient" %}
-    	<a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/patient/{{ variant_instance.ID }}/path_all/path_all/" class="pathway">Variant Patient</a>
+    	<a href="/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/patient/{{ variant_instance.ID }}/path_all/path_all/" class="pathway">Variant Patient</a>
     	<img src="/img/arrow.png" alt="">
-    	<a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/patient/{{ variant_instance.ID }}/instance_result/path_all/sort_date/order_desc/" class="pathway">Variant Instance Patient Results</a>
+    	<a href="/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/patient/{{ variant_instance.ID }}/instance_result/path_all/sort_date/order_desc/" class="pathway">Variant Instance Patient Results</a>
     	<img src="/img/arrow.png" alt="">
-        <a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/patient/instance_detail/{{ variant_instance.ID }}/" class="pathway">Variant Patient Instance Detail</a>
+        <a href="/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/patient/instance_detail/{{ variant_instance.ID }}/" class="pathway">Variant Patient Instance Detail</a>
     {% endif %}
     {% if template == "lab_request_lab" %}
-        <a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/searchvariant/path_all/path_all/" class="pathway">Variant</a>
+        <a href="/search/gene/{{ gene.ID }}/searchvariant/path_all/path_all/" class="pathway">Variant</a>
         <img src="/img/arrow.png" alt="">
-        <a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ variant_instance.ID }}/path_all/sort_date/order_desc/" class="pathway">Variant Instance Lab Results</a>
+        <a href="/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/lab/instance_result/{{ variant_instance.ID }}/path_all/sort_date/order_desc/" class="pathway">Variant Instance Lab Results</a>
         <img src="/img/arrow.png" alt="">
-        <a href="{{ BASE_URL }}/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/lab/instance_detail/{{ variant_instance.ID }}/" class="pathway">Variant Lab Instance Detail</a>
+        <a href="/search/gene/{{ gene.ID }}/variant/{{ variant.ID }}/lab/instance_detail/{{ variant_instance.ID }}/" class="pathway">Variant Lab Instance Detail</a>
     {% endif %}
     <img src="/img/arrow.png" alt="">
     Lab Request
@@ -37,49 +37,42 @@
 <!-- Content -->
 {% block content %}
 	<div id="div1">
-        <table class="ui-widget ui-dialog-content ui-widget-content ui-corner-all" style="font-size:small">
-	        <tr>
-		        <th align="center" colspan="2"><h4>{{ gene.GeneName }}</h4></th>
-	        </tr>
-            <tr>
-                <td width="60px">RefSeq</td>
-                <td>{{ gene.RefSeqName }}{% if gene.RefSeqVer != "" %}.{{ gene.RefSeqVer }}{% endif %}</td>
-            </tr>
-            <tr>
-                <td>cDNA</td>
-                <td>{{ variant.cDNA }}</td>
-            </tr>
-            <tr>
-                <td>genomic</td>
-                <td>{% if variant.Genomic != "None" %}{{ variant.Genomic }}{% else %}-{% endif %}</td>
-            </tr>
-            <tr>
-                <td>Protein</td>
-                <td>{% if variant.Protein != "None" %}{{ variant.Protein }}{% else %}-{% endif %}</td>
-            </tr>
-            <tr>
-                <td>mRNA</td>
-                <td>{% if variant.mRNA != "None" %}{{ variant.mRNA }}{% else %}-{% endif %}</td>
-            </tr>
-        </table>
-        
-        {% comment %}
-        <h3>
-			From Gene / Variant - &nbsp; {{ gene.GeneName }} / {{variant.cDNA|default:""}}
-			{{variant.mRNA|default:""}}{{variant.Genomic|default:""}}{{variant.Protein|default:""}}
-		</h3> 
-        {% endcomment %}
+    <table class="ui-widget ui-dialog-content ui-widget-content ui-corner-all" style="font-size:small">
+      <tr>
+        <th align="center" colspan="2"><h4>{{ gene.GeneName }}</h4></th>
+      </tr>
+        <tr>
+            <td width="60px">RefSeq</td>
+            <td>{{ gene.RefSeqName }}{% if gene.RefSeqVer != "" %}.{{ gene.RefSeqVer }}{% endif %}</td>
+        </tr>
+        <tr>
+            <td>cDNA</td>
+            <td>{{ variant.cDNA }}</td>
+        </tr>
+        <tr>
+            <td>genomic</td>
+            <td>{% if variant.Genomic != "None" %}{{ variant.Genomic }}{% else %}-{% endif %}</td>
+        </tr>
+        <tr>
+            <td>Protein</td>
+            <td>{% if variant.Protein != "None" %}{{ variant.Protein }}{% else %}-{% endif %}</td>
+        </tr>
+        <tr>
+            <td>mRNA</td>
+            <td>{% if variant.mRNA != "None" %}{{ variant.mRNA }}{% else %}-{% endif %}</td>
+        </tr>
+    </table>
 		<p>
 			<h4>Request Details</h4>
 		</p>
 		{% if lab_request %}
 			<div class="ui-widget" style="width:75%;">
-	            <div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">
-                    <p class="errorMessage">
-                    <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
-						A request for this instance has been sent
-                    </p>
-	            </div>
+          <div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">
+                <p class="errorMessage">
+                	<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+									A request for this instance has been sent
+                </p>
+          </div>
 		    </div>
 	    {% endif %}
 	    {% if page_error %}

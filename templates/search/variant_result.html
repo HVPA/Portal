@@ -1,11 +1,10 @@
 {% extends "base.html" %}
-{# {% load pagination_tags %} #}
 
 <!-- Breadcrumb -->
 {% block breadcrumb %} 
-	<a href="{{ BASE_URL }}/" class="pathway">Home</a> 
+	<a href="/" class="pathway">Home</a> 
 	<img src="/img/arrow.png" alt="">
-	<a href="{{ BASE_URL }}/search/searchgene/" class="pathway">Gene/Disease</a>
+	<a href="/search/searchgene/" class="pathway">Gene/Disease</a>
 	<img src="/img/arrow.png" alt=""> 
 	Variant
 {% endblock %}
@@ -27,83 +26,54 @@
 <div id="search" style="float: left; width: 600px">
 	<!-- Search Bar -->
 	<form action="" method="post" enctype="multipart/form-data" accept-charset="utf-8">
-        <table>
-            <tr>
-                <td>
+    <table>
+	    <tr>
+        <td>
 					<div class="gene-icon">
 						{{ geneName }}
 					</div>
-                </td>
+        </td>
 				<td>
 					<table>
 						<tr>
-			                <td>
-			                    <input type="text" name="searched_variant" value="{{ searched_variant }}" id="searched_variant" style="width:400px"/>
-			                </td>
-			                <td>
-                    			<input type="submit" value="Search" name="search"
-                        			class="ui-button ui-state-default ui-corner-all ui-button-text-only" />
-                			</td>
-                
-            			</tr>
-                        {% comment %}
-                        <tr>
-							<td colspan="2">
-								<p>
-									Search by: &nbsp;
-									Variant <input type="radio" name="search_type" value="variantType" checked="checked">&nbsp;
-									{# Sequence <input type="radio" name="search_type" value="sequenceType">&nbsp; #}
-								</p>
-							</td>
-						</tr>
-                        {% endcomment %}
-                        <tr>
-                            <td colspan="2">
-                                <p>
-                                    <h5>Filter results by Level of Pathogenicity(Community Consensus):</h5>
-                                    <div id="path_filter">
-                                        <input type="radio" id="path_all" name="path_filter" value="path_all" {{ dict_path.path_all }} 
-                                            onclick="document.location='/search/gene/{{ geneID }}/searchvariant/{{ searched_variant }}/{{ search_type }}/results/path_all/{{ path_filter_ratio }}/';">
-                                            <label for="path_all" style="font-size:10px">Show All</label>
-                                        <input type="radio" id="path" name="path_filter" value="path" {{ dict_path.path }} 
-                                            onclick="document.location='/search/gene/{{ geneID }}/searchvariant/{{ searched_variant }}/{{ search_type }}/results/path/{{ path_filter_ratio }}/';">
-                                            <label for="path" style="font-size:10px">Pathogenic</label>
-                                        <input type="radio" id="not_path" name="path_filter" value="not_path" {{ dict_path.not_path }} 
-                                            onclick="document.location='/search/gene/{{ geneID }}/searchvariant/{{ searched_variant }}/{{ search_type }}/results/not_path/{{ path_filter_ratio }}/';">
-                                            <label for="not_path" style="font-size:10px">Not Pathogenic</label>
-                                        <input type="radio" id="likely_not_path" name="path_filter" value="likely_not_path" {{ dict_path.likely_not_path }} 
-                                            onclick="document.location='/search/gene/{{ geneID }}/searchvariant/{{ searched_variant }}/{{ search_type }}/results/likely_not_path/{{ path_filter_ratio }}/';">
-                                            <label for="likely_not_path" style="font-size:10px">Unlikely Path</label>
-                                        <input type="radio" id="likely_path" name="path_filter" value="likely_path" {{ dict_path.likely_path }} 
-                                            onclick="document.location='/search/gene/{{ geneID }}/searchvariant/{{ searched_variant }}/{{ search_type }}/results/likely_path/{{ path_filter_ratio }}/';">
-                                            <label for="likely_path" style="font-size:10px">Likely Path</label>
-                                        <input type="radio" id="unknown_path" name="path_filter" value="unknown_path" {{ dict_path.unknown_path }} 
-                                            onclick="document.location='/search/gene/{{ geneID }}/searchvariant/{{ searched_variant }}/{{ search_type }}/results/unknown_path/{{ path_filter_ratio }}/';">
-                                            <label for="unknown_path" style="font-size:10px">Unknown</label>
-                                    </div>
-                                </p>
-                            </td>
-                        </tr>
+	            <td>
+	                <input type="text" name="searched_variant" value="{{ searched_variant }}" id="searched_variant" style="width:400px"/>
+	            </td>
+	            <td>
+	          			<input type="submit" value="Search" name="search"
+	              			class="ui-button ui-state-default ui-corner-all ui-button-text-only" />
+	      			</td>
+      			</tr>
+            <tr>
+                <td colspan="2">
+                    <p>
+                        <h5>Filter results by Level of Pathogenicity(Community Consensus):</h5>
+                        <div id="path_filter">
+                            <input type="radio" id="path_all" name="path_filter" value="path_all" {{ dict_path.path_all }} 
+                                onclick="document.location='/search/gene/{{ geneID }}/searchvariant/{{ searched_variant }}/{{ search_type }}/results/path_all/{{ path_filter_ratio }}/';">
+                                <label for="path_all" style="font-size:10px">Show All</label>
+                            <input type="radio" id="path" name="path_filter" value="path" {{ dict_path.path }} 
+                                onclick="document.location='/search/gene/{{ geneID }}/searchvariant/{{ searched_variant }}/{{ search_type }}/results/path/{{ path_filter_ratio }}/';">
+                                <label for="path" style="font-size:10px">Pathogenic</label>
+                            <input type="radio" id="not_path" name="path_filter" value="not_path" {{ dict_path.not_path }} 
+                                onclick="document.location='/search/gene/{{ geneID }}/searchvariant/{{ searched_variant }}/{{ search_type }}/results/not_path/{{ path_filter_ratio }}/';">
+                                <label for="not_path" style="font-size:10px">Not Pathogenic</label>
+                            <input type="radio" id="likely_not_path" name="path_filter" value="likely_not_path" {{ dict_path.likely_not_path }} 
+                                onclick="document.location='/search/gene/{{ geneID }}/searchvariant/{{ searched_variant }}/{{ search_type }}/results/likely_not_path/{{ path_filter_ratio }}/';">
+                                <label for="likely_not_path" style="font-size:10px">Unlikely Path</label>
+                            <input type="radio" id="likely_path" name="path_filter" value="likely_path" {{ dict_path.likely_path }} 
+                                onclick="document.location='/search/gene/{{ geneID }}/searchvariant/{{ searched_variant }}/{{ search_type }}/results/likely_path/{{ path_filter_ratio }}/';">
+                                <label for="likely_path" style="font-size:10px">Likely Path</label>
+                            <input type="radio" id="unknown_path" name="path_filter" value="unknown_path" {{ dict_path.unknown_path }} 
+                                onclick="document.location='/search/gene/{{ geneID }}/searchvariant/{{ searched_variant }}/{{ search_type }}/results/unknown_path/{{ path_filter_ratio }}/';">
+                                <label for="unknown_path" style="font-size:10px">Unknown</label>
+                        </div>
+                    </p>
+                </td>
+            </tr>
 					</table>
 				</td>
 			</tr>
-<!--
-            <tr>
-				<td align="right">
-					Display number of results
-					<select id="paginate_results" name="paginate_results">
-						<option {%ifequal paginate_results 5%}selected="selected"{%endifequal%} value="5">
-							5</option>
-						<option {%ifequal paginate_results 10%}selected="selected"{%endifequal%} value="10">
-							10</option>
-						<option {%ifequal paginate_results 20%}selected="selected"{%endifequal%} value="20">
-							20</option>
-						<option {%ifequal paginate_results 50%}selected="selected"{%endifequal%} value="50">
-							50</option>
-					</select>
-				</td>
-			</tr>
--->
 		</table>
 	</form>
 	{# if search query string is too short display this message #}
@@ -128,54 +98,32 @@
         </div>
 	{% else %}
 		{% if variants %}
-            <div style="width:600px; background-color:#F0F7F9; border-top: solid 1px #6B90DA; padding: 0.3em">
-                Showing <strong>{{ result_low }} - {{ result_high }}</strong> of <strong>{{ results }}</strong> results
-				matched your search for <strong>{{ searched_variant }}</strong>
-            </div>
-			{% if debug and variant_tokens %}
-				<table style="background-color: #cccccc; border: solid 1px black">
-					<tr>
-						<td>DEBUG:</td>
-						<td>&nbsp</td>
-					</tr>
-					<tr> <td>v_type:</td> <td>{{ variant_tokens.v_type }}</td> </tr>
-					<tr> <td>position:</td> <td>{{ variant_tokens.position }}</td> </tr>
-					<tr> <td>position_intron:</td> <td>{{ variant_tokens.position_intron }}</td> </tr>
-					<tr> <td>range_lower:</td> <td>{{ variant_tokens.range_lower }}</td> </tr>
-					<tr> <td>range_lower_intron:</td> <td>{{ variant_tokens.range_lower_intron }}</td> </tr>
-					<tr> <td>range_upper:</td> <td>{{ variant_tokens.range_upper }}</td> </tr>
-					<tr> <td>range_upper_intron:</td> <td>{{ variant_tokens.range_upper_intron }}</td> </tr>
-					<tr> <td>operator:</td> <td>{{ variant_tokens.operator }}</td> </tr>
-					<tr>
-						<td>solrQuery:</td>
-						<td>{{solrQuery}}</td>
-					</tr>
-				</table>
-			{% endif %}
+      <div style="width:600px; background-color:#F0F7F9; border-top: solid 1px #6B90DA; padding: 0.3em">
+          Showing <strong>{{ result_low }} - {{ result_high }}</strong> of <strong>{{ results }}</strong> results matched your search for <strong>{{ searched_variant }}</strong>
+      </div>
 			<p>
 				<div align="center">
 					{# Sets how many results to display per page, currently at 10 #}
 					{# {% autopaginate variant_list paginate_results %} #}
 				</div>
 			</p>
-            <p>
-                <div style="padding-left: 200px;">
-					{# {% paginate %} #}
-                    {% if variants.has_previous %}
-                        <a href="?page={{ variants.previous_page_number }}" onclick="this.form.submit();">&lt;&lt;Previous</a>
-                    {% else %}
-                        &lt;&lt;Previous
-                    {% endif %}
-                    
-                    Page {{ variants.number }} of {{ variants.paginator.num_pages }}
+      <p>
+        <div style="padding-left: 200px;">
+	        {% if variants.has_previous %}
+	            <a href="?page={{ variants.previous_page_number }}" onclick="this.form.submit();">&lt;&lt;Previous</a>
+	        {% else %}
+	            &lt;&lt;Previous
+	        {% endif %}
+        
+	        Page {{ variants.number }} of {{ variants.paginator.num_pages }}
 
-                    {% if variants.has_next %}
-                        <a href="?page={{ variants.next_page_number }}" onclick="this.form.submit();">Next&gt;&gt;</a>
-                    {% else %}
-                        Next&gt;&gt;
-                    {% endif %}
+	        {% if variants.has_next %}
+	            <a href="?page={{ variants.next_page_number }}" onclick="this.form.submit();">Next&gt;&gt;</a>
+	        {% else %}
+	            Next&gt;&gt;
+	        {% endif %}
 				</div>
-            </p>
+      </p>
 			<!-- Results -->
 			<p>
 				<table cellspacing="10">
@@ -183,16 +131,16 @@
 						<tr>
 							<td>
 								<div class="{% if forloop.counter|divisibleby:2 %}search-item-alt{% else %}search-item-div{% endif %}">
-									<a class="search-item" href="{{ BASE_URL }}/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/path_all/sort_date/order_asc/">
+									<a class="search-item" href="/search/gene/{{ variant.Gene.ID }}/variant/{{ variant.ID }}/instance_result/path_all/sort_date/order_asc/">
 										<table>
-                                            <tr>
-                                                <td>
-                                                    <div class="tableHeading1">
-                                                        RefSeq: {{ variant.Gene.RefSeqName }}{% if variant.Gene.RefSeqVer %}.{{ variant.Gene.RefSeqVer }}{% endif %}
-                                                        Date of last submission: 
-                                                    </div>
-                                                </td>
-                                            </tr>
+                      <tr>
+                          <td>
+                              <div class="tableHeading1">
+                                  RefSeq: {{ variant.Gene.RefSeqName }}{% if variant.Gene.RefSeqVer %}.{{ variant.Gene.RefSeqVer }}{% endif %}
+                                  Date of last submission: 
+                              </div>
+                          </td>
+                      </tr>
 											<tr>
 												<td style="vertical-align: top;">
 													<div class="tableHeading1">
@@ -230,13 +178,7 @@
 															</tr>
 															<tr>
 																<td>
-																	{% comment %}
-                                                                    {{ variant.count_instance_not_path }}% Not Pathogenic |
-																	{{ variant.count_instance_likely_path }}% Likely Pathogenic |
-																	{{ variant.count_instance_unlikely_path }}% Unlikely Pathogenic |
-																	{{ variant.count_instance_path}}% Certainly Pathogenic |
-																	{{ variant.count_instance_unknown }}% Unknown
-                                                                    {% endcomment %}
+																	
 																</td>		
 															</tr>	
 														</table>
@@ -254,7 +196,7 @@
 									</a>
 									{% if user.get_profile.IsHVPAdmin %}
 										<div class="tableMinorText" style="text-align: right;">
-											<a href="{{ BASE_URL }}/search/gene/{{geneID}}/searchvariant/variant/{{variant.ID}}/consensus">
+											<a href="/search/gene/{{geneID}}/searchvariant/variant/{{variant.ID}}/consensus">
 												Click here to set the consensus
 											</a>
 										</div>
@@ -267,1036 +209,33 @@
 			</p>
 			<p>
 				<div style="padding-left: 200px;">
-					{# {% paginate %} #}
-                    {% if variants.has_previous %}
-                        <a href="?page={{ variants.previous_page_number }}">&lt;&lt;Previous</a>
-                    {% else %}
-                        &lt;&lt;Previous
-                    {% endif %}
-                    
-                    Page {{ variants.number }} of {{ variants.paginator.num_pages }}
+	        {% if variants.has_previous %}
+	            <a href="?page={{ variants.previous_page_number }}">&lt;&lt;Previous</a>
+	        {% else %}
+	            &lt;&lt;Previous
+	        {% endif %}
+        
+	        Page {{ variants.number }} of {{ variants.paginator.num_pages }}
 
-                    {% if variants.has_next %}
-                        <a href="?page={{ variants.next_page_number }}">Next&gt;&gt;</a>
-                    {% else %}
-                        Next&gt;&gt;
-                    {% endif %}
+	        {% if variants.has_next %}
+	            <a href="?page={{ variants.next_page_number }}">Next&gt;&gt;</a>
+	        {% else %}
+	            Next&gt;&gt;
+	        {% endif %}
 				</div>
 			</p>
 		{% else %}
-                <div class="ui-widget">
-                        <div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">
-                                <p class="errorMessage">
-                                <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
-									No match found for {{ searched_variant }}	
-                                </p>
-                        </div>
-                </div>
+	    <div class="ui-widget">
+	      <div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">
+          <p class="errorMessage">
+          <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+					No match found for {{ searched_variant }}	
+          </p>
+	      </div>
+	    </div>
 		{% endif %}
 	{% endif %}
     <div style="height:200px"></div>
 </div>
-{% comment %}
-<div id="div_showVisual" style="float: right">
-    Click for visualisation
-</div>
-<div id="visualiser" style="float: right"></div>
-
-<script type="text/javascript">
-(function(VariVis2, $, undefined) {
-    /*
-     * Private appendTag()
-     * Adds a new div (default) under the parent element with a new id that is a suffix of the parent.
-     * Can use other tags if provided.
-     * Returns the result.
-     */
-    var appendTag = function(parentElement, suffixID, altTag) {
-        var tag = 'div';
-
-        if (altTag) {
-            tag = altTag;
-        }
-
-        var newDivID = parentElement.attr('id') + '_' + suffixID;
-        parentElement.append('<' + tag + ' id="' + newDivID + '"></' + tag + '>');
-
-        return $("#" + newDivID);
-    };
-
-    /*
-     * Private setupDrawingArea()
-     * Add and draw the required html divs and Raphael elements on screen
-     * Returns Raphael object
-     */
-    var setupDrawingArea = function(id, width, height, xPadding, yPadding) {
-        var pane = $("#" + id)
-            .width(width)
-            .height(height);
-
-        var menuHeight = 40;
-        var menuPane = appendTag(pane, "menu")
-            .width('100%')
-            .height(menuHeight)
-            .css({
-                'float': 'top',
-            });
-        var loadingPane = appendTag(menuPane, "loading")
-            .width('50%')
-            .height(menuHeight)
-            .css({
-                'float': 'left',
-            });
-        var loadingLabel = appendTag(loadingPane, "label")
-            .css({
-                'float': 'left',
-                'color': 'grey',
-            });
-        VariVis2.wLoading = loadingLabel;
-        var heading = appendTag(loadingPane, "heading")
-            .css({
-                'font-family': 'Arial',
-                'font-weight': '800',
-                'font-style': 'Bold',
-                'color': 'grey',
-            })
-            .html("GeneStructure");
-        VariVis2.wHeading = heading;
-                
-        var sliderPane = appendTag(menuPane, "slider")
-            .width('50%')
-            .height(menuHeight)
-            .css({
-                'float': 'right',
-            });
-        var sliderLabel = appendTag(sliderPane, "label")
-            .css({
-                'font-family': 'Arial',
-                'font-size': '10px',
-                'color': 'grey',
-            })
-            .html("Zoom");
-        var slider = appendTag(sliderPane, "control").slider({
-            value: 2,
-            min: 0,
-            max: VariVis2.oZoomSizes.length - 1,
-            step: 1,
-            stop: function(event, ui) {
-                VariVis2.raiseEvent("ZoomChanged", null);
-                VariVis2.raiseEvent("IndexChanged", null);
-            }
-        });
-        VariVis2.wZoomSlider = slider;
-                
-
-        var borderPane = appendTag(pane, "border")
-            .width(width - 2*xPadding)
-            .height(height - 2*yPadding)
-            .css({
-                'float': 'bottom',
-                'border': '1px solid black',
-                'padding-top': yPadding,
-                'padding-bottom': yPadding,
-                'padding-left': xPadding,
-                'padding-right': xPadding,
-            });
-
-        var drawPane = appendTag(borderPane, "draw")
-            .width(width - 2*xPadding)
-            .height(height - 2*yPadding)
-            .css({
-                'background-color': '#f9f9f9'
-            });
-        var tmpImg = appendTag(drawPane, "zoomIcon", "img")
-            .attr({
-                'src': '/img/Magnifying-Glass-icon.png'
-            });
-
-        return Raphael(drawPane.attr('id'));
-    };
-
-    /*
-     * Private getData()
-     * Ajax calls back to server for the different data in this tool
-     */
-    var getData = function() {
-        jQuery.ajax({
-            url: '{{ BASE_URL }}/gene/{{ gene.ID }}/structure/',
-            dataType: 'json',
-            success: function(data) {
-                //console.log(data);
-                VariVis2.oGeneStructure = data;
-
-                exonMap = [];
-                exonMap.push({
-                    'start': 0,
-                    'end': data.Exons[0].genStart - 1,
-                    'exon': 0,
-                });
-                exonMap.push({
-                    'start': data.Exons[0].genStart,
-                    'end': data.Exons[0].genEnd,
-                    'exon': 0,
-                });
-                for (var i = 1; i < data.Exons.length; ++i) {
-                    var cur = data.Exons[i];
-                    var prev = data.Exons[i - 1];
-                    var diff = cur.genStart - prev.genEnd;
-                    var mid = prev.genStart + (diff/2);
-
-                    exonMap.push({
-                        'start': prev.genEnd + 1,
-                        'end': mid,
-                        'exon': i - 1
-                    });
-                    exonMap.push({
-                        'start': mid + 1,
-                        'end': cur.genStart - 1,
-                        'exon': i
-                    });
-                    exonMap.push({
-                        'start': cur.genStart,
-                        'end': cur.genEnd,
-                        'exon': i
-                    });
-                }
-                exonMap.push({
-                    'start': data.Exons[0].genEnd + 1,
-                    'end': data.GeneRange.genEnd,
-                    'exon': data.Exons.length - 1,
-                });
-                VariVis2.oExonMap = exonMap;
-
-                VariVis2.raiseEvent("DownloadProgress", null);
-                VariVis2.raiseEvent("LoadProgress", 1);
-
-            }
-        });
-        
-        jQuery.ajax({
-            url: '{{ BASE_URL }}/gene/{{ gene.ID }}/variants/',
-            dataType: 'json',
-            success: function(data) {
-                //console.log(data);
-                VariVis2.oVariants = data;
-
-                VariVis2.raiseEvent("DownloadProgress", null);
-                VariVis2.raiseEvent("LoadProgress", 1);
-            }
-        });
-    };
-
-    /*
-     * Private downloadHandler()
-     */
-    var downloadHandler = function() {
-        if (VariVis2.oGeneStructure != null && VariVis2.oVariants != null) {
-            VariVis2.raiseEvent("DownloadComplete", null);
-        }
-    }
-    /*
-     * Private downloadCompleteHandler()
-     */
-    var downloadCompleteHandler = function() {
-        drawGeneStructure();
-        drawDetailsBase();
-
-        var vMap = {
-            'sub': [VariVis2.oGeneStructure.GeneRange.genEnd +1],
-            'del': [VariVis2.oGeneStructure.GeneRange.genEnd +1],
-            'dup': [VariVis2.oGeneStructure.GeneRange.genEnd +1],
-            'ins': [VariVis2.oGeneStructure.GeneRange.genEnd +1],
-            'inv': [VariVis2.oGeneStructure.GeneRange.genEnd +1],
-            'delins': [VariVis2.oGeneStructure.GeneRange.genEnd +1],
-        };
-        var varList = VariVis2.oVariants.varList;
-
-        for (var i = 0; i < varList.length; ++i) {
-            var v = varList[i];
-            if (v.isRange == false) {
-                if (vMap[v.change_type][v.genIndex] == undefined) {
-                    vMap[v.change_type][v.genIndex] = [];
-                }
-                vMap[v.change_type][v.genIndex].push({ 'cDNA': v.cDNA, 'refIndex': v.refIndex });
-            }
-            else {
-                for (var j = v.genStart; j <= v.genEnd; ++j) {
-                    if (vMap[v.change_type][j] == undefined) {
-                        vMap[v.change_type][j] = [];
-                    }
-                    // TODO: ref index proper
-                    vMap[v.change_type][j].push({ 'cDNA': v.cDNA, 'refIndex': v.refStart });
-                }
-            }
-        }
-        VariVis2.oVariantsMap = vMap;
-        VariVis2.raiseEvent("LoadProgress", 1);
-
-        VariVis2.wZoomSlider.slider("value", 1);
-        VariVis2.iCurrentIndex = Math.max(getGenIndexFromRef({{position}}) - 20, 0);
-        VariVis2.raiseEvent("ZoomChanged", null);
-        
-        moveZoomIconToIndex(VariVis2.iCurrentIndex);
-
-        VariVis2.raiseEvent("LoadProgress", 1);
-    }
-
-    /* 
-     * Private resetLoad()
-     * Resets the loading counter
-     */
-    var resetLoad = function() {
-        VariVis2.iLoadCurrent = 0;
-        VariVis2.raiseEvent("LoadProgress", 0);
-    };
-    /*
-     * Private updateLoadHandler()
-     * Updates the loading bar
-     */
-    var updateLoadHandler = function(incStep) {
-        VariVis2.iLoadCurrent += incStep;
-        VariVis2.iLoadCurrent = Math.min(VariVis2.iLoadCurrent, VariVis2.iLoadItemTotal); // Cap the count just encase
-
-        var isFinished = VariVis2.iLoadCurrent == VariVis2.iLoadItemTotal;
-
-        var percentage = isFinished ? 100 : (100 * VariVis2.iLoadCurrent / VariVis2.iLoadItemTotal).toFixed();
-
-        VariVis2.wLoading.show();
-        VariVis2.wLoading.html('Loading ' + percentage + '% ...');
-
-        VariVis2.wHeading.hide();
-
-        if (isFinished) {
-            VariVis2.raiseEvent("LoadComplete", null);
-        }
-    };
-    /*
-     * Private loadCompleteHandler()
-     * Executed when all data has been downloaded and processed
-     */
-    var loadCompleteHandler = function(args) {
-        VariVis2.wLoading.fadeOut("slow", function() {} );
-        VariVis2.wHeading.fadeIn("slow", function() {} );
-    };
-
-    /*
-     * Private drawGeneStructure()
-     * Displays only the gene structure component
-     */
-    var drawGeneStructure = function() {
-        var a = VariVis2.oAnchorPoints;
-        var w = paper.width;
-        var h = paper.height;
-
-        var x, x1, x2;
-        var y, y1, y2;
-        var bw, bh;
-        var box;
-        var style;
-        var label;
-
-        // Draw the main boundary of the gene as two lines
-        var gd = a['GeneDiagram'];
-        x1 = gd['x']; 
-        x2 = gd['x'] + gd['width'];
-        y1 = gd['y'];
-        y2 = h - gd['y'];
-        style = {
-            'stroke': '#000000', 
-            'stroke-width':'1', 
-        };
-        paper.path(getLineString(x1, y1, x1, y2)).attr(style);
-        paper.path(getLineString(x2, y1, x2, y2)).attr(style);
-
-        var range = VariVis2.oGeneStructure.GeneRange;
-        var exons = VariVis2.oGeneStructure.Exons;
-
-        // Write the upper and lower ranges of the whole gene
-        var git = a['GeneIndexText'];
-        x = git['x'] + git['width'];
-        y1 = git['y'];
-        y2 = h - git['y'];
-        label = paper.text(x, y1, calcIndexNotation(range.genStart, exons[0])).attr(VariVis2.oIndexFont);
-        paper.text(x, y2, calcIndexNotation(range.genEnd, exons[exons.length -1])).attr(VariVis2.oIndexFont);
-
-        var fontHeight = label.getBBox().height;
-
-        // Draw boxes and start text for each exon
-        var geneHeight = h - 2*gd['y'];
-        var indexScale = geneHeight / range.genEnd;
-
-        x1 = git['x'] + git['width'];
-        x2 = gd['x'];
-        bw = gd['width'];
-        style = {
-            'stroke': 'none', 
-            'fill': 'hsb(0.4,1,0.7)', 
-            'opacity': '1',
-        };
-        var prevY = -1000000;
-        $.each(exons, function(index, exon) {
-            y = gd['y'] + indexScale * exon.genStart;
-            bh = indexScale * (exon.genEnd - exon.genStart);
-            // Only draw a label if it is not overlapping with the previous one
-            if (y > prevY + fontHeight) {
-                paper.text(x1, y, getIndexNotation(exon.genStart, exon.refStart)).attr(VariVis2.oIndexFont);
-                prevY = y;
-            }
-            box = paper.rect(x2, y, bw, bh).attr(style);
-            box.hover(
-                function(event) {
-                },
-                function(event) {
-                }
-            );
-        }); 
-
-        // Highlight box that starts invisible, and opacity filled when moving zoom icon
-        var zhl = a['ZoomHighlight'];
-        x = zhl['x'];
-        y = zhl['y'];
-        w = zhl['width'];
-        h = zhl['height'];
-        VariVis2.wExonHighlight = paper.rect(x, y, w, h);
-        VariVis2.wExonHighlight.attr({'fill': '#d0d0f0', 'stroke': '#aaf', 'stroke-width': 2, 'stroke-opacity': 0, 'fill-opacity': 0});
- 
-        VariVis2.wPopupSet = paper.set();
-        VariVis2.wPopupSet.push(
-            paper.rect(50, 100, 200, 50).attr({'fill': '#d0d0f0', 'stroke': '#aaf', 'stroke-width': 2, 'fill-opacity': .7}),
-            paper.text(150, 112, "a").attr(VariVis2.oStandardFont),
-            paper.text(150, 127, "a").attr(VariVis2.oStandardFont),
-            paper.text(150, 140, "...").attr(VariVis2.oStandardFont)
-        );
-
-        VariVis2.wPopupSet.hide();
-    };
-
-
-    var wZoomIconOnMove = function (dx, dy) { // onmove
-        me = VariVis2.wZoomIcon;
-        var bh = VariVis2.oAnchorPoints['ZoomIcon']['height'];
-        var posY = me.oy + (bh/2) + dy;
-        posY = Math.max(posY, VariVis2.oDetailsDim['y1']);
-        posY = Math.min(posY, VariVis2.oDetailsDim['y2']);
-        me.attr({x: me.ox, y: posY - (bh/2)});
-        VariVis2.wZoomLine.translate(0, posY - VariVis2.wZoomLine.oy);
-        VariVis2.wZoomLine.oy = posY;
-   
-
-        var exons = VariVis2.oGeneStructure.Exons;
-        var index = calculateIndexFromPixel(posY);
-        var closest = getClosestExon(index);
-        var exon = null;
-        if (closest > -1) {
-            exon = exons[closest];
-            console.log(exon);
-            var lowerY = calculatePixelFromIndex(exon.genStart) - 10;
-            var upperY = calculatePixelFromIndex(exon.genEnd) + 10;
-            VariVis2.wExonHighlight.attr({
-                'stroke-opacity': 0.7,
-                'y': lowerY,
-                'height': upperY - lowerY
-            });
-        }
-    };
-    var wZoomIconOnStart = function() { // onstart
-        me = VariVis2.wZoomIcon;
-        me.ox = me.attr('x');
-        me.oy = me.attr('y');
-        me.oo = me.attr('opacity');
-        me.attr({'opacity': 0.5});
-        var bh = VariVis2.oAnchorPoints['ZoomIcon']['height'];
-        VariVis2.wZoomLine.oy = me.oy + (bh/2);
-    };
-    var wZoomIconOnStop = function() { // onstop
-        me = VariVis2.wZoomIcon;
-
-        // Fix appearrance
-        me.attr({opacity: me.oo});
-
-        // Calc new index
-        var bh = VariVis2.oAnchorPoints['ZoomIcon']['height'];
-        var y = me.attr("y") + (bh/2);
-        var index = calculateIndexFromPixel(y);
-
-        VariVis2.iCurrentIndex = index;
-        VariVis2.raiseEvent("IndexChanged", null);
-    }
-
-    // To get the genIndex from absolute y in zoom icon position
-    var calculateIndexFromPixel = function(y) {
-        var y1 = VariVis2.oDetailsDim['y1'];
-        var height = VariVis2.oDetailsDim['height'];
-
-        var index = parseInt(((y-y1) * VariVis2.oGeneStructure.GeneRange.genEnd) / height);
-
-        return index;
-    };
-    // To get absolute y from genIndex
-    var calculatePixelFromIndex = function(index) {
-        var height = VariVis2.oDetailsDim['height'];
-        var y1 = VariVis2.oDetailsDim['y1'];
-        var y = (index * height / VariVis2.oGeneStructure.GeneRange.genEnd) + y1;
-
-        return y;
-    };
-    
-
-    // Hacky function just to render the icon somewhere else (no data change)
-    var moveZoomIconToPixel = function(y) {
-        me = VariVis2.wZoomIcon;
-        var bh = VariVis2.oAnchorPoints['ZoomIcon']['height'];
-        var oy = me.attr('y');
-        var posY = oy + (bh/2);
-        var destY = y - (bh/2);
-        me.attr({y: destY});
-        VariVis2.wZoomLine.translate(0, y - posY);
-    };
-    var moveZoomIconToIndex = function(index) {
-        var y = calculatePixelFromIndex(index);
-        moveZoomIconToPixel(y);
-
-        VariVis2.iCurrentIndex = index;
-        VariVis2.raiseEvent("IndexChanged", null);
-    };
-
-
-    /*
-     * Private drawDetailsBase()
-     * Displays only the details component
-     */
-    var drawDetailsBase = function() {
-        var a = VariVis2.oAnchorPoints;
-        var w = paper.width;
-        var h = paper.height;
-
-        var x, x1, x2;
-        var y, y1, y2;
-
-        var bw, bh;
-        var style;
-        var label;
-
-        // Draw the grey areas to show that the display is continguous
-        var dpre = a['DetailPre'];
-        var dpost = a['DetailPost'];
-
-        var boxStyle = {
-            'stroke': 'none',
-            'fill': '#e0e0e0',
-        };
-        var lineStyle = {
-            'stroke': '#000000',
-            'stroke-dasharray': '.',
-            'stroke-width': '1',
-        };
-
-        x1 = dpre['x'];
-        y1 = dpre['y'];
-        bw = dpre['width'];
-        bh = dpre['height'];
-        x2 = x1 + bw;
-        y2 = y1 + bh;
-        paper.rect(x1, y1, bw, bh).attr(boxStyle);
-        paper.path(getLineString(x1, y1, x1, y2)).attr(lineStyle);
-        paper.path(getLineString(x1, y2, x2, y2)).attr(lineStyle);
-        paper.path(getLineString(x2, y2, x2, y1)).attr(lineStyle);
-
-
-        x1 = dpost['x'];
-        bw = dpost['width'];
-        bh = dpost['height'];
-        y1 = h - bh - dpre['y'];
-        x2 = x1 + bw;
-        y2 = y1 + bh;
-        paper.rect(x1, y1, bw, bh).attr(boxStyle);
-        paper.path(getLineString(x1, y1, x1, y2)).attr(lineStyle);
-        paper.path(getLineString(x1, y1, x2, y1)).attr(lineStyle);
-        paper.path(getLineString(x2, y2, x2, y1)).attr(lineStyle);
-
-        // Draw the main boundary of the details as two lines
-        x1 = dpre['x']; 
-        x2 = dpre['x'] + dpre['width'];
-        y1 = dpre['y'] + dpre['height'];
-        y2 = h - (dpre['y'] + dpost['height']);
-        style = {
-            'stroke': '#000000', 
-            'stroke-width':'1', 
-        };
-        paper.path(getLineString(x1, y1, x1, y2)).attr(style);
-        paper.path(getLineString(x2, y1, x2, y2)).attr(style);
-
-        VariVis2.oDetailsDim = {
-            'y1': y1,
-            'y2': y2,
-            'height': y2 - y1,
-        };
-
-
-        // Draw the zoom icon
-        var gd = a['GeneDiagram']; 
-        var zi = a['ZoomIcon'];
-
-        bw = zi['width'];
-        bh = zi['height'];
-        x1 = zi['x'];
-        y1 = zi['y'] - bh/2;
-
-        var img = $("#visualiser_border_draw_zoomIcon").css({'display': 'none'}); // Used to pre-load the image
-        VariVis2.wZoomIcon = paper.image('/img/Magnifying-Glass-icon.png', x1, y1, bw, bh)
-            .attr({
-                'opacity' : 1,
-            });
-
-        x1 = gd['x'];
-        x2 = zi['x'];
-        y1 = zi['y'];
-        VariVis2.wZoomLine = paper.path(getLineString(x1, y1, x2, y1))
-            .attr({
-                'stroke': 'hsb(0.6,1,0.7)', 
-            });
-
-        VariVis2.wZoomIcon.drag(wZoomIconOnMove,wZoomIconOnStart,wZoomIconOnStop);
-   
-    };
-
-    /*
-     * Private generateContentBoxes()
-     */
-    var generateContentBoxes = function(minRows, bh) {
-        var a = VariVis2.oAnchorPoints;
-        var seqc = a['SequenceCol'];
-        var subc = a['SubCol'];
-        var delc = a['DelCol'];
-        var dupc = a['DupCol'];
-        var insc = a['InsCol'];
-        var invc = a['InvCol'];
-        var delinsc = a['DelInsCol'];
-
-        var bw = seqc['width'];
-        var y = seqc['y'];
-
-        var seq_x = seqc['x'];
-        var sub_x = subc['x'];
-        var del_x = delc['x'];
-        var dup_x = dupc['x'];
-        var ins_x = insc['x'];
-        var inv_x = invc['x'];
-        var delins_x = delinsc['x'];
-
-
-        if (VariVis2.aContentBoxes != null) {
-            // Delete everything form last time
-            var aa = VariVis2.aContentBoxes;
-            for (var i = 0; i < aa.length; ++i) {
-                for (var j = 0; j < aa[i].length; ++j) {
-                    aa[i][j]['txt'].remove();
-                    aa[i][j]['box'].remove();
-                    aa[i][j]['set'].remove();
-                }
-                aa[i] = [];
-            }
-            aa = [];
-        }
-        VariVis2.aContentBoxes = [];
-
-        // Just short hand
-        var aa = VariVis2.aContentBoxes;
-
-        while (minRows > aa.length) {
-            var newRow = [];
-            newRow.push(generateContentBox(seq_x, y, bw, bh));
-            newRow.push(generateContentBox(sub_x, y, bw, bh));
-            newRow.push(generateContentBox(del_x, y, bw, bh));
-            newRow.push(generateContentBox(dup_x, y, bw, bh));
-            newRow.push(generateContentBox(ins_x, y, bw, bh));
-            newRow.push(generateContentBox(inv_x, y, bw, bh));
-            newRow.push(generateContentBox(delins_x, y, bw, bh));
-            aa.push(newRow);
-        }
-
-        y = seqc['y'];
-        var dy;
-        for (var i = 0; i < aa.length; ++i) {
-            dy = y - aa[i][0]['box'].attr('y');
-            for (var j = 0; j < aa[i].length; ++j) {
-                aa[i][j]['set'].translate(0, dy);
-            }
-
-            y += bh;
-        }
-
-        VariVis2.aContentBoxes = aa;
-    }
-
-    /*
-     * Private generateContentBox()
-     */
-    var generateContentBox = function(x, y, bw, bh) {
-        var result = paper.set();
-
-        var box = paper.rect(x, y, bw, bh)
-            .attr({
-                'stroke': 'hsb(0.6, 1, 0.9)',
-                'opacity': '0.5'
-            });
-        var txt = paper.text(x + (bw/2), y + (bh/2), " ")
-            .attr(VariVis2.oZoomFont)
-            .attr(getZoomFontSize());
-
-        result.push(box, txt);
-
-        return {
-            'set': result,
-            'box': box,
-            'txt': txt
-        };
-    }
-    
-    /*
-     * Private zoomChangedHandler()
-     */
-    var zoomChangedHandler = function(args) {
-        var a = VariVis2.oAnchorPoints;
-
-        // test label for dimensions
-        label = paper.text(-1000, -1000, '0')
-            .attr(VariVis2.oZoomFont)
-            .attr(getZoomFontSize())
-            .attr({'opacity': 0});
-        var fontHeight = label.getBBox().height;
-        label.remove();
-
-        var detailsHeight = VariVis2.oDetailsDim['height'];
-        var numItems = (detailsHeight / fontHeight).toFixed(0);
-
-        VariVis2.oDetailsDim['numItems'] = numItems;
-
-        // Draw stuff!
-        generateContentBoxes(numItems, fontHeight);
-    };
-
-    /*
-     * Private indexChangedHandler()
-     */
-    var indexChangedHandler = function(args) {
-        var a = VariVis2.oAnchorPoints;
-        var dt = a['DetailText'];
-        var x = dt['x'] + dt['width'];
-
-        var curI = VariVis2.iCurrentIndex;
-
-        var seq = VariVis2.oGeneStructure.Sequence;
-        var exons = VariVis2.oGeneStructure.Exons;
-        var aa = VariVis2.aContentBoxes;
-        var vMap = VariVis2.oVariantsMap;
-
-        if (VariVis2.aDetailsText != null) {
-            for (var i = 0; i < VariVis2.aDetailsText.length; ++i) {
-                VariVis2.aDetailsText[i].remove();
-            }
-            VariVis2.aDetailsText = [];
-        }
-        VariVis2.aDetailsText = [];
-
-        for (var i = 0; i < aa.length; ++i) {
-            iterI = curI+i;
-
-            if (iterI < VariVis2.oGeneStructure.GeneRange.genEnd) {
-                // Display the index
-                if (iterI % 5 == 0) {
-                    var y = aa[i][0]['box'].attr('y') + (aa[i][0]['box'].attr('height') / 2);
-                    VariVis2.aDetailsText.push(
-                        paper.text(x, y, calcIndexNotation(iterI, exons[getClosestExon(iterI)])).attr(VariVis2.oIndexFont)
-                    );
-                }
-
-                // Seqeuence
-                aa[i][0]['txt'].attr({'text': seq.charAt(iterI)});
-
-                assignBox(vMap, i, iterI, aa, 'sub', 1, 'S');
-                assignBox(vMap, i, iterI, aa, 'del', 2, 'D');
-                assignBox(vMap, i, iterI, aa, 'dup', 3, 'd');
-                assignBox(vMap, i, iterI, aa, 'ins', 4, 'I');
-                assignBox(vMap, i, iterI, aa, 'inv', 5, 'i');
-                assignBox(vMap, i, iterI, aa, 'delins', 6, 'di');
-            }
-            else {
-                // past the end of the gene
-                aa[i][0]['txt'].attr({'text': ' '});
-                aa[i][1]['txt'].attr({'text': ' '});
-                aa[i][2]['txt'].attr({'text': ' '});
-                aa[i][3]['txt'].attr({'text': ' '});
-                aa[i][4]['txt'].attr({'text': ' '});
-                aa[i][5]['txt'].attr({'text': ' '});
-                aa[i][6]['txt'].attr({'text': ' '});
-            }
-        }
-
-        VariVis2.wZoomIcon.toFront();
-    };
-
-    var assignBox = function(vMap, i, iterI, aa, change_type, index, symbol) {
-        if (vMap[change_type][iterI] != undefined && vMap[change_type][iterI][0] != undefined) {
-            aa[i][index]['txt'].attr({'text': symbol});
-            var text0;
-            var text1;
-            var text2;
-            var linkText = "/search/gene/1721/searchvariant/c." + vMap[change_type][iterI][0].refIndex + "/variantType/results/";
-
-            text0 = vMap[change_type][iterI][0].cDNA;
-            if (vMap[change_type][iterI].length > 1) {
-                text1 = vMap[change_type][iterI][1].cDNA;
-            }
-            else {
-                text1 = '';
-            }
-            if (vMap[change_type][iterI].length > 2) {
-                text2 = '...';
-            }
-            else {
-                text2 = '';
-            }
-
-            aa[i][index]['box'].mouseover(
-                function(event) { 
-                    VariVis2.wPopupSet[1].attr({'text': text0});
-                    VariVis2.wPopupSet[2].attr({'text': text1});
-                    VariVis2.wPopupSet[3].attr({'text': text2});
-                    VariVis2.wPopupSet.show();
-                    VariVis2.wPopupSet.attr({'opacity': 1});
-                    VariVis2.wPopupSet.animate({'opacity':0}, 5000);
-                });
-            aa[i][index]['box'].click(
-                function(event) {
-                    console.log("clicked");
-                    window.location = linkText;
-                });
-        }
-        else {
-            aa[i][index]['txt'].attr({'text': ' '});
-            aa[i][index]['box'].click();
-            aa[i][index]['box'].mouseover();
-        }
-
-    };
-
-    /*
-     * Private getZoomFontSize()
-     * Returns the current font size
-     */
-    var getZoomFontSize = function() {
-        return VariVis2.oZoomSizes[VariVis2.wZoomSlider.slider("value")];
-    };
-
-    /*
-     * Private getLineString()
-     * Returns a string designed to be used for a line between two points in Raphael
-     */
-    var getLineString = function(x1, y1, x2, y2) {
-        return "M" + x1 + " " + y1 + "L" + x2 + " " + y2;
-    };
-
-    /*
-     * Private getIndexNotation()
-     * Returns a string for displaying both the genome and ref seq indicies
-     */
-    var getIndexNotation = function(genIndex, refIndex) {
-        return '(' + refIndex.toString() + ') ' + genIndex.toString();
-    };
-    /*
-     * Private calcIndexNotation()
-     * Returns a string for displaying both the genome and ref seq indicies, where ref seq has been calculated
-     * based on genome and exon provided
-     */
-    var calcIndexNotation = function(genIndex, exon) {
-        var refIndex = '';
-        if (genIndex < exon.genStart) {
-            if (exon.counter == 0) {
-                refIndex = '-' + (exon.genStart - genIndex).toString();
-            }
-            else {
-                refIndex = (exon.refStart).toString() + '-' + (exon.genStart - genIndex).toString();
-            }
-        }
-        else if (genIndex > exon.genEnd) {
-            if (exon.counter == VariVis2.oGeneStructure.Exons.length - 1) {
-                refIndex = '*' + (genIndex - exon.genEnd).toString();
-            }
-            else {
-                refIndex = (exon.refEnd).toString() + '+' + (genIndex - exon.genEnd).toString();
-            }
-        }
-        else {
-            refIndex = exon.refStart + genIndex - exon.genStart;
-        }
-        return getIndexNotation(genIndex, refIndex);
-    };
-    /*
-     * Private getClosestExon()
-     */
-    var getClosestExon = function(genIndex) {
-        var em = VariVis2.oExonMap;
-        for (var i = 0; i < em.length; ++i) {
-            if (genIndex >= em[i]['start'] && em[i]['end'] >= genIndex) {
-                return em[i]['exon'];
-            }
-        }
-        return -1;
-    };
-
-    // TODO: Hack
-    var getGenIndexFromRef = function(refIndex) {
-        var exons = VariVis2.oGeneStructure.Exons;
-
-        for (var i = 0; i < exons.length; ++i) {
-            var exon = exons[i];
-            if (refIndex >= exon.refStart && refIndex <= exon.refEnd) {
-                var indexFromRefExon = refIndex - exon.refStart;
-                return exon.genStart + indexFromRefExon;
-            }
-        }
-        return 0;
-    };
-
-    VariVis2.initialize = function(args) {
-        id = args.id;
-        width = args.width;
-        height = args.height;
-        xPadding = args.xPadding;
-        yPadding = args.yPadding;
-
-        paper = setupDrawingArea(id, width, height, xPadding, yPadding);
-
-        
-        VariVis2.subscribeEvent("DownloadProgress", downloadHandler);
-        VariVis2.subscribeEvent("DownloadComplete", downloadCompleteHandler);
-
-
-        VariVis2.subscribeEvent("LoadProgress", updateLoadHandler);
-        resetLoad();
-        VariVis2.raiseEvent("LoadProgress", 0);
-
-        VariVis2.subscribeEvent("LoadComplete", loadCompleteHandler);
-
-        VariVis2.subscribeEvent("ZoomChanged", zoomChangedHandler);
-        VariVis2.subscribeEvent("IndexChanged", indexChangedHandler);
-
-        getData();
-    };
-
-    VariVis2.subscribeEvent = function(eventType, callback) {
-        if (eventType in VariVis2.oEvents == false) {
-            VariVis2.oEvents[eventType] = [];
-        }
-        VariVis2.oEvents[eventType].push(callback);
-    };
-    VariVis2.raiseEvent = function(eventType, args) {
-        var handlers = VariVis2.oEvents[eventType];
-        $.each(handlers, function( index, func ) {
-            if (func) {
-                func(args);
-            }
-        });
-    };
-
-    // Data models
-    VariVis2.oGeneStructure = null;
-    VariVis2.oVariants = null;
-    VariVis2.oExonMap = null;
-    VariVis2.oVariantsMap = null;
-
-    VariVis2.aContentBoxes = null;
-    VariVis2.aDetailsText = null;
-
-    // Events
-    VariVis2.oEvents = {};
-
-    // Widgets
-    VariVis2.wLoading = null;
-    VariVis2.wHeading = null;
-    VariVis2.wZoomSlider = null;
-    VariVis2.wZoomIcon = null;
-    VariVis2.wExonHighlight = null;
-    VariVis2.wPopupSet = null;
-    VariVis2.wPopup = null;
-
-    // Dimensions of the detials area. Calculated on load
-    VariVis2.oDetailsDim = null;
-
-    // Where are we now in the gene
-    VariVis2.iCurrentIndex = 0;
-
-    // Absolute positions code to reference
-    VariVis2.oAnchorPoints = {
-        'GeneIndexText': { x:5,   y: 50,   width: 70, height: null },
-        'GeneDiagram':   { x:80,  y: 50,   width: 70, height: null },
-        'DetailText':    { x:160, y: 50,   width: 70, height: null },
-        'ZoomIcon':      { x:170, y: 50,   width: 25, height: 25 },
-        'ZoomHighlight': { x:70,  y: 50,   width: 90, height: 25 },
-        'DetailPre':     { x:240, y: 10,   width: 140, height: 40 },
-        'DetailPost':    { x:240, y: null, width: 140, height: 40 },
-        'SequenceCol':   { x:240, y: 50,   width: 20, height: null },
-        'SubCol':        { x:260, y: 50,   width: 20, height: null },
-        'DelCol':        { x:280, y: 50,   width: 20, height: null },
-        'DupCol':        { x:300, y: 50,   width: 20, height: null },
-        'InsCol':        { x:320, y: 50,   width: 20, height: null },
-        'InvCol':        { x:340, y: 50,   width: 20, height: null },
-        'DelInsCol':     { x:360, y: 50,   width: 20, height: null },
-    };
-    // Zoom sizes for details display
-    VariVis2.oZoomSizes = [
-        { 'font-size': 8 },
-        { 'font-size': 10 },
-        { 'font-size': 12 },
-    ];
-    // Fonts
-    VariVis2.oStandardFont = {
-        'font-family': 'Courier',
-        'font-size': '12',
-        'fill': '#000000',
-        'fill-opacity': '1',
-    };
-    VariVis2.oZoomFont = {
-        'font-family': 'Courier',
-        'fill': '#000000',
-        'fill-opacity': '1',
-    };
-    VariVis2.oIndexFont = {
-        'font-family': 'Courier',
-        'font-size': '8',
-        'fill': '#000000',
-        'fill-opacity': '1',
-        'text-anchor': 'end',
-    };
-    VariVis2.oRightAligned = {
-        'text-anchor': 'end',
-    };
-
-    // Loading
-    VariVis2.iLoadCurrent = 0;
-    VariVis2.iLoadItemTotal = 4;
-
-
-
-})(window.VariVis2 = window.VariVis2 || {}, jQuery);
-
-
-jQuery(document).ready(function() {
-    $("#div_showVisual").css({"width": 400, "height": jQuery("#search").height()})
-        .click(function() {
-            $(this).hide();
-            window.VariVis2.initialize({
-                id: "visualiser",
-                width: 400,
-                height: jQuery("#search").height(),
-                xPadding: 0,
-                yPadding: 0,
-            });       
-        });
-
-});
-
-</script>
-{% endcomment %}
 
 {% endblock %}

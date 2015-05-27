@@ -12,19 +12,10 @@
 		<title>The Human Variome Project Australian Node</title>
 		
 		<!-- Javascript -->
-        <!-- Dajax -->
-        <script type="text/javascript" src="/js/jquery.dajax.core.js"></script>
-
 		<!-- jQuery -->
 		<script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
 		<script type="text/javascript" src="/js/jquery-ui-1.8.custom.min.js"></script>
 
-		<!-- Raphael svg -->
-        {% comment %}
-		<script type="text/javascript" src="/js/raphael-min.js"></script>
-		<script type="text/javascript" src="/js/raphael-pie.js"></script>
-		<script type="text/javascript" src="/js/raphael.path.methods.js"></script>
-        {% endcomment %}
 		<!-- Google Analytics  -->		
 		<script type="text/javascript">
 			var _gaq = _gaq || [];
@@ -146,16 +137,11 @@
 							</li>
 							{% if user.get_profile.IsHVPAdmin %}
 								<li>
-                                    <a href="/admin_email"><span>Send Test Email</span></a>
-                                </li>
-                                <li>
+                    <a href="/admin_email"><span>Send Test Email</span></a>
+                </li>
+                <li>
 									<a href="/user_management/"><span>User Management</span></a>
 								</li>
-								{% comment %}
-								<li>
-									<a href="/user_org/"><span>User Organisations</span></a>
-								</li>
-								{% endcomment %}
 								<li>
 									<a href="/pending/"><span>View Pending User Applications</span></a>
 								</li>
@@ -217,28 +203,6 @@
 								<td class="buttonheading" align="right" width="100%">
 									&nbsp; 
 								</td>
-								<!-- dont need these for now so just comment them out for now
-								<td class="buttonheading" align="right" width="100%">
-									<a href="http://www.humanvariomeproject.org/index.php/about/vision?format=pdf" title="PDF" 
-										onclick="window.open(this.href,'win2','status=no,toolbar=no,scrollbars=yes,
-											titlebar=no,menubar=no,resizable=yes,width=640,height=480,directories=no,location=no');
-											return false;" rel="nofollow"><img src="/img/pdf_button.png" alt="PDF">
-									</a>		
-								</td>
-								<td class="buttonheading" align="right" width="100%">
-									<a href="http://www.humanvariomeproject.org/index.php/about/vision?tmpl=component&amp;print=1&amp;page=" title="Print" 
-										onclick="window.open(this.href,'win2','status=no,toolbar=no,scrollbars=yes,
-											titlebar=no,menubar=no,resizable=yes,width=640,height=480,directories=no,location=no');
-											return false;" rel="nofollow"><img src="/img/printButton.png" alt="Print">
-									</a>
-								</td>
-								<td class="buttonheading" align="right" width="100%">
-									<a href="http://www.humanvariomeproject.org/index.php/component/mailto/?tmpl=component&amp;link=aHR0cDovL3d3dy5odW1hbnZhcmlvbWVwcm9qZWN0Lm9yZy9pbmRleC5waHAvYWJvdXQvdmlzaW9u"
-										title="E-mail" onclick="window.open(this.href,'win2','width=400,height=350,menubar=yes,resizable=yes');
-										return false;"><img src="/img/emailButton.png" alt="E-mail">
-									</a>
-								</td>
-								-->
 							</tr>
 						</tbody>
 					</table>
@@ -256,43 +220,43 @@
 		</div>            
 		<div id="footer">
 			<div id="text_nav">
-                <ul class="menu">
-                    <li class="item1">
-                        <a href="http://portal.hvpaustralia.org.au/">
-                            <span>Home</span>
-                        </a>
-                    </li>
-                    <li class="item2">
-                        <a href="http://hvpaustralia.org.au/the-node/">
-                            <span>The Node</span>
-                        </a>
-                    </li>
-                    <li class="item3">
-                        <a href="http://hvpaustralia.org.au/the-data/">
-                            <span>The Data</span>
-                        </a>
-                    </li>
-                    <li class="item4">
-                        <a href="http://hvpaustralia.org.au/the-system/">
-                            <span>The System</span>
-                        </a>
-                    </li>
-                    <li class="item5">
-                        <a href="http://hvpaustralia.org.au/information-for-patients/">
-                            <span>Information for Patients</span>
-                        </a>
-                    </li>
-                    <li class="item6">
-                        <a href="http://hvpaustralia.org.au/blog/">
-                            <span>Blog</span>
-                        </a>
-                    </li>
-                    <li class="item7">
-                        <a href="http://hvpaustralia.org.au/sitemap/">
-                            <span>Sitemap</span>
-                        </a>
-                    </li>
-                </ul>
+	      <ul class="menu">
+	          <li class="item1">
+	              <a href="http://portal.hvpaustralia.org.au/">
+	                  <span>Home</span>
+	              </a>
+	          </li>
+	          <li class="item2">
+	              <a href="http://hvpaustralia.org.au/the-node/">
+	                  <span>The Node</span>
+	              </a>
+	          </li>
+	          <li class="item3">
+	              <a href="http://hvpaustralia.org.au/the-data/">
+	                  <span>The Data</span>
+	              </a>
+	          </li>
+	          <li class="item4">
+	              <a href="http://hvpaustralia.org.au/the-system/">
+	                  <span>The System</span>
+	              </a>
+	          </li>
+	          <li class="item5">
+	              <a href="http://hvpaustralia.org.au/information-for-patients/">
+	                  <span>Information for Patients</span>
+	              </a>
+	          </li>
+	          <li class="item6">
+	              <a href="http://hvpaustralia.org.au/blog/">
+	                  <span>Blog</span>
+	              </a>
+	          </li>
+	          <li class="item7">
+	              <a href="http://hvpaustralia.org.au/sitemap/">
+	                  <span>Sitemap</span>
+	              </a>
+	          </li>
+	      </ul>
 			</div>
 			<div id="legals">
 				<div>Copyright © {% now "Y" %} Human Variome Project Australian Node. All Rights Reserved.</div>
