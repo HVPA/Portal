@@ -18,11 +18,11 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from genename_reader import genename_reader
 
 # txt filename that contains the gene names
-filename = 'www.genenames.org_all_.txt'
+# file needs to be in the same directory
+filename = 'genes.txt'
 
 # For importing gene data from www.genenames.org
 def import_gene_view(request):
-    #import pdb; pdb.set_trace()    
     # user is logged in
     if not request.user.is_authenticated():
         return render_to_response('home/timeout.html')

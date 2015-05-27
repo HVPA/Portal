@@ -15,7 +15,6 @@
 
 
 from django.shortcuts import render_to_response, get_object_or_404
-#from Portal.hvp.models import search, users, ref
 from Portal.hvp.models.search.Gene import Gene
 from Portal.hvp.models.search.Variant import Variant
 from Portal.hvp.models.ref.RefPathogenicity import RefPathogenicity

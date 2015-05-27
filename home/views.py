@@ -5,8 +5,8 @@
 # === License ===
 #
 # Last Author:   $Author: MelvinLuong $
-# Last Revision: $Rev: 841 $
-# Last Modified: $Date: 2014-06-06 15:55:03 +1000 (Fri, 06 Jun 2014) $ 
+# Last Revision: $Rev: 726 $
+# Last Modified: $Date: 2013-12-20 14:30:54 +1100 (Fri, 20 Dec 2013) $ 
 #
 # === Description ===
 #
@@ -20,7 +20,6 @@ from Portal.hvp.models.search import *
 from Portal.hvp.models.users.LaboratoryGroup import LaboratoryGroup
 from django.contrib.auth.models import User
 import locale, jwt
-from Portal.hvp.models.ref import RefTitle, RefState, RefUsageIntention
 
 def get_node_stats():
     # used to provide the commas in the numbers display
@@ -39,6 +38,39 @@ def get_node_stats():
         {'Unique Variants': variant_count},
         {'Instances submitted': variant_instance_count},
         {'Registered Users': user_count}]
+
+def index_view(request):
+    # init var
+    user = None
+    error_message = None
+
+    # get status data
+    node_stats = get_node_stats()
+    
+    username = ''
+    if request.method == 'POST':
+        # try and get username and password from request to validate user
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+            
+        if user is not None:
+            # login success
+            login(request, user)
+        else:
+            # Error invalid login
+            error_message = 'Invalid username or password'
+    else:
+        if request.user.is_authenticated():
+            user = request.user
+
+    return render_to_response('home/index.html',
+                              {
+                               'user': user,
+                               'username': username,
+                               'error_message': error_message,
+                               'node_stats': node_stats,
+                               })
 
 def aaf_auth_view(request):
     if "assertion" in request.POST:
@@ -84,58 +116,20 @@ def aaf_auth_view(request):
     else:
         return HttpResponseRedirect('/')
 
-def index_view(request):
-    # init var
-    user = None
-    error_message = None
-
-    # get status data
-    node_stats = get_node_stats()
-    
-    username = ''
-    if request.method == 'POST':
-        # try and get username and password from request to validate user
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-            
-        if user is not None:
-            # login success
-            login(request, user)
-        else:
-            # Error invalid login
-            error_message = 'Invalid username or password'
-    else:
-        if request.user.is_authenticated():
-            user = request.user
-
-    return render_to_response('home/index.html',
-                              {
-                               'user': user,
-                               'username': username,
-                               'error_message': error_message,
-                               'node_stats': node_stats,
-                               })
 
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/')
 
+
 def about_view(request):
-    if request.user.is_authenticated():
-        return render_to_response('home/about.html', {'user': request.user,})
-    else:
-        return render_to_response('home/about.html')
+    return render_to_response('home/about.html', {'user': request.user,})
+    
 
 def policy_view(request):
-    if request.user.is_authenticated():
-        return render_to_response('home/policy.html', {'user': request.user,})
-    else:
-        return render_to_response('home/policy.html')
+    return render_to_response('home/policy.html', {'user': request.user,})
+    
     
 def contact_view(request):
-    if request.user.is_authenticated():
-        return render_to_response('home/contact.html', {'user': request.user,})
-    else:
-        return render_to_response('home/contact.html')
+    return render_to_response('home/contact.html', {'user': request.user,})
 

@@ -5,8 +5,8 @@
 # === License ===
 #
 # Last Author:   $Author: MelvinLuong $
-# Last Revision: $Rev: 881 $
-# Last Modified: $Date: 2014-07-22 15:44:08 +1000 (Tue, 22 Jul 2014) $ 
+# Last Revision: $Rev: 802 $
+# Last Modified: $Date: 2014-03-19 15:41:21 +1100 (Wed, 19 Mar 2014) $ 
 #
 # === Description ===
 #
@@ -42,7 +42,6 @@ def gene_view(request):
         return render_to_response('home/permission.html', {'user': request.user, })
         
     page_error = False
-    #user = request.user
     
     query = """
         select g1.*, max(hvp_variantinstance.DateSubmitted) as DateSubmitted,
@@ -65,20 +64,6 @@ def gene_view(request):
     qs = Gene.objects.raw(query)                                
     gene_list = list(qs)
 
-    # set the search result into the url
-    #if 'search' in request.POST:
-    #    # get user gene search query from POST
-    #    searched_gene = request.POST['searched_gene']
-
-    """
-    if len(searched_gene) < 2:
-        #page_error = True
-        #return HttpResponseRedirect(settings.BASE_URL + '/search/searchgene/' + '0' + '/results/')
-        return HttpResponseRedirect(settings.BASE_URL + '/search/searchgene/results/')
-    else:
-        #return HttpResponseRedirect(settings.BASE_URL + '/search/searchgene/' + searched_gene + '/results/')
-        return HttpResponseRedirect(settings.BASE_URL + '/search/searchgene/results/')
-    """
     return render_to_response('search/gene.html', {'user':request.user, 'page_error':page_error, 'gene_list':gene_list, })
 
 
@@ -121,17 +106,13 @@ def gene_results_view(request):
                 gene = variant_list[0].Gene
                 
             return HttpResponseRedirect('/search/gene/' + str(gene.ID) + '/searchvariant/' + 
-                urllib.quote(searched_gene) + '/variantType/results/1/path_all/path_all/')
+                urllib.quote(searched_gene) + '/variantType/results/path_all/path_all/')
         except:
             error = True
                 
     # tries for a precise search for the GeneName, groups then by GeneName due to duplicate GeneNames
     # with different RefSeq Names and Versions.
-    #gene_list = (Gene.objects.filter(GeneName__istartswith=searched_gene).values('GeneName').distinct())
     if searched_gene == '':
-        #qs = Gene.objects.all().order_by('GeneName')
-        #qs.query.group_by = ['GeneName']
-        #gene_list = qs
         query = """
             select g1.*, max(hvp_variantinstance.DateSubmitted) as DateSubmitted,
 
@@ -153,9 +134,6 @@ def gene_results_view(request):
         qs = Gene.objects.raw(query)                                
         gene_list = list(qs)
     else:
-        #qs = (Gene.objects.filter(GeneName__istartswith=searched_gene))
-        #qs.query.group_by = ['GeneName']          
-        #gene_list = qs
         query = """
             select g1.*, max(hvp_variantinstance.DateSubmitted) as DateSubmitted,
             
@@ -180,18 +158,6 @@ def gene_results_view(request):
 
     # if nothing is return then we need to search in the other areas
     if len(gene_list) == 0:
-        """
-        qs = (Gene.objects.filter(RefSeqName__istartswith=searched_gene)
-                                   | Gene.objects.filter(GeneDescription__istartswith=searched_gene)
-                                   | Gene.objects.filter(HGNC_ID__istartswith=searched_gene) 
-                                   | Gene.objects.filter(AlternateSymbols__istartswith=searched_gene) 
-                                   | Gene.objects.filter(AlternateNames__istartswith=searched_gene)
-                                   | Gene.objects.filter(Chromosome__istartswith=searched_gene)
-                                   | Gene.objects.filter(PreviousSymbols__istartswith=searched_gene)
-                                   | Gene.objects.filter(PreviousNames__istartswith=searched_gene))
-        qs.query.group_by = ['GeneName']
-        gene_list = qs
-        """
         query = """
             select g1.*, max(hvp_variantinstance.DateSubmitted) as DateSubmitted,
             
@@ -215,9 +181,6 @@ def gene_results_view(request):
         """
         qs = Gene.objects.raw(query, [searched_gene+'%', '%'+searched_gene+'%', searched_gene+'%', '%'+searched_gene+'%', '%'+searched_gene+'%', searched_gene+'%', '%'+searched_gene+'%', '%'+searched_gene+'%'])
         gene_list = list(qs)
-    # Calculate the mth and nth record numbers displayed for this page
-    #result_low = max(1, (request.page - 1)*paginate_results + 1)
-    #result_high = min(int(gene_list.count()), request.page*paginate_results)
     
     # if still nothing then look at the gene disease tags - using taggit
     if len(gene_list) == 0:
@@ -244,13 +207,10 @@ def gene_results_view(request):
             {
                 'user': request.user, 
                 'error': error,
-                #'gene': gene, 
                 'searched_gene': searched_gene,
                 'gene_count': gene_count,
                 'genes': genes,
                 'paginate_results': paginate_results,
-                #'result_low': result_low,
-                #'result_high': result_high,
             },
         context_instance=RequestContext(request))
 

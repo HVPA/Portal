@@ -22,7 +22,6 @@ from Portal.hvp.models.users.InstitutionContact import InstitutionContact
 from Portal.hvp.models.users.UserDocument import UserDocument
 from Portal.hvp.models import ref
 from django.http import Http404
-# from Portal.users.UploadFileForm import UploadFileForm
 from django.core.mail import send_mail
 from Portal import settings
 from datetime import date
@@ -188,20 +187,6 @@ def signup_view(request):
                             
                             # send email
                             send_new_signup_email(user)
-                                
-                            """
-                            # file upload
-                            if uploaded_file:
-                                uploaded_file.name = str(user.id) + '_' + uploaded_file.name
-                                form = UploadFileForm(request.POST, request.FILES)
-                                form.save()
-
-                                # add the user fk to upload
-                                filename = 'uploads/' + uploaded_file.name
-                                upload = UserDocument.objects.get(file = filename)
-                                upload.user = user
-                                upload.save()
-                            """
                             
                         except:
                             # in case of error! we delete objects if they have an id, the id

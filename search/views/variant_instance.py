@@ -5,8 +5,8 @@
 # === License ===
 #
 # Last Author:   $Author: MelvinLuong $
-# Last Revision: $Rev: 856 $
-# Last Modified: $Date: 2014-06-25 16:51:33 +1000 (Wed, 25 Jun 2014) $ 
+# Last Revision: $Rev: 744 $
+# Last Modified: $Date: 2014-01-21 17:11:04 +1100 (Tue, 21 Jan 2014) $ 
 #
 # === Description ===
 #
@@ -17,7 +17,6 @@ from Portal import settings
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
-from Portal.hvp.models.ref.RefDataType import RefDataType
 from Portal.hvp.models.search.Patient import Patient
 from Portal.hvp.models.search.Gene import Gene
 from Portal.hvp.models.search.Variant import Variant
@@ -26,7 +25,7 @@ from Portal.hvp.models.users.Consensus import Consensus
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # shows list of variant instance for a selected variant
-def variant_instance_view(request, geneID, variantID, path_filter, sort_filter, order_filter, datatype_filter_id):
+def variant_instance_view(request, geneID, variantID, path_filter, sort_filter, order_filter):
     template = 'variant_instance'
     
     # kick user if the are not authenticated
@@ -36,9 +35,6 @@ def variant_instance_view(request, geneID, variantID, path_filter, sort_filter, 
     # kick user if they have not been verified
     if not request.user.get_profile().AccessStatus.ID == 2:
         return render_to_response('home/permission.html', {'user': request.user})
-
-    # get ref_datatype 
-    refdatatypes = RefDataType.objects.all()
 
     gene = get_object_or_404(Gene, pk = geneID)
     variant = get_object_or_404(Variant, pk = variantID)
@@ -64,13 +60,8 @@ def variant_instance_view(request, geneID, variantID, path_filter, sort_filter, 
         consensus = None
 
     qs = VariantInstance.objects.filter(Variant = variant).order_by(order + sort)
-    # filter pathogenicity
     if path_id:    
         qs = qs.filter(Pathogenicity__ID = path_id)
-    # filter datatype
-    if int(datatype_filter_id) != 1:
-        qs = qs.filter(DataType__ID = datatype_filter_id)
-    
     variant_instance_list = qs
     
     # get the last instance submitted date
@@ -104,9 +95,15 @@ def variant_instance_view(request, geneID, variantID, path_filter, sort_filter, 
                                 'gene': gene, 
                                 'variant': variant, 
                                 'result': result,
+                                #'variant_instance_list': variant_instance_list, 
                                 'variant_instances': variant_instances,
-                                'refdatatypes': refdatatypes,
-                                'datatype_filter_id': long(datatype_filter_id),
+                                #'paginate_results': paginate_results,
+                                #'result_low': result_low, 
+                                #'result_high': result_high,
+                                #'sort_type': sort_type, 
+                                #'order_by': order_by,
+                                #'filter_type': filter_type, 
+                                #'filter_text': filter_text,
                                 'dict_path_filter': dict_path_filter,
                                 'dict_order_filter': dict_order_filter,
                                 'dict_sort_filter': dict_sort_filter,
@@ -144,8 +141,7 @@ def variant_instance_detail_view(request, geneID, variantID, instanceID):
                            })
     
 # shows all other variant instance for a selected patientID     
-def variant_instance_patient_view(request, geneID, variantID, instanceID, path_filter, sort_filter, order_filter, 
-    datatype_filter_id):
+def variant_instance_patient_view(request, geneID, variantID, instanceID, path_filter, sort_filter, order_filter):
     template = 'variant_instance_patient'
     
     if not request.user.is_authenticated():
@@ -153,9 +149,6 @@ def variant_instance_patient_view(request, geneID, variantID, instanceID, path_f
         
     if request.user.get_profile().AccessStatus.ID != 2:
         return render_to_response('home/permission.html', {'user': request.user})
-    
-    # get refdatatype
-    refdatatypes = RefDataType.objects.all()
     
     # get related obejcts
     gene = get_object_or_404(Gene, pk = geneID)
@@ -178,12 +171,8 @@ def variant_instance_patient_view(request, geneID, variantID, instanceID, path_f
     order = Order(order_filter)
         
     qs = VariantInstance.objects.filter(Variant = variant, Patient = patient).order_by(order + sort)
-    # filter pathogenicity
     if path_id:
         qs = qs.filter(Pathogenicity__ID = path_id)
-    # filter datatype
-    if int(datatype_filter_id) != 1:
-        qs = qs.filter(DataType__ID = datatype_filter_id)
     variant_instance_list = qs
     
     # sum of total results used to display on screen
@@ -206,8 +195,6 @@ def variant_instance_patient_view(request, geneID, variantID, instanceID, path_f
                                 'user': request.user,
                                 'template': template,
                                 'gene': gene,
-                                'datatype_filter_id': long(datatype_filter_id),
-                                'refdatatypes': refdatatypes,
                                 'dict_path_filter': dict_path_filter,
                                 'dict_sort_filter': dict_sort_filter,
                                 'dict_order_filter': dict_order_filter,
@@ -245,8 +232,7 @@ def variant_instance_detail_patient_view(request, geneID, variantID, instanceID)
                            
                            
 # shows all variant instances from a select variant and lab/org
-def variant_instance_lab_view(request, geneID, variantID, instanceID, path_filter, sort_filter, order_filter,
-    datatype_filter_id):
+def variant_instance_lab_view(request, geneID, variantID, instanceID, path_filter, sort_filter, order_filter):
     template = 'variant_instance_lab'
     
     if not request.user.is_authenticated():
@@ -254,10 +240,7 @@ def variant_instance_lab_view(request, geneID, variantID, instanceID, path_filte
         
     if request.user.get_profile().AccessStatus.ID != 2:
         return render_to_response('home/permission.html', {'user': request.user})
-    
-    # get refdatatypes
-    refdatatypes = RefDataType.objects.all()
-    
+        
     # get related objects
     gene = get_object_or_404(Gene, pk=geneID)
     variant = get_object_or_404(Variant, pk=variantID)
@@ -278,12 +261,8 @@ def variant_instance_lab_view(request, geneID, variantID, instanceID, path_filte
     order = Order(order_filter)
 
     qs = VariantInstance.objects.filter(Variant = variant, Organisation = variant_instance.Organisation).order_by(order + sort)
-    # filter pathogenicity
     if path_id:
         qs = qs.filter(Pathogenicity__ID = path_id)
-    # filter datatype
-    if int(datatype_filter_id) != 1:
-        qs = qs.filter(DataType__ID = datatype_filter_id)
     variant_instance_list = qs
     
     # sum of total results used to display on screen
@@ -305,8 +284,6 @@ def variant_instance_lab_view(request, geneID, variantID, instanceID, path_filte
                                 {
                                     'user': request.user,
                                     'template': template,
-                                    'datatype_filter_id': long(datatype_filter_id),
-                                    'refdatatypes': refdatatypes,
                                     'dict_path_filter': dict_path_filter,
                                     'dict_sort_filter': dict_sort_filter,
                                     'dict_order_filter': dict_order_filter,

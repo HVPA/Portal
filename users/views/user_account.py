@@ -42,24 +42,7 @@ def user_account_view(request):
         # get all the user related data
         user = request.user
         user_profile = get_object_or_404(UserProfile, user=user)
-        """
-        try:
-            current_institution = user.CurrentInstitution
-        except:
-            current_institution = None
-        current_contact = None
-        if current_institution != None:
-            current_contact = get_object_or_404(InstitutionContact, UserInstitution=current_institution)
-            
-        try:
-            pending_institution = user.PendingInstitution
-        except:
-            pending_institution = None
-        pending_contact = None
-        if pending_institution != None:
-            pending_contact = get_object_or_404(InstitutionContact, UserInstitution=pending_institution)
-            request_org_change = True
-        """
+        
         try:
             institution = user.Institution
         except:
@@ -154,12 +137,7 @@ def user_account_view(request):
                                    'user': user,
                                    'institution': institution,
                                    'contact': contact,
-                                   #'current_institution': current_institution,
-                                   #'current_contact': current_contact,
-                                   #'pending_institution': pending_institution,
-                                   #'pending_contact': pending_contact,
                                    'debug': False,
-                                   #'debug_message': dir(current_contact)
                                    })
     else:
         return render_to_response('home/timeout.html')

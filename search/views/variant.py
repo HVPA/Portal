@@ -5,8 +5,8 @@
 # === License ===
 #
 # Last Author:   $Author: MelvinLuong $
-# Last Revision: $Rev: 881 $
-# Last Modified: $Date: 2014-07-22 15:44:08 +1000 (Tue, 22 Jul 2014) $ 
+# Last Revision: $Rev: 790 $
+# Last Modified: $Date: 2014-03-06 10:29:44 +1100 (Thu, 06 Mar 2014) $ 
 #
 # === Description ===
 #
@@ -19,7 +19,6 @@ from Portal.hvp.models.search.Patient import Patient
 from Portal.hvp.models.search.Gene import Gene
 from Portal.hvp.models.search.Variant import Variant
 from Portal.hvp.models.search.VariantInstance import VariantInstance
-from Portal.hvp.models.ref.RefDataType import RefDataType
 
 import urllib
 
@@ -32,7 +31,7 @@ from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Default view selects all Variants
-def variant_view(request, geneID, path_filter, path_filter_ratio, datatype_filter_id):
+def variant_view(request, geneID, path_filter, path_filter_ratio):
     template = 'variant'
     
     # kick user if they are not authenticated    
@@ -42,10 +41,7 @@ def variant_view(request, geneID, path_filter, path_filter_ratio, datatype_filte
     # kick user if they have not been verified
     if not request.user.get_profile().AccessStatus.ID == 2:
         return render_to_response('home/permission.html', {'user': request.user})
-    
-    # get ref_datatypes
-    refdatatypes = RefDataType.objects.all()
-    
+
     # searching/filtering for a specific variant search
     if 'search' in request.POST:
         if request.POST['searched_variant'] != '':
@@ -53,9 +49,10 @@ def variant_view(request, geneID, path_filter, path_filter_ratio, datatype_filte
             search_type = "variantType"            
             searched_variant = request.POST['searched_variant']
             return HttpResponseRedirect('/search/gene/' + geneID + 
-                                        '/searchvariant/' + urllib.quote(searched_variant) +
-                                        '/' + search_type + '/results/' + str(datatype_filter_id) + 
-                                        '/' + path_filter + '/' + path_filter_ratio + '/')
+                                        '/searchvariant/' + 
+                                        urllib.quote(searched_variant) +
+                                        '/' + search_type + '/results/' + path_filter + 
+                                        '/' + path_filter_ratio + '/')
                                         
     # apply path filters (filter the path set by community consensus)
     dict_path = Dict_path_filter(path_filter)
@@ -83,30 +80,23 @@ def variant_view(request, geneID, path_filter, path_filter_ratio, datatype_filte
     # query options filter by path count
     count_query_string = ''
     order_query_string = ' order by Instances desc '
-    
-    # add path filter query
     if path_ratio_id != '':
         count_query_string = """, (select count(hvp_variantinstance.Pathogenicity_id) as path 
                             from hvp_variantinstance 
                             where hvp_variantinstance.Variant_ID = hvp_variant.ID 
                             and hvp_variantinstance.pathogenicity_id = """ + str(path_ratio_id) + ') as Path_Count '
         order_query_string = ' order by Path_Count desc '
-    
-    # append data type filter query
-    datatype_query = ' '
-    if int(datatype_filter_id) != 1:
-        datatype_query = ' and hvp_variantinstance.DataType_id = ' + datatype_filter_id + ' '
-    
+
     query = """select hvp_variant.*, Count(hvp_variantinstance.Variant_id) as Instances, 
                 max(hvp_variantinstance.DateSubmitted) as DateSubmitted """ + count_query_string + """
                 from hvp_variant
                 left join hvp_variantinstance on hvp_variant.ID = hvp_variantinstance.Variant_id
                 left join hvp_gene on hvp_variant.Gene_id = hvp_gene.ID
                 where hvp_gene.GeneName = %s
-                """ + datatype_query + path_query_string + ' group by ID ' + order_query_string
+                """ + path_query_string + ' group by ID ' + order_query_string
     
     qs = Variant.objects.raw(query, params)
-    
+
     # get gene name to query variants from the same genename group
     geneName = Gene.objects.get(pk=geneID).GeneName
     #variant_list = Variant.objects.filter(Gene__GeneName = geneName)
@@ -137,8 +127,6 @@ def variant_view(request, geneID, path_filter, path_filter_ratio, datatype_filte
                                     'geneName' : geneName,
                                     'geneID' : geneID,
                                     'results' : results,
-                                    'refdatatypes' : refdatatypes,
-                                    'datatype_filter_id' : long(datatype_filter_id),
                                     'dict_path': dict_path,
                                     'path_filter': path_filter,
                                     'dict_path_ratio': dict_path_ratio,
@@ -146,8 +134,7 @@ def variant_view(request, geneID, path_filter, path_filter_ratio, datatype_filte
                                 })    
 
 
-def variant_results_view(request, geneID, searched_variant, search_type, path_filter, 
-    path_filter_ratio, datatype_filter_id):
+def variant_results_view(request, geneID, searched_variant, search_type, path_filter, path_filter_ratio):
     template = 'variant_result'
     
     if not request.user.is_authenticated():
@@ -155,10 +142,7 @@ def variant_results_view(request, geneID, searched_variant, search_type, path_fi
         
     if request.user.get_profile().AccessStatus.ID != 2:
         return render_to_response('home/permission.html', {'user': request.user})
-    
-    # get ref_datatypes
-    refdatatypes = RefDataType.objects.all()
-    
+        
     # searching/filtering for a specific variant search
     if 'search' in request.POST:
         if request.POST['searched_variant'] != '':
@@ -166,9 +150,10 @@ def variant_results_view(request, geneID, searched_variant, search_type, path_fi
             search_type = "variantType"            
             searched_variant = request.POST['searched_variant']
             return HttpResponseRedirect('/search/gene/' + geneID + 
-                                        '/searchvariant/' +  urllib.quote(searched_variant) +
-                                        '/' + search_type + '/results/' + str(datatype_filter_id) + 
-                                        '/' + path_filter + '/' + path_filter_ratio + '/')
+                                        '/searchvariant/' + 
+                                        urllib.quote(searched_variant) +
+                                        '/' + search_type + '/results/' + path_filter + 
+                                        '/' + path_filter_ratio + '/')
         else:
             # go back to the default variant page that lists all variants
             return HttpResponseRedirect('/search/gene/' + geneID +
@@ -242,18 +227,13 @@ def variant_results_view(request, geneID, searched_variant, search_type, path_fi
                                 where hvp_variantinstance.Variant_ID = v.ID
                                 and hvp_variantinstance.pathogenicity_id = """ + str(path_ratio_id) + ') as Path_Count '
             order_query_string = ' order by Path_Count desc '
-            
-        # append data type filter query
-        datatype_query = ' '
-        if int(datatype_filter_id) != 1:
-            datatype_query = ' and hvp_variantinstance.DataType_id = ' + datatype_filter_id + ' '
     
         query = 'select v.*, Count(hvp_variantinstance.Variant_id) as Instances' + count_query_string + """
                 from hvp_variant v
                 left join hvp_variantinstance on v.ID = hvp_variantinstance.Variant_id
                 left join hvp_gene on v.Gene_id = hvp_gene.ID
                 where hvp_gene.GeneName = %s 
-                """ + datatype_query + path_query_string + variant_query_string + ' group by ID ' + order_query_string
+                """ + path_query_string + variant_query_string + ' group by ID ' + order_query_string
         
         qs = Variant.objects.raw(query, params)                                
         variant_list = list(qs)
@@ -288,8 +268,6 @@ def variant_results_view(request, geneID, searched_variant, search_type, path_fi
                                'variants': variants,
                                'results': results, 
                                'search_tooShort': search_tooShort,
-                               'refdatatypes': refdatatypes,
-                               'datatype_filter_id': long(datatype_filter_id),
                                'path_filter': path_filter,
                                'dict_path': dict_path,
                                'dict_path_ratio': dict_path_ratio,
@@ -298,7 +276,7 @@ def variant_results_view(request, geneID, searched_variant, search_type, path_fi
                               context_instance=RequestContext(request))
        
 
-def variant_patient_view(request, geneID, variantID, instanceID, path_filter, path_filter_ratio, datatype_filter_id):
+def variant_patient_view(request, geneID, variantID, instanceID, path_filter, path_filter_ratio):
     template = 'variant_patient'
     
     if not request.user.is_authenticated():
@@ -306,8 +284,6 @@ def variant_patient_view(request, geneID, variantID, instanceID, path_filter, pa
         
     if request.user.get_profile().AccessStatus.ID != 2:
         return render_to_response('home/permission.html', {'user': request.user})
-    
-    refdatatypes = RefDataType.objects.all()
     
     gene = get_object_or_404(Gene, pk = geneID)
     instance = get_object_or_404(VariantInstance, pk = instanceID)
@@ -373,11 +349,6 @@ def variant_patient_view(request, geneID, variantID, instanceID, path_filter, pa
                             where hvp_variantinstance.Variant_ID = v.ID
                             and hvp_variantinstance.pathogenicity_id = """ + str(path_ratio_id) + ') as Path_Count '
         order_query_string = ' order by Path_Count desc '
-        
-    # append data type filter query
-    datatype_query = ' '
-    if int(datatype_filter_id) != 1:
-        datatype_query = ' and hvp_variantinstance.DataType_id = ' + datatype_filter_id + ' '
     
     query = """select v.*, hvp_variantinstance.Patient_id,
             	(select Count(hvp_variantinstance.Variant_id) as i from hvp_variantinstance 
@@ -386,7 +357,7 @@ def variant_patient_view(request, geneID, variantID, instanceID, path_filter, pa
             from hvp_variant v
             left join hvp_variantinstance on v.ID = hvp_variantinstance.Variant_id
             where hvp_variantinstance.Patient_id = %s 
-            """ + datatype_query + path_query_string + variant_query_string + ' group by ID ' + order_query_string
+            """ + path_query_string + variant_query_string + ' group by ID ' + order_query_string
     
     qs = Variant.objects.raw(query, params)
     
@@ -412,8 +383,6 @@ def variant_patient_view(request, geneID, variantID, instanceID, path_filter, pa
                                 'user': request.user,
                                 'template': template,
                                 'dict_path': dict_path,
-                                'datatype_filter_id': long(datatype_filter_id),
-                                'refdatatypes': refdatatypes,
                                 'path_filter': path_filter,
                                 'geneID': geneID,
                                 'variantID': variantID,

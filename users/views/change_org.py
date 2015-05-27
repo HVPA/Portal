@@ -42,12 +42,6 @@ def change_org_view(request):
             # get all user & user org
             user_profile = get_object_or_404(UserProfile, user = user)
             
-            # this is the current/old institution user is changing from
-            #old_user_institution = get_object_or_404(UserInstitution, CurrentInstitution = user)
-            # set the old user_institution to CurrentInstitution to be null 
-            #old_user_institution.CurrentInstitution = None            
-            #old_user_institution.save()
-            
             # create a new user institution
             new_user_institution = UserInstitution()
             new_institution_contact = InstitutionContact()
