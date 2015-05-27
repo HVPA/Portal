@@ -12,18 +12,6 @@
 #
 ################################################################################
 
-# local_settings.py
-# An un-svn'ed file which stores local (site/developer) settings which change frequently
-# This allows multiple developers to work on the code without svn commits causing conflicts
-# If local_settings.py does not exists, it simple uses a default
-# Only applies to settings within a use_local_settings if block
-use_local_settings = True
-try:
-    import local_settings
-    use_local_settings = True
-except:
-    use_local_settings = False
-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -31,103 +19,41 @@ ADMINS = (
     # ('HVP Admin', 'portal-admin@hvpaustralia.org.au'),
 )
 
+BASE_URL = ''
+
 MANAGERS = ADMINS
 
-if use_local_settings == True:
-    # Database Settings
-    DATABASES = {
-        # EXAMPLE DB settings, 'a la copy pasta'
-        #'example': {
-        #    'ENGINE': '',    # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        #    'NAME': '',      # Or path to database file if using sqlite3.
-        #    'USER': '',      # Not used with sqlite3.
-        #    'PASSWORD': '',  # Not used with sqlite3.
-        #    'HOST': '',      # Set to empty string for localhost. Not used with sqlite3.
-        #    'PORT': '',      # Set to empty string for default. Not used with sqlite3.
-        #}
-        
-        # DEFAULT HVP portal DB settings
-        'default': {
-            'ENGINE': local_settings.DATABASE_ENGINE_PORTAL, 
-            'NAME': local_settings.DATABASE_NAME_PORTAL,     
-            'USER': local_settings.DATABASE_USER_PORTAL,     
-            'PASSWORD': local_settings.DATABASE_PASSWORD_PORTAL, 
-            'HOST': local_settings.DATABASE_HOST_PORTAL, 
-            'PORT': local_settings.DATABASE_PORT_PORTAL 
-        },
-
-        # JOOMLA HVP Node DB settings
-        'joomla': {
-                'ENGINE': local_settings.DATABASE_ENGINE_SITE,
-                'NAME': local_settings.DATABASE_NAME_SITE,
-                'USER': local_settings.DATABASE_USER_SITE,
-                'PASSWORD': local_settings.DATABASE_PASSWORD_SITE,
-                'HOST': local_settings.DATABASE_HOST_SITE,
-                'PORT': local_settings.DATABASE_PORT_SITE
-        },
-        
-        # LABS DB settings
-        'labs': {
-                'ENGINE': local_settings.DATABASE_ENGINE_LABS,
-                'NAME': local_settings.DATABASE_NAME_LABS,
-                'USER': local_settings.DATABASE_USER_LABS,
-                'PASSWORD': local_settings.DATABASE_PASSWORD_LABS,
-                'HOST': local_settings.DATABASE_HOST_LABS,
-                'PORT': local_settings.DATABASE_PORT_LABS
-        }
+# Database Settings
+DATABASES = {        
+    # DEFAULT HVP portal DB settings
+    'default': {
+        'ENGINE': 'django.db.backends.mysql', 
+        'NAME': 'Portal',     
+        'USER': 'root',     
+        'PASSWORD': 'password', 
+        'HOST': 'localhost', 
+        'PORT': '3306'
+    },
+    
+    # LABS DB settings
+    'labs': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'Labs',
+            'USER': 'root',
+            'PASSWORD': 'password',
+            'HOST': 'localhost',
+            'PORT': '3306'
     }
+}
 
-    # EMAIL server settings
-    EMAIL_HOST = local_settings.EMAIL_HOST
-    EMAIL_PORT = local_settings.EMAIL_PORT
-    EMAIL_HOST_USER = local_settings.EMAIL_HOST_USER
-    EMAIL_HOST_PASSWORD = local_settings.EMAIL_HOST_PASSWORD
-    EMAIL_USE_TLS = local_settings.EMAIL_USE_TLS
-    PORTAL_URL = local_settings.PORTAL_URL
-    ADMIN_EMAIL = local_settings.ADMIN_EMAIL
-
-else:
-    # Database Settings
-    DATABASES = {        
-        # DEFAULT HVP portal DB settings
-        'default': {
-            'ENGINE': 'django.db.backends.mysql', 
-            'NAME': 'HVP',     
-            'USER': '',     
-            'PASSWORD': '', 
-            'HOST': '', 
-            'PORT': ''
-        },
-
-        # JOOMLA HVP Node DB settings
-        'joomla': {
-                'ENGINE': 'django.db.backends.mysql',
-                'NAME': '',
-                'USER': '',
-                'PASSWORD': '',
-                'HOST': '',
-                'PORT': ''
-        },
-        
-        # LABS DB settings
-        'labs': {
-                'ENGINE': 'django.db.backends.mysql',
-                'NAME': 'Labs',
-                'USER': '',
-                'PASSWORD': '',
-                'HOST': '',
-                'PORT': ''
-        }
-    }
-
-    # EMAIL server settings
-    EMAIL_HOST = 'mail.hvpaustralia.org.au'
-    EMAIL_PORT = '25'
-    EMAIL_HOST_USER = 'portal-admin'
-    EMAIL_HOST_PASSWORD = '&EWaGA9rev-4'
-    EMAIL_USE_TLS = False
-    PORTAL_URL = 'http://portal.hvpaustralia.org.au'
-    ADMIN_EMAIL = 'portal-admin@hvpaustralia.org.au'
+# EMAIL server settings
+EMAIL_HOST = 'mail.hvpaustralia.org.au'
+EMAIL_PORT = '25'
+EMAIL_HOST_USER = 'portal-admin'
+EMAIL_HOST_PASSWORD = 'PASSWORD'
+EMAIL_USE_TLS = False
+PORTAL_URL = 'http://portal.hvpaustralia.org.au'
+ADMIN_EMAIL = 'portal-admin@hvpaustralia.org.au'
 
 
 # Local time zone for this installation. Choices can be found here:
@@ -206,7 +132,6 @@ MIDDLEWARE_CLASSES = (
     #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'pagination.middleware.PaginationMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -214,13 +139,13 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'Portal.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'Portal.wsgi.application'
+# Comment this out if you are running in debug
+#WSGI_APPLICATION = 'Portal.wsgi.application'
 
 # Place the directory path of where your templates are 
-if use_local_settings == True:
-    HOME_DIR = local_settings.HOME_DIR
-else:
-    HOME_DIR = ''
+import os
+BASE_DIR = os.path.dirname(__file__)
+HOME_DIR = os.path.join(BASE_DIR, 'templates')
 
 TEMPLATE_DIRS = (
     HOME_DIR,
@@ -244,7 +169,6 @@ INSTALLED_APPS = (
     'Portal.hvp',
     'Portal.search',
     'Portal.users',
-    #'pagination',
     
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
@@ -263,19 +187,6 @@ SESSION_COOKIE_AGE = 6000
 
 # Set the model that extends the existing user attributes
 AUTH_PROFILE_MODULE = 'hvp.UserProfile'
-
-# Set the server for solr
-if use_local_settings == True:
-    SOLR_SERVER = local_settings.SOLR_SERVER
-else:
-    SOLR_SERVER = ''
-
-
-# The base url for the site
-if use_local_settings == True:
-    BASE_URL = local_settings.BASE_URL
-else:
-    BASE_URL = ''
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
