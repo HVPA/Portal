@@ -5,8 +5,8 @@
 # === License ===
 #
 # Last Author:   $Author: MelvinLuong $
-# Last Revision: $Rev: 856 $
-# Last Modified: $Date: 2014-06-25 16:51:33 +1000 (Wed, 25 Jun 2014) $ 
+# Last Revision: $Rev: 763 $
+# Last Modified: $Date: 2014-02-06 11:18:49 +1100 (Thu, 06 Feb 2014) $ 
 #
 # === Description ===
 #
@@ -15,7 +15,7 @@
 
 
 
-from django.conf.urls import *
+from django.conf.urls.defaults import *
 from Portal import settings
 
 # Uncomment the next two lines to enable the admin:
@@ -23,13 +23,6 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Example:
-    # (r'^Portal/', include('Portal.foo.urls')),
-
-    # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
-    # to INSTALLED_APPS to enable admin documentation:
-    # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
     
@@ -37,28 +30,28 @@ urlpatterns = patterns('',
     (r'^$', 'Portal.home.views.index_view'),
     (r'^login/$', 'Portal.home.views.index_view'),
     (r'^logout/$', 'Portal.home.views.logout_view'),
-    (r'^about/$', 'Portal.home.views.about_view'),
+    #(r'^about/$', 'Portal.home.views.about_view'),
     (r'^policy/$', 'Portal.home.views.policy_view'),
-    (r'^contact/$', 'Portal.home.views.contact_view'),
+    #(r'^contact/$', 'Portal.home.views.contact_view'),
     
     # aaf validation view
     (r'^aaf/$', 'Portal.home.views.aaf_auth_view'),
     
     # gene default page - displays top 5 genes in db
     (r'search/searchgene/$', 'Portal.search.views.gene.gene_view'),
+    
     # gene search results
     (r'search/searchgene/results/$', 'Portal.search.views.gene.gene_results_view'),
     
     # variant default page - lists all variants for selected gene ordered by total variant instance 
-    (r'search/gene/(?P<geneID>\d+)/searchvariant/(?P<datatype_filter_id>\d+)/(?P<path_filter>\w+)/(?P<path_filter_ratio>\w+)/$', 'Portal.search.views.variant.variant_view'),
+    (r'search/gene/(?P<geneID>\d+)/searchvariant/(?P<path_filter>\w+)/(?P<path_filter_ratio>\w+)/$', 'Portal.search.views.variant.variant_view'),
     
     # variant search results    
-    (r'search/gene/(?P<geneID>\d+)/searchvariant/(?P<searched_variant>[\w|\W]+)/(?P<search_type>\w+)/results/(?P<datatype_filter_id>\d+)/(?P<path_filter>\w+)/(?P<path_filter_ratio>\w+)/$', 
+    (r'search/gene/(?P<geneID>\d+)/searchvariant/(?P<searched_variant>[\w|\W]+)/(?P<search_type>\w+)/results/(?P<path_filter>\w+)/(?P<path_filter_ratio>\w+)/$', 
         'Portal.search.views.variant.variant_results_view'),
     
-    
     # variant instance results
-    (r'search/gene/(?P<geneID>\d+)/variant/(?P<variantID>\d+)/instance_result/(?P<datatype_filter_id>\d+)/(?P<path_filter>\w+)/(?P<sort_filter>\w+)/(?P<order_filter>\w+)/$', 
+    (r'search/gene/(?P<geneID>\d+)/variant/(?P<variantID>\d+)/instance_result/(?P<path_filter>\w+)/(?P<sort_filter>\w+)/(?P<order_filter>\w+)/$', 
         'Portal.search.views.variant_instance.variant_instance_view'),
 
     # variant instance details
@@ -66,11 +59,11 @@ urlpatterns = patterns('',
         'Portal.search.views.variant_instance.variant_instance_detail_view'),
         
     # variants from patient ID
-    (r'search/gene/(?P<geneID>\d+)/variant/(?P<variantID>\d+)/patient/(?P<instanceID>\d+)/(?P<datatype_filter_id>\d+)/(?P<path_filter>\w+)/(?P<path_filter_ratio>\w+)/$',
+    (r'search/gene/(?P<geneID>\d+)/variant/(?P<variantID>\d+)/patient/(?P<instanceID>\d+)/(?P<path_filter>\w+)/(?P<path_filter_ratio>\w+)/$',
         'Portal.search.views.variant.variant_patient_view'),
     
     # variant instance from patient ID
-    (r'search/gene/(?P<geneID>\d+)/variant/(?P<variantID>\d+)/patient/(?P<instanceID>\d+)/instance_result/(?P<datatype_filter_id>\d+)/(?P<path_filter>\w+)/(?P<sort_filter>\w+)/(?P<order_filter>\w+)/$',
+    (r'search/gene/(?P<geneID>\d+)/variant/(?P<variantID>\d+)/patient/(?P<instanceID>\d+)/instance_result/(?P<path_filter>\w+)/(?P<sort_filter>\w+)/(?P<order_filter>\w+)/$',
         'Portal.search.views.variant_instance.variant_instance_patient_view'),
         
     # variant instance details from patient ID
@@ -78,7 +71,7 @@ urlpatterns = patterns('',
         'Portal.search.views.variant_instance.variant_instance_detail_patient_view'),
         
     # variant instance from lab/org ID
-    (r'search/gene/(?P<geneID>\d+)/variant/(?P<variantID>\d+)/lab/instance_result/(?P<instanceID>\d+)/(?P<datatype_filter_id>\d+)/(?P<path_filter>\w+)/(?P<sort_filter>\w+)/(?P<order_filter>\w+)/$',
+    (r'search/gene/(?P<geneID>\d+)/variant/(?P<variantID>\d+)/lab/instance_result/(?P<instanceID>\d+)/(?P<path_filter>\w+)/(?P<sort_filter>\w+)/(?P<order_filter>\w+)/$',
         'Portal.search.views.variant_instance.variant_instance_lab_view'),
         
     # variant instance details from lab/org ID
@@ -103,11 +96,6 @@ urlpatterns = patterns('',
     (r'search/gene/(?P<geneID>\d+)/searchvariant/variant/(?P<variantID>\d+)/consensus/$',
         'Portal.search.views.consensus.consensus_view'),
     
-
-    # rest/json
-    (r'gene/(?P<geneID>\d+)/structure/$', 'Portal.search.views.rest_services.gene_structure_view'),
-    (r'gene/(?P<geneID>\d+)/variants/$', 'Portal.search.views.rest_services.variant_list_view'),
-
     # user request change org
     (r'user/change_org/', 'Portal.users.views.change_org.change_org_view'),
     
@@ -129,6 +117,7 @@ urlpatterns = patterns('',
     # for admin
     (r'request/$', 'Portal.users.views.laboratory_request.admin_laboratory_request_view'),
     (r'request/(?P<labRequestID>\d+)/$', 'Portal.users.views.laboratory_request.admin_laboratory_request_page_view'),
+   
     # for users
     (r'user/request/$', 'Portal.users.views.laboratory_request.user_laboratory_request_view'),
     (r'user/request/?P<labRequestID>\d+/$', 'Portal.users.views.laboratory_request.user_laboratory_request_page_view'),
@@ -138,7 +127,7 @@ urlpatterns = patterns('',
     
     # user signup
     (r'^signup/$', 'Portal.users.views.signup.signup_view'),
-        
+    
     # Data import
     (r'import/$', 'Portal.hvp.views.import_gene_view'),
 )
