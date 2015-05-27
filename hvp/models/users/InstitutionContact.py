@@ -26,5 +26,8 @@ class InstitutionContact (models.Model):
     
     UserInstitution = models.ForeignKey(UserInstitution, unique=True)
     
+    def __unicode__(self):
+        return str(self.ContactFirstName + ' ' + self.ContactLastName)
+    
     class Meta:
         app_label = 'hvp'

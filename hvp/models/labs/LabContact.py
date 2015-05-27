@@ -12,6 +12,10 @@ class LabContact( models.Model ):
     Fax = models.CharField('Fax Number', max_length=255, blank = True, null = True)
     Email = models.CharField('Email Address', max_length=255, blank = False, null = False)
     Lab = models.ForeignKey(LabDetail)
-
+    
+    def __unicode__(self):
+        return str(self.Email)
+    
     class Meta:
         app_label = 'hvp'
+    

@@ -14,10 +14,10 @@
 ################################################################################
 
 from Gene import Gene
+from GrhaniteHash import GrhaniteHash
+from HG_Build import HG_Build
 from Organisation import Organisation
 from Patient import Patient
 from Phenotype import Phenotype
 from Variant import Variant
 from VariantInstance import VariantInstance
-from GrhaniteHash import GrhaniteHash
-from HG_Build import HG_Build

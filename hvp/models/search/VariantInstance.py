@@ -5,8 +5,8 @@
 # === License ===
 #
 # Last Author:   $Author: MelvinLuong $
-# Last Revision: $Rev: 856 $
-# Last Modified: $Date: 2014-06-25 16:51:33 +1000 (Wed, 25 Jun 2014) $ 
+# Last Revision: $Rev: 728 $
+# Last Modified: $Date: 2013-12-20 14:44:12 +1100 (Fri, 20 Dec 2013) $ 
 #
 # === Description ===
 #
@@ -40,9 +40,11 @@ class VariantInstance( models.Model ):
     VariantSegregatesWithDisease = models.NullBooleanField( 'Variant Segregates with Disease', null = True )
     HistologyStored = models.NullBooleanField( 'Histology Stored', null = True )
     DateSubmitted = models.DateField( 'Date Submitted', blank = False, null = True )
-    #DataType = models.ForeignKey( ref.RefDataType, blank = True, null = True )
     Patient = models.ForeignKey( Patient )
     Organisation = models.ForeignKey( Organisation )
+    
+    def __unicode__(self):
+        return str(self.ID)
     
     class Meta:
         app_label = 'hvp'

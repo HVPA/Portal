@@ -20,6 +20,9 @@ class HG_Build( models.Model ):
     ID = models.AutoField( primary_key=True )
     BuildNumber = models.CharField( 'BuildNumber', max_length=255, blank = False, null = False )
 
+    def __unicode__(self):
+        return str(self.BuildNumber)
+
     class Meta:
         app_label = 'hvp'
         

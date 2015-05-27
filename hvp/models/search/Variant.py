@@ -5,8 +5,8 @@
 # === License ===
 #
 # Last Author:   $Author: MelvinLuong $
-# Last Revision: $Rev: 880 $
-# Last Modified: $Date: 2014-07-22 12:02:33 +1000 (Tue, 22 Jul 2014) $ 
+# Last Revision: $Rev: 755 $
+# Last Modified: $Date: 2014-02-03 17:09:58 +1100 (Mon, 03 Feb 2014) $ 
 #
 # === Description ===
 #
@@ -17,7 +17,7 @@ from django.db import models
 from Portal.hvp.models.search.Gene import Gene
 from Portal.hvp.models import ref
 
-class Variant( models.Model ):    
+class Variant( models.Model ):
     ID = models.AutoField( primary_key=True )
     Gene = models.ForeignKey( Gene )
     cDNA = models.CharField( 'cDNA', max_length=3276, blank = False, null = True )
@@ -44,7 +44,9 @@ class Variant( models.Model ):
     UpperRangeIntron = models.FloatField( 'UpperRange', blank = True, null = True )
     Operator = models.CharField( 'Operator', max_length = 255 , blank = True, null = True )
     OperatorValue = models.CharField( 'OperatorValue', max_length = 255, blank = True, null = True )
-    Allele = models.ForeignKey( ref.RefAllele, null = True )
+    
+    def __unicode__(self):
+        return str(self.ID)
     
     class Meta:
         app_label = 'hvp'
@@ -109,51 +111,3 @@ class Variant( models.Model ):
     # Unknown
     def count_instance_unknown(self):
         return self.count_instance(5)
-        
-    # count number of each Data Type
-    def count_dataType_list(self):
-        # get all the DataTypes
-        dataType_list = ref.RefDataType.objects.all()
-        
-        # list to store dataTypes and number of instances per datatype
-        dataType_list_count = []
-        
-        # count all the variant instance datatypes 
-        for dataType in dataType_list:
-            # ignore the first row "Show All"
-            if dataType.ID == 1:
-                continue
-            
-            query = """
-                    select hvp_variantinstance.ID
-                    from hvp_variantinstance
-                    left join hvp_variant on hvp_variantinstance.Variant_id = hvp_variant.ID
-                    left join hvp_refdatatype on hvp_variantinstance.DataType_id = hvp_refdatatype.ID
-                    where hvp_variant.ID = %s and hvp_refdatatype.ID = %s
-                    """
-            params = [self.ID, dataType.ID]
-            
-            from Portal.hvp.models.search.VariantInstance import VariantInstance
-            
-            qs = VariantInstance.objects.raw(query, params)
-            count = len(list(qs))
-            
-            dataType_list_count.append((dataType, count))
-        
-        # count the unknowns (variant instances without a set datatype)
-        query = """
-                select hvp_variantinstance.ID
-                from hvp_variantinstance
-                left join hvp_variant on hvp_variantinstance.Variant_id = hvp_variant.ID
-                left join hvp_refdatatype on hvp_variantinstance.DataType_id = hvp_refdatatype.ID
-                where hvp_variant.ID = %s and hvp_refdatatype.ID = %s
-                """
-        params = [self.ID, 'NULL']
-        qs = VariantInstance.objects.raw(query, params)
-        count = len(list(qs))
-        
-        dataType_list_count.append(('Unknown', count))
-            
-        return dataType_list_count
-        
-        

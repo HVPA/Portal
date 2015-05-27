@@ -15,9 +15,9 @@
 
 
 from Consensus import Consensus
-from LabRequest import LabRequest
-from UserInstitution import UserInstitution
 from InstitutionContact import InstitutionContact
-from UserProfile import UserProfile
 from LaboratoryGroup import LaboratoryGroup
+from LabRequest import LabRequest
 from UserDocument import UserDocument
+from UserInstitution import UserInstitution
+from UserProfile import UserProfile

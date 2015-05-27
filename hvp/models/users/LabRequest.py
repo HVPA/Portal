@@ -32,5 +32,8 @@ class LabRequest (models.Model):
     LabRequestStatus = models.ForeignKey(RefLabRequestStatus, null = False) # status of application
     StatusDateUpdated = models.DateField('StatusDateUpdated', blank = True, null = True) # if status has been changed, store the last date it was updated
     
+    def __unicode__(self):
+        return str(self.User.email)
+    
     class Meta:
         app_label = 'hvp'

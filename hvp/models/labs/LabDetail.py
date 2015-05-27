@@ -12,6 +12,9 @@ class LabDetail( models.Model ):
     State = models.ForeignKey(ref.RefState)
     Org_Hash = models.CharField( 'Hash Code', max_length=255, blank = False, null = False)
     HVP_ID = models.IntegerField()
+    
+    def __unicode__(self):
+        return str(self.Org_Name + ', ' + self.Lab_Name)
 
     class Meta:
         app_label = 'hvp'

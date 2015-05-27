@@ -26,5 +26,8 @@ class GrhaniteHash( models.Model ):
     Site =  models.ForeignKey( Organisation )
     PatientHash = models.ForeignKey( Patient )
 
+    def __unicode__(self):
+        return str(self.ID)
+
     class Meta:
         app_label = 'hvp'

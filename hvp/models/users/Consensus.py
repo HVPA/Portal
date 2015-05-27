@@ -26,5 +26,8 @@ class Consensus (models.Model):
     User = models.ForeignKey(User)
     Variant = models.ForeignKey(Variant)
     
+    def __unicode__(self):
+        return str(self.Variant.ID)
+    
     class Meta:
         app_label = 'hvp'

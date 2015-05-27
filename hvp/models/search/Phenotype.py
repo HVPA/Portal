@@ -25,5 +25,8 @@ class Phenotype( models.Model ):
     PhenotypeMethod = models.ForeignKey( ref.RefPhenotypeMethod )
     PhenotypeValue = models.CharField( 'Phenotype Value', max_length=255, blank = False, null = False )
     
+    def __unicode__(self):
+        return str(self.ID)
+    
     class Meta:
         app_label = 'hvp'

@@ -27,5 +27,8 @@ class LaboratoryGroup (models.Model):
     Phone = models.CharField('Phone', max_length=25, blank=False, null=False)
     Fax = models.CharField('Fax', max_length=25, blank=True, null=True)
     
+    def __unicode__(self):
+        return str(self.Name)
+    
     class Meta:
         app_label = 'hvp'

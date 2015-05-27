@@ -5,8 +5,8 @@
 # === License ===
 #
 # Last Author:   $Author: MelvinLuong $
-# Last Revision: $Rev: 856 $
-# Last Modified: $Date: 2014-06-25 16:51:33 +1000 (Wed, 25 Jun 2014) $ 
+# Last Revision: $Rev: 728 $
+# Last Modified: $Date: 2013-12-20 14:44:12 +1100 (Fri, 20 Dec 2013) $ 
 #
 # === Description ===
 #
@@ -41,9 +41,10 @@ class Gene( models.Model ):
     
     #Diseases = models.CharField( 'Diseases', max_length = 1024, blank = False, null = False )
     DiseasesTags = TaggableManager()
-
-    #Variants = models.ManyToMany(Variant)
-
+    
+    def __unicode__(self):
+        return str(self.GeneName)
+    
     class Meta:
         app_label = 'hvp'
     

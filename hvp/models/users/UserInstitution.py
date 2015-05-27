@@ -37,5 +37,8 @@ class UserInstitution (models.Model):
     PendingInstitution = models.OneToOneField(User, primary_key=False, null=True, related_name='PendingInstitution')
     BelongsTo = models.ForeignKey(User, related_name="InstitutionHistory")
     
+    def __unicode__(self):
+        return str(self.Name)
+    
     class Meta:
         app_label = 'hvp'

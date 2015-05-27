@@ -21,5 +21,8 @@ class UserDocument(models.Model):
     file = models.FileField(upload_to='uploads/')
     user = models.ForeignKey(User, editable=False, null = True)
     
+    def __unicode__(self):
+        return str(self.ID)
+    
     class Meta:
         app_label = 'hvp'

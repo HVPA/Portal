@@ -32,5 +32,8 @@ class UserProfile (models.Model ):
     # NB: 'user' needs to start in lowercase for UserProfile to work
     user = models.ForeignKey(User, unique=True)
     
+    def __unicode__(self):
+        return str(self.user.email)
+    
     class Meta:
         app_label = 'hvp'
