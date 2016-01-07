@@ -51,3 +51,6 @@ admin.site.register(search.Patient)
 admin.site.register(search.Phenotype)
 admin.site.register(search.Variant)
 admin.site.register(search.VariantInstance)
+
+admin.site.register(labs.LabDetail)
+admin.site.register(labs.LabContact)

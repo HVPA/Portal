@@ -16,3 +16,4 @@
 import ref
 import search
 import users
+import labs

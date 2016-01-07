@@ -45,8 +45,10 @@ def admin_laboratory_request_page_view(request, labRequestID):
             org_id = lab_request.VariantInstance.Organisation.HashCode
 
             # get lab and contact information
-            lab_details = LabDetail.objects.using('labs').get(Org_Hash=org_id)
-            lab_contacts = LabContact.objects.using('labs').filter(Lab=lab_details)
+            ##lab_details = LabDetail.objects.using('labs').get(Org_Hash=org_id)
+            ##lab_contacts = LabContact.objects.using('labs').filter(Lab=lab_details)
+            lab_details = LabDetail.objects.get(Org_Hash=org_id)
+            lab_contacts = LabContact.objects.filter(Lab=lab_details)
             
             # if admin grants user lab details
             if 'grant' in request.POST:
