@@ -1,0 +1,1549 @@
+[
+  {
+    "pk": 1, 
+    "model": "hvp.refaccessstatus", 
+    "fields": {
+      "AccessStatus": "Pending review/Not yet authenticated"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "hvp.refaccessstatus", 
+    "fields": {
+      "AccessStatus": "Application Granted"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "hvp.refaccessstatus", 
+    "fields": {
+      "AccessStatus": "Request change of organisation"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "hvp.refaccessstatus", 
+    "fields": {
+      "AccessStatus": "Application Rejected"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "hvp.refaccessstatus", 
+    "fields": {
+      "AccessStatus": "Request change of organisation"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Afghans"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Afrikaners"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Albanians"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Algerians"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Americans"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Andorrans"
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Angolans"
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Argentines"
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Armenians"
+    }
+  }, 
+  {
+    "pk": 10, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Aromanians"
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Arubans"
+    }
+  }, 
+  {
+    "pk": 12, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Australians"
+    }
+  }, 
+  {
+    "pk": 13, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Indigenous Australians"
+    }
+  }, 
+  {
+    "pk": 14, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Austrians"
+    }
+  }, 
+  {
+    "pk": 15, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Azerbaijanis"
+    }
+  }, 
+  {
+    "pk": 16, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Bahamians"
+    }
+  }, 
+  {
+    "pk": 17, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Bahrainis"
+    }
+  }, 
+  {
+    "pk": 18, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Balochi"
+    }
+  }, 
+  {
+    "pk": 19, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Bangladeshis"
+    }
+  }, 
+  {
+    "pk": 20, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Barbadians"
+    }
+  }, 
+  {
+    "pk": 21, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Belarusians"
+    }
+  }, 
+  {
+    "pk": 22, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Belgians"
+    }
+  }, 
+  {
+    "pk": 23, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Belizeans"
+    }
+  }, 
+  {
+    "pk": 24, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Boers"
+    }
+  }, 
+  {
+    "pk": 25, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Bosnians"
+    }
+  }, 
+  {
+    "pk": 26, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Brazilians"
+    }
+  }, 
+  {
+    "pk": 27, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Breton people"
+    }
+  }, 
+  {
+    "pk": 28, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "British people"
+    }
+  }, 
+  {
+    "pk": 29, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "British Virgin Islanders"
+    }
+  }, 
+  {
+    "pk": 30, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Bulgarians"
+    }
+  }, 
+  {
+    "pk": 31, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Burkinab\u00e8s"
+    }
+  }, 
+  {
+    "pk": 32, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Burundians"
+    }
+  }, 
+  {
+    "pk": 33, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Cambodians"
+    }
+  }, 
+  {
+    "pk": 34, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Cameroonians"
+    }
+  }, 
+  {
+    "pk": 35, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Canadians"
+    }
+  }, 
+  {
+    "pk": 36, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Catalans"
+    }
+  }, 
+  {
+    "pk": 37, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Cape Verdeans"
+    }
+  }, 
+  {
+    "pk": 38, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Chadians"
+    }
+  }, 
+  {
+    "pk": 39, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Chileans"
+    }
+  }, 
+  {
+    "pk": 40, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Chinese"
+    }
+  }, 
+  {
+    "pk": 41, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Colombians"
+    }
+  }, 
+  {
+    "pk": 42, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Comorians"
+    }
+  }, 
+  {
+    "pk": 43, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Congolese"
+    }
+  }, 
+  {
+    "pk": 44, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Croatians"
+    }
+  }, 
+  {
+    "pk": 45, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Cubans"
+    }
+  }, 
+  {
+    "pk": 46, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Cypriots"
+    }
+  }, 
+  {
+    "pk": 47, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Turkish Cypriots"
+    }
+  }, 
+  {
+    "pk": 48, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Czechs"
+    }
+  }, 
+  {
+    "pk": 49, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Danes"
+    }
+  }, 
+  {
+    "pk": 50, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Dominicans"
+    }
+  }, 
+  {
+    "pk": 51, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Eastern Caribbean"
+    }
+  }, 
+  {
+    "pk": 52, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Dutch"
+    }
+  }, 
+  {
+    "pk": 53, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "East Timorese"
+    }
+  }, 
+  {
+    "pk": 54, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Ecuadorians"
+    }
+  }, 
+  {
+    "pk": 55, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Egyptians"
+    }
+  }, 
+  {
+    "pk": 56, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "UAE Nationals"
+    }
+  }, 
+  {
+    "pk": 57, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "English"
+    }
+  }, 
+  {
+    "pk": 58, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Eritreans"
+    }
+  }, 
+  {
+    "pk": 59, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Estonians"
+    }
+  }, 
+  {
+    "pk": 60, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Ethiopians"
+    }
+  }, 
+  {
+    "pk": 61, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Finns"
+    }
+  }, 
+  {
+    "pk": 62, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Finnish Swedes"
+    }
+  }, 
+  {
+    "pk": 63, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Fijians"
+    }
+  }, 
+  {
+    "pk": 64, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Filipinos"
+    }
+  }, 
+  {
+    "pk": 65, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "French"
+    }
+  }, 
+  {
+    "pk": 66, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Georgians"
+    }
+  }, 
+  {
+    "pk": 67, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Germans"
+    }
+  }, 
+  {
+    "pk": 68, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Baltic Germans"
+    }
+  }, 
+  {
+    "pk": 69, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Ghanaians"
+    }
+  }, 
+  {
+    "pk": 70, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Gibraltarians"
+    }
+  }, 
+  {
+    "pk": 71, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Greeks"
+    }
+  }, 
+  {
+    "pk": 72, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Grenadians"
+    }
+  }, 
+  {
+    "pk": 73, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Guatemalans"
+    }
+  }, 
+  {
+    "pk": 74, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Guianese (French)"
+    }
+  }, 
+  {
+    "pk": 75, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Guineans"
+    }
+  }, 
+  {
+    "pk": 76, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Guinea-Bissau nationals"
+    }
+  }, 
+  {
+    "pk": 77, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Guyanese"
+    }
+  }, 
+  {
+    "pk": 78, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Haitians"
+    }
+  }, 
+  {
+    "pk": 79, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Hondurans"
+    }
+  }, 
+  {
+    "pk": 80, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Hong Kong"
+    }
+  }, 
+  {
+    "pk": 81, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Hungarians"
+    }
+  }, 
+  {
+    "pk": 82, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Icelanders"
+    }
+  }, 
+  {
+    "pk": 83, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Indians"
+    }
+  }, 
+  {
+    "pk": 84, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Indonesians"
+    }
+  }, 
+  {
+    "pk": 85, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Iranians"
+    }
+  }, 
+  {
+    "pk": 86, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Iraqis"
+    }
+  }, 
+  {
+    "pk": 87, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Irish"
+    }
+  }, 
+  {
+    "pk": 88, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Israelis"
+    }
+  }, 
+  {
+    "pk": 89, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Italians"
+    }
+  }, 
+  {
+    "pk": 90, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Ivoirians"
+    }
+  }, 
+  {
+    "pk": 91, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Jamaicans"
+    }
+  }, 
+  {
+    "pk": 92, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Japanese"
+    }
+  }, 
+  {
+    "pk": 93, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Jordanians"
+    }
+  }, 
+  {
+    "pk": 94, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Kazakhs"
+    }
+  }, 
+  {
+    "pk": 95, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Kenyans"
+    }
+  }, 
+  {
+    "pk": 96, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Koreans"
+    }
+  }, 
+  {
+    "pk": 97, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Kosovars"
+    }
+  }, 
+  {
+    "pk": 98, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Kuwaitis"
+    }
+  }, 
+  {
+    "pk": 99, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Lao"
+    }
+  }, 
+  {
+    "pk": 100, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Latvians"
+    }
+  }, 
+  {
+    "pk": 101, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Lebanese"
+    }
+  }, 
+  {
+    "pk": 102, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Liberians"
+    }
+  }, 
+  {
+    "pk": 103, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Libyans"
+    }
+  }, 
+  {
+    "pk": 104, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Liechtensteiners"
+    }
+  }, 
+  {
+    "pk": 105, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Lithuanians"
+    }
+  }, 
+  {
+    "pk": 106, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Luxembourgers"
+    }
+  }, 
+  {
+    "pk": 107, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Macedonians"
+    }
+  }, 
+  {
+    "pk": 108, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Malawians"
+    }
+  }, 
+  {
+    "pk": 109, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Malaysians"
+    }
+  }, 
+  {
+    "pk": 110, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Maldivians"
+    }
+  }, 
+  {
+    "pk": 111, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Malians"
+    }
+  }, 
+  {
+    "pk": 112, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Maltese"
+    }
+  }, 
+  {
+    "pk": 113, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Manx"
+    }
+  }, 
+  {
+    "pk": 114, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Mauritians"
+    }
+  }, 
+  {
+    "pk": 115, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Mexicans"
+    }
+  }, 
+  {
+    "pk": 116, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Moldovans"
+    }
+  }, 
+  {
+    "pk": 117, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Moroccans"
+    }
+  }, 
+  {
+    "pk": 118, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Mongolians"
+    }
+  }, 
+  {
+    "pk": 119, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Montenegrins"
+    }
+  }, 
+  {
+    "pk": 120, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Namibians"
+    }
+  }, 
+  {
+    "pk": 121, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Nepalese"
+    }
+  }, 
+  {
+    "pk": 122, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "New Zealanders"
+    }
+  }, 
+  {
+    "pk": 123, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Nicaraguans"
+    }
+  }, 
+  {
+    "pk": 124, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Nigeriens"
+    }
+  }, 
+  {
+    "pk": 125, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Nigerians"
+    }
+  }, 
+  {
+    "pk": 126, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Norwegians"
+    }
+  }, 
+  {
+    "pk": 127, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Pakistanis"
+    }
+  }, 
+  {
+    "pk": 128, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Palauans"
+    }
+  }, 
+  {
+    "pk": 129, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Palestinians"
+    }
+  }, 
+  {
+    "pk": 130, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Panamanians"
+    }
+  }, 
+  {
+    "pk": 131, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Papua New Guineans"
+    }
+  }, 
+  {
+    "pk": 132, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Paraguayans"
+    }
+  }, 
+  {
+    "pk": 133, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Peruvians"
+    }
+  }, 
+  {
+    "pk": 134, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Poles"
+    }
+  }, 
+  {
+    "pk": 135, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Portuguese"
+    }
+  }, 
+  {
+    "pk": 136, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Punjabis"
+    }
+  }, 
+  {
+    "pk": 137, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Puerto Ricans"
+    }
+  }, 
+  {
+    "pk": 138, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Quebecers"
+    }
+  }, 
+  {
+    "pk": 139, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "R\u00e9unionnais"
+    }
+  }, 
+  {
+    "pk": 140, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Romanians"
+    }
+  }, 
+  {
+    "pk": 141, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Russians"
+    }
+  }, 
+  {
+    "pk": 142, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Baltic Russians"
+    }
+  }, 
+  {
+    "pk": 143, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Rwandans"
+    }
+  }, 
+  {
+    "pk": 144, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Salvadorans"
+    }
+  }, 
+  {
+    "pk": 145, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "S\u00e3o Tom\u00e9 and Pr\u00edncipe"
+    }
+  }, 
+  {
+    "pk": 146, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Saudis"
+    }
+  }, 
+  {
+    "pk": 147, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Scots"
+    }
+  }, 
+  {
+    "pk": 148, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Senegalese"
+    }
+  }, 
+  {
+    "pk": 149, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Serbs"
+    }
+  }, 
+  {
+    "pk": 150, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Sicilians"
+    }
+  }, 
+  {
+    "pk": 151, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Sierra Leoneans"
+    }
+  }, 
+  {
+    "pk": 152, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Singaporeans"
+    }
+  }, 
+  {
+    "pk": 153, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Slovaks"
+    }
+  }, 
+  {
+    "pk": 154, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Slovenians"
+    }
+  }, 
+  {
+    "pk": 155, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Somalis"
+    }
+  }, 
+  {
+    "pk": 156, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "South Africans"
+    }
+  }, 
+  {
+    "pk": 157, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Spaniards"
+    }
+  }, 
+  {
+    "pk": 158, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Sri Lankans"
+    }
+  }, 
+  {
+    "pk": 159, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Sudanese"
+    }
+  }, 
+  {
+    "pk": 160, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Swedes"
+    }
+  }, 
+  {
+    "pk": 161, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Swiss"
+    }
+  }, 
+  {
+    "pk": 162, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Syrians"
+    }
+  }, 
+  {
+    "pk": 163, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Taiwanese"
+    }
+  }, 
+  {
+    "pk": 164, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Tanzanians"
+    }
+  }, 
+  {
+    "pk": 165, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Thais"
+    }
+  }, 
+  {
+    "pk": 166, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Tibetans"
+    }
+  }, 
+  {
+    "pk": 167, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Tobagonians"
+    }
+  }, 
+  {
+    "pk": 168, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Trinidadians"
+    }
+  }, 
+  {
+    "pk": 169, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Turks"
+    }
+  }, 
+  {
+    "pk": 170, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Tuvaluans"
+    }
+  }, 
+  {
+    "pk": 171, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Ugandans"
+    }
+  }, 
+  {
+    "pk": 172, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Ukrainians"
+    }
+  }, 
+  {
+    "pk": 173, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Uruguayans"
+    }
+  }, 
+  {
+    "pk": 174, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Venezuelans"
+    }
+  }, 
+  {
+    "pk": 175, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Vietnamese"
+    }
+  }, 
+  {
+    "pk": 176, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Welsh"
+    }
+  }, 
+  {
+    "pk": 177, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Yemenis"
+    }
+  }, 
+  {
+    "pk": 178, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Zambians"
+    }
+  }, 
+  {
+    "pk": 179, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Zimbabweans"
+    }
+  }, 
+  {
+    "pk": 180, 
+    "model": "hvp.refethnicity", 
+    "fields": {
+      "Ethnicity": "Unknown"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "hvp.reflabrequeststatus", 
+    "fields": {
+      "RequestStatus": "Pending"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "hvp.reflabrequeststatus", 
+    "fields": {
+      "RequestStatus": "Granted"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "hvp.reflabrequeststatus", 
+    "fields": {
+      "RequestStatus": "Rejected"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "hvp.refpathogenicity", 
+    "fields": {
+      "Pathogenicity": "Class 1 - Certainly not pathogenic"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "hvp.refpathogenicity", 
+    "fields": {
+      "Pathogenicity": "Class 2 - Unlikely to be pathogenic"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "hvp.refpathogenicity", 
+    "fields": {
+      "Pathogenicity": "Class 4 - Likely to be pathogenic"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "hvp.refpathogenicity", 
+    "fields": {
+      "Pathogenicity": "Class 5 - Certainly pathogenic"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "hvp.refpathogenicity", 
+    "fields": {
+      "Pathogenicity": "Class 3 - Unknown"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "hvp.refphenotypefeature", 
+    "fields": {
+      "PhenotypeFeature": "Disease name"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "hvp.refphenotypefeature", 
+    "fields": {
+      "PhenotypeFeature": "Diagnosis age"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "hvp.refphenotypefeature", 
+    "fields": {
+      "PhenotypeFeature": "Align-GVGD value"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "hvp.refphenotypefeature", 
+    "fields": {
+      "PhenotypeFeature": "SIFT value"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "hvp.refphenotypemethod", 
+    "fields": {
+      "PhenotypeMethod": "Diagnosis"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "hvp.refphenotypemethod", 
+    "fields": {
+      "PhenotypeMethod": "Program"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "hvp.refsamplesource", 
+    "fields": {
+      "SampleSource": "DNA"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "hvp.refstate", 
+    "fields": {
+      "State": "ACT"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "hvp.refstate", 
+    "fields": {
+      "State": "NSW"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "hvp.refstate", 
+    "fields": {
+      "State": "NT"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "hvp.refstate", 
+    "fields": {
+      "State": "QLD"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "hvp.refstate", 
+    "fields": {
+      "State": "SA"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "hvp.refstate", 
+    "fields": {
+      "State": "TAS"
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "hvp.refstate", 
+    "fields": {
+      "State": "VIC"
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "hvp.refstate", 
+    "fields": {
+      "State": "WA"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "hvp.reftitle", 
+    "fields": {
+      "Title": "Mr."
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "hvp.reftitle", 
+    "fields": {
+      "Title": "Mrs."
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "hvp.reftitle", 
+    "fields": {
+      "Title": "Ms."
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "hvp.reftitle", 
+    "fields": {
+      "Title": "Miss."
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "hvp.reftitle", 
+    "fields": {
+      "Title": "Dr."
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "hvp.reftitle", 
+    "fields": {
+      "Title": "Professor"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "hvp.refusageintention", 
+    "fields": {
+      "UsageIntention": "Clinical"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "hvp.refusageintention", 
+    "fields": {
+      "UsageIntention": "Laboratory"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "hvp.refusageintention", 
+    "fields": {
+      "UsageIntention": "Academic research"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "hvp.refvariantclass", 
+    "fields": {
+      "VariantClass": "Genomic"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "hvp.refvariantclass", 
+    "fields": {
+      "VariantClass": "cDNA"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "hvp.refvariantclass", 
+    "fields": {
+      "VariantClass": "Protein"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "hvp.refvariantclass", 
+    "fields": {
+      "VariantClass": "mRNA"
+    }
+  }
+]
