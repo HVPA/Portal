@@ -17,7 +17,7 @@ from django.db import models
 
 class RefTitle (models.Model):
     ID = models.AutoField( primary_key = True )
-    Title = models.CharField('Title', max_length=5, blank=True)
+    Title = models.CharField('Title', max_length=20, blank=True)
     
     def __unicode__(self):
         return self.Title
