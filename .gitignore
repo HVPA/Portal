@@ -1,4 +1,4 @@
 .tox/
 HVPA_Portal.egg-info/
 errors*.log
-
+*.pyc
