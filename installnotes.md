@@ -63,20 +63,27 @@ Answer the following:
 > Remove test database and access to it? [Y/n] y
 
 > Reload privilege tables now? [Y/n] y
+
 ```
 sudo apt-get install python-dev libmysqlclient-dev
 ```
+
 Make databases for the Node
+
 ```
 mysql -u root -p
 ```
+
 NOTE: In theory you can host the Labs database on different server/credentials for extra security
 But for the purposes of these instructions we will combine them in the one database
+
 ```
 mysql> CREATE DATABASE Portal;
 mysql> CREATE DATABASE SiteConf;
 ```
+
 Make a db user for the portal. Please note the username and password for later
+
 ```
 mysql> CREATE USER 'portalproxy'@'localhost' IDENTIFIED BY 'pr0xyPASS';
 mysql> GRANT ALL PRIVILEGES ON Portal.* to 'portalproxy'@'localhost';
@@ -84,38 +91,52 @@ mysql> GRANT ALL PRIVILEGES ON SiteConf.* to 'portalproxy'@'localhost';
 mysql> FLUSH PRIVILEGES;
 mysql> exit
 ```
+
 Test by
+
 ```
 mysql -u portalproxy -p Portal
 ```
 
 ## Setup django and dependencies under virtual env for Apache/WSGI to run
 
-`sudo pip install virtualenv
+```
+sudo pip install virtualenv
 
-`cd HVP/
-`virtualenv hvpenv
-`source hvpenv/bin/activate
-
-`pip install django==1.4.2
-`pip install django-taggit==0.12.2
-`pip install PyJWT
-`pip install MySQL-python
-`pip install tox
+cd HVP/
+virtualenv hvpenv
+source hvpenv/bin/activate
+pip install django==1.4.2
+pip install django-taggit==0.12.2
+pip install PyJWT
+pip install MySQL-python
+pip install tox
+```
 
 For SiteConf
-`pip install django-tastypie==0.9.14
+```
+pip install django-tastypie==0.9.14
+```
 
 For VariantIndexer
-`pip install suds
-For VariantImporter
-`pip install pyCrypto
-`pip install biopython
 
+```
+pip install suds
+```
+
+For VariantImporter
+
+```
+pip install pyCrypto
+pip install biopython
+```
 
 Setup portal
-`cd Portal/
-`tox
+
+```
+cd Portal/
+tox
+```
 
 Edit settings.py with preferred editor. e.g. vim settings.py
 1) Under DATABASES, ‘default’ ensure:
@@ -128,24 +149,35 @@ add ‘/var/HVP/hvpenv/django/contrib/admin/templates’ to the list
 
 
 Create database schemas using DJANGO
-`python manage.py syncdb
+
+```
+python manage.py syncdb
+```
+
 You will be asked to make django superuser
 Answer the following:
 > Would you like to create one now? (yes/no): yes
+
 > Username (leave blank to use 'alan'): admin
+
 > E-mail address: admin@example.com
+
 > Password: 
+
 > Password (again): 
+
 Please make note of it in /etc/hvp.secrets
 
 Load initial data. You may want to alter the data first depending on your node’s needs
-`python manage.py loaddata hvp/fixtures/gene.json 
-`python manage.py loaddata hvp/fixtures/ref.json 
-`python manage.py loaddata hvp/fixtures/hg_build.json 
+
+```
+python manage.py loaddata hvp/fixtures/gene.json 
+python manage.py loaddata hvp/fixtures/ref.json 
+python manage.py loaddata hvp/fixtures/hg_build.json 
+```
 
 Edit Portal/apache/django.wsgi
 Insert value for portal_site_path variable to the parent directory of Portal. e.g. /var/HVP/
-
 
 
 ## Setup apache
