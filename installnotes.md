@@ -373,9 +373,12 @@ Copy it the result. You will need to reference this multiple times
 Use the DJANGO administrator to assist adding new data you will need to use both the Portal’s administrator and the SiteConf to complete this process.
 
 Start with Portal administrator
+
 **! Using a web browser, go to your portal’s URL with /admin/ at the end of the url**
+
 E.g. http://xx.xx.xx.xx/admin/
 
+```
 Login with your administrator user name and password for the Portal site
 
 Under Hvp > Organisations, click ‘+Add’, and paste the hash code in the text box. Click ‘Save’
@@ -393,7 +396,7 @@ Under Hvp > Lab contacts, click ‘+add’
 Here we enter the person who is the main contact for that site
 
 You can also use this administrator to update details for these labs as they change.
-
+```
 
 Next, we set the SiteConf
 
@@ -401,6 +404,7 @@ Next, we set the SiteConf
 
 E.g. http://xx.xx.xx.xx/siteconf/admin/
 
+```
 Login with your administrator user name and password for the SiteConf site
 
 Under Orgsite > Org sites, click ‘+Add’
@@ -410,6 +414,7 @@ Here we enter the hash code again and the ID of the Organisation ID from Portal
 Click Home under breadcrumbs to return
 
 Under Upload > Uploads, click ‘+Add’
+```
 
 Here we initialise the details for a plugin the lab will receive from the exporter. A brief explanation of the fields are as follows:
 
@@ -433,6 +438,7 @@ Here we initialise the details for a plugin the lab will receive from the export
 
 
 An example URL to access a value assuming the above values have been used:
+
 http://localhost:8000/api/v1/orgsite/1/?OrgHashCode=123_test&username=siteconf&api_key=3020577c5bd111b889bb5cdd0cda80aee376fd2c
 
 
