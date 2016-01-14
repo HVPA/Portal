@@ -184,28 +184,40 @@ Insert value for portal_site_path variable to the parent directory of Portal. e.
 
 There is an example apache configuration file in the Portal repository
 The following instructions help guide how to use it
-`cp Portal/apache/example-apache.conf /etc/apache2/sites-available/hvpportal.conf
-`cd /etc/apache2/sites-enabled
-`ln -s ../sites-available/hvpportal.conf 
+
+```
+cp Portal/apache/example-apache.conf /etc/apache2/sites-available/hvpportal.conf
+cd /etc/apache2/sites-enabled
+ln -s ../sites-available/hvpportal.conf 
+```
 
 Review the hvpportal.conf file for location differences if you have used different paths
 Review the hvpportal.conf file for apache changes required if the server you are using has existing apache services
 
 
 Enable proxy pass for WebReceiver to be hosted on the same server
-`cd /etc/apache2/mods-enabled
-`ln -s ../mods-available/proxy.conf 
-`ln -s ../mods-available/proxy_connect.load 
-`ln -s ../mods-available/proxy_ftp.conf 
-`ln -s ../mods-available/proxy_ftp.load 
-`ln -s ../mods-available/proxy_http.load 
-`ln -s ../mods-available/proxy.load
+
+```
+cd /etc/apache2/mods-enabled
+ln -s ../mods-available/proxy.conf 
+ln -s ../mods-available/proxy_connect.load 
+ln -s ../mods-available/proxy_ftp.conf 
+ln -s ../mods-available/proxy_ftp.load 
+ln -s ../mods-available/proxy_http.load 
+ln -s ../mods-available/proxy.load
+```
 
 Test the config to see if there are any errors
-`apachectl configtest
+
+```
+apachectl configtest
+```
 
 Restart Apache for changes to take affect
-`apachectl restart
+
+```
+apachectl restart
+```
 
 
 
@@ -228,7 +240,11 @@ Look for the variable ‘path’ in the first few lines of the file. Set this to
 You can setup a cron job to run these commands on a periodic basis. 
 Review the frequency and path locations of VariantIndexer/crontab-example.txt and change as needed
 Copy the contents of VariantIndexer/crontab-example.txt
-`crontab -e
+
+```
+crontab -e
+```
+
 Paste the contents into the crontab, save and exit
 
 
@@ -237,19 +253,27 @@ There are two applications here:
    WebReceiver.py - a web service which waits for incoming submissions
    VariantImporter.py - an application executed nightly to process the submissions from the previous day
 
-`cd /var/HVP/VariantImporter/
-`mkdir -p temp output diff complete keys
-
+```
+cd /var/HVP/VariantImporter/
+mkdir -p temp output diff complete keys
+```
 
 Generate the node's public/private key
-`pushd Utils/
-`python HVP_Encryption.py -c --keyname=hvp
+
+```
+pushd Utils/
+python HVP_Encryption.py -c --keyname=hvp
+```
+
 This generates a public private key pair.
    The private one in the main VariantImporter folder
    The public one in the VariantImporter/keys folder. This is freely given to the labs
-`mv hvp.private ../
-`mv hvp.public ../keys/
-`popd
+
+```
+mv hvp.private ../
+mv hvp.public ../keys/
+popd
+```
 
 Edit WebReceive.py.cfg
 There shouldn’t be anything here to change if you followed the above instructions
@@ -265,7 +289,9 @@ Ensure the ‘username’, ‘password’, and ‘database’ values are set to 
 This is a service the VariantExporters communicate with for settings and configurations
 It allows a HVP operator to support some of the configurations of the system at the remote sites
 
-`cd /var/HVP/SiteConf/
+```
+cd /var/HVP/SiteConf/
+```
 
 Edit SiteConf/settings.py
 Under DATABASES, ‘default’ ensure:
@@ -275,22 +301,33 @@ Under DATABASES, ‘default’ ensure:
 are set to connect to SiteConf database
 
 Create the database schema
-`python manage.py syncdb
+
+```
+python manage.py syncdb
+```
+
 You will be asked to make django superuser
 Answer the following:
 > Would you like to create one now? (yes/no): yes
+
 > Username (leave blank to use 'alan'): siteconf
+
 > E-mail address: admin@example.com
+
 > Password: 
+
 > Password (again): 
+
 Please make note of it in /etc/hvp.secrets
 
 Create an API key that allows VariantExporters to speak to SiteConf
-`mysql -u portalproxy -p SiteConf
-`mysql> INSERT INTO tastypie_apikey (user_id, `key`) VALUES (1,'3020577c5bd111b889bb5cdd0cda80aee376fd2c');
+
+```
+mysql -u portalproxy -p SiteConf
+mysql> INSERT INTO tastypie_apikey (user_id, `key`) VALUES (1,'3020577c5bd111b889bb5cdd0cda80aee376fd2c');
+```
+
 You can use a different key value if you like
-
-
 
 ## Adding the first admin user for HVP Portal
 For the purposes of approving users and requests, there should be at least one user appointed with the responsibility of
@@ -317,8 +354,12 @@ A Site is an individual laboratory group with their own instance of the VariantE
 
 Generate a new hash code for this organisation. You can use anything you like as long as you stick to the same generator.
 We have implemented a simple generator for this purpose.
-`cd OrgHashGenerator
-`python OrgHashGenerator
+
+```
+cd OrgHashGenerator
+python OrgHashGenerator
+```
+
 Copy it the result. You will need to reference this multiple times
 
 
@@ -332,9 +373,12 @@ Login with your administrator user name and password for the Portal site
 Under Hvp > Organisations, click ‘+Add’, and paste the hash code in the text box. Click ‘Save’
 Click Home under breadcrumbs to return
 Under Hvp > Lab details, click ‘+Add’
+
 > Here we enter the details of this organisation. You will need to paste the Hash code here too
+
 Click Home under breadcrumbs to return
 Under Hvp > Lab contacts, click ‘+add’
+
 > Here we enter the person who is the main contact for that site
 
 You can also use this administrator to update details for these labs as they change.
@@ -350,16 +394,26 @@ Under Orgsite > Org sites, click ‘+Add’
 > Here we enter the hash code again and the ID of the Organisation ID from Portal
 Click Home under breadcrumbs to return
 Under Upload > Uploads, click ‘+Add’
+
 > Here we initialise the details for a plugin the lab will receive from the exporter. A brief explanation of the fields are as
 follows:
+
 >   Name: Name of this plugin for this site
+
 >   DataSourceType: The type of the plugin. Refer to the Exporter codebase
+
 >   DataSourceName: This can be left blank for the initial setup. It is the location of any file/folder it is expecting to load from locally
+
 >   Databasename: Equivalent of DataSourceName for database connections
+
 >   UserName: A default name of uploaders submitting data for this plugin
+
 >   Password: A Secret used to encrypt information with. It will be compiled into the Exporter for this site in the Configuration.xml
+
 >   Plugin: The name of the .dll (locally)
+
 >   RefMapper: The name of the local xml file it will use to map local terminology to HVP
+
 >   OrgSite: The site for this plugin
 
 
