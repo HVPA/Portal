@@ -139,14 +139,8 @@ tox
 ```
 
 Edit settings.py with preferred editor. e.g. vim settings.py
-1) Under DATABASES, ‘default’ ensure:
-   ’NAME’ (of database), 
-   ’USER’,
-   and ‘PASSWORD’
-are set to connect to Portal database
-2) Under TEMPLATE_DIR
-add ‘/var/HVP/hvpenv/django/contrib/admin/templates’ to the list
-
+1. Under DATABASES, ‘default’ ensure: ’NAME’ (of database), ’USER’, and ‘PASSWORD’ are set to connect to Portal database
+2. Under TEMPLATE_DIR add ‘/var/HVP/hvpenv/django/contrib/admin/templates’ to the list
 
 Create database schemas using DJANGO
 
@@ -176,7 +170,8 @@ python manage.py loaddata hvp/fixtures/ref.json
 python manage.py loaddata hvp/fixtures/hg_build.json 
 ```
 
-Edit Portal/apache/django.wsgi
+**! Edit Portal/apache/django.wsgi**
+
 Insert value for portal_site_path variable to the parent directory of Portal. e.g. /var/HVP/
 
 
@@ -191,8 +186,9 @@ cd /etc/apache2/sites-enabled
 ln -s ../sites-available/hvpportal.conf 
 ```
 
-Review the hvpportal.conf file for location differences if you have used different paths
-Review the hvpportal.conf file for apache changes required if the server you are using has existing apache services
+**! Review the hvpportal.conf file for location differences if you have used different paths**
+
+**! Review the hvpportal.conf file for apache changes required if the server you are using has existing apache services**
 
 
 Enable proxy pass for WebReceiver to be hosted on the same server
@@ -224,34 +220,38 @@ apachectl restart
 ## Setup OrgHashGenerator
 This is a simple tool for the operator to create new Organisation Hashes
 
-Edit /var/HVP/OrgHashGenerator/OrgHashGenerator.py
+**! Edit /var/HVP/OrgHashGenerator/OrgHashGenerator.py**
+
 Look for the variable ‘path’ in the first few lines of the file. Set this to /var/HVP
 
 
 ## Setup VariantIndexer
 These are applications that support the portal. They are executed routinely on the server
 
-Edit /var/HVP/VariantIndexer/cDNAIndexer.py
+**! Edit /var/HVP/VariantIndexer/cDNAIndexer.py**
+
 Look for the variable ‘path’ in the first few lines of the file. Set this to /var/HVP
 
-Edit /var/HVP/VariantIndexer/GenomicMutalyzer.py
+**! Edit /var/HVP/VariantIndexer/GenomicMutalyzer.py**
+
 Look for the variable ‘path’ in the first few lines of the file. Set this to /var/HVP
 
 You can setup a cron job to run these commands on a periodic basis. 
-Review the frequency and path locations of VariantIndexer/crontab-example.txt and change as needed
-Copy the contents of VariantIndexer/crontab-example.txt
+**! Review the frequency and path locations of VariantIndexer/crontab-example.txt and change as needed.**
+
+**! Copy the contents of VariantIndexer/crontab-example.txt**
 
 ```
 crontab -e
 ```
 
-Paste the contents into the crontab, save and exit
+**! Paste the contents into the crontab, save and exit**
 
 
 ## Setup Variant Importer
 There are two applications here:
-   WebReceiver.py - a web service which waits for incoming submissions
-   VariantImporter.py - an application executed nightly to process the submissions from the previous day
+* WebReceiver.py - a web service which waits for incoming submissions
+* VariantImporter.py - an application executed nightly to process the submissions from the previous day
 
 ```
 cd /var/HVP/VariantImporter/
@@ -266,8 +266,8 @@ python HVP_Encryption.py -c --keyname=hvp
 ```
 
 This generates a public private key pair.
-   The private one in the main VariantImporter folder
-   The public one in the VariantImporter/keys folder. This is freely given to the labs
+* The private one in the main VariantImporter folder
+* The public one in the VariantImporter/keys folder. This is freely given to the labs
 
 ```
 mv hvp.private ../
@@ -275,12 +275,14 @@ mv hvp.public ../keys/
 popd
 ```
 
-Edit WebReceive.py.cfg
+**! Edit WebReceive.py.cfg**
+
 There shouldn’t be anything here to change if you followed the above instructions
 If you gave your key a different name, make sure the ‘private_key’ variable is updated
 
 
-Edit Importer.py.cfg
+**! Edit Importer.py.cfg**
+
 Ensure the ‘username’, ‘password’, and ‘database’ values are set to the Portal database
 
 
@@ -293,12 +295,8 @@ It allows a HVP operator to support some of the configurations of the system at 
 cd /var/HVP/SiteConf/
 ```
 
-Edit SiteConf/settings.py
-Under DATABASES, ‘default’ ensure:
-   ’NAME’ (of database), 
-   ’USER’,
-   and ‘PASSWORD’
-are set to connect to SiteConf database
+**! Edit SiteConf/settings.py**
+Under DATABASES, ‘default’ ensure: ’NAME’ (of database), 'USER’, and ‘PASSWORD’ are set to connect to SiteConf database
 
 Create the database schema
 
@@ -332,19 +330,28 @@ You can use a different key value if you like
 ## Adding the first admin user for HVP Portal
 For the purposes of approving users and requests, there should be at least one user appointed with the responsibility of
 ‘HVP_Admin’. This is likely to be the first user you add to the system. As such, it requires special instructions to do so
+
 1) Go to the main node site http://(server address)
+
    You should see the front page for the portal.
+   
 2) Sign up for an account
+
    Fill in the details for this administrator user
+   
 3) Go to the admin page for the site http://(server address)/admin
+
    Log in with the django admin user made previously when setting up the database of the portal. 
+   
 4) Add a Laboratory Group for the node. Click +Add under HVP > Laboratory groups
+
    Fill in details for the HVP Node you are setting up. Save and return to home
+   
 5) Edit the user profile for the user you registered before. Click on User profiles under HVP > User profiles
-   Set ‘Is HVP Admin’ to ‘Yes’
-   Set ‘AccessStatus’ to ‘Application Granted’
-   Set ‘LaboratoryGroup’ to the group you have just added in #4
-   Set ‘Joomla User ID’ to 1 (deprecated)
+* Set ‘Is HVP Admin’ to ‘Yes’
+* Set ‘AccessStatus’ to ‘Application Granted’
+* Set ‘LaboratoryGroup’ to the group you have just added in #4
+* Set ‘Joomla User ID’ to 1 (deprecated)
 
 Using this user, you can now approve future user requests after logging into the portal under Pending applications
 
@@ -366,37 +373,45 @@ Copy it the result. You will need to reference this multiple times
 Use the DJANGO administrator to assist adding new data you will need to use both the Portal’s administrator and the SiteConf to complete this process.
 
 Start with Portal administrator
-Using a web browser, go to your portal’s URL with /admin/ at the end of the url
+**! Using a web browser, go to your portal’s URL with /admin/ at the end of the url**
 E.g. http://xx.xx.xx.xx/admin/
 
 Login with your administrator user name and password for the Portal site
+
 Under Hvp > Organisations, click ‘+Add’, and paste the hash code in the text box. Click ‘Save’
+
 Click Home under breadcrumbs to return
+
 Under Hvp > Lab details, click ‘+Add’
 
-> Here we enter the details of this organisation. You will need to paste the Hash code here too
+Here we enter the details of this organisation. You will need to paste the Hash code here too
 
 Click Home under breadcrumbs to return
+
 Under Hvp > Lab contacts, click ‘+add’
 
-> Here we enter the person who is the main contact for that site
+Here we enter the person who is the main contact for that site
 
 You can also use this administrator to update details for these labs as they change.
 
 
-
 Next, we set the SiteConf
-Using a web browser, go to your portal’s URL with /siteconf/admin/ at the end of the url
+
+**! Using a web browser, go to your portal’s URL with /siteconf/admin/ at the end of the url**
+
 E.g. http://xx.xx.xx.xx/siteconf/admin/
 
 Login with your administrator user name and password for the SiteConf site
+
 Under Orgsite > Org sites, click ‘+Add’
-> Here we enter the hash code again and the ID of the Organisation ID from Portal
+
+Here we enter the hash code again and the ID of the Organisation ID from Portal
+
 Click Home under breadcrumbs to return
+
 Under Upload > Uploads, click ‘+Add’
 
-> Here we initialise the details for a plugin the lab will receive from the exporter. A brief explanation of the fields are as
-follows:
+Here we initialise the details for a plugin the lab will receive from the exporter. A brief explanation of the fields are as follows:
 
 >   Name: Name of this plugin for this site
 
