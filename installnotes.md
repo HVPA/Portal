@@ -10,64 +10,84 @@ Assumes debian based linux distribution
 ## Get software dependencies
 You are about the install the tools and libraries required to build the node
 
-`sudo apt-get install git
-`sudo apt-get install python-pip
-`sudo apt-get install apache2 libapache2-mod-wsgi
+```
+sudo apt-get install git
+sudo apt-get install python-pip
+sudo apt-get install apache2 libapache2-mod-wsgi
+```
 
 ## Get source code
 You are about to install the HVP tool chain in /var/HVP as root
 
-`sudo su
-`cd /var
-`mkdir HVP
-`cd HVP
-`git clone https://bt_alanlo@bitbucket.org/hvpa/portal.git Portal
-`git clone https://bt_alanlo@bitbucket.org/hvpa/siteconf.git SiteConf
-`git clone https://bt_alanlo@bitbucket.org/hvpa/variantimporter.git VariantImporter
-`git clone https://bt_alanlo@bitbucket.org/hvpa/variantindexer.git VariantIndexer
-`git clone https://bt_alanlo@bitbucket.org/hvpa/orghashgenerator.git OrgHashGenerator
-
+```
+sudo su
+cd /var
+mkdir HVP
+cd HVP
+git clone https://bt_alanlo@bitbucket.org/hvpa/portal.git Portal
+git clone https://bt_alanlo@bitbucket.org/hvpa/siteconf.git SiteConf
+git clone https://bt_alanlo@bitbucket.org/hvpa/variantimporter.git VariantImporter
+git clone https://bt_alanlo@bitbucket.org/hvpa/variantindexer.git VariantIndexer
+git clone https://bt_alanlo@bitbucket.org/hvpa/orghashgenerator.git OrgHashGenerator
+```
 Add the HGVS_Parser library to the Portal
-`pushd Portal/search/hgvs_parser
-`git clone https://bt_alanlo@bitbucket.org/hvpa/hgvs_nomenclatureparser.git .
-`popd
-
+```
+pushd Portal/search/hgvs_parser
+git clone https://bt_alanlo@bitbucket.org/hvpa/hgvs_nomenclatureparser.git .
+popd
+```
 Add the HGVS_Parser library to the VariantImporter
-`pushd VariantImporter/Utils/HGVS
-`git clone https://bt_alanlo@bitbucket.org/hvpa/hgvs_nomenclatureparser.git .
-`popd
+```
+pushd VariantImporter/Utils/HGVS
+git clone https://bt_alanlo@bitbucket.org/hvpa/hgvs_nomenclatureparser.git .
+popd
+```
 
 ## Install and Setup databases
 
-`sudo apt-get install mysql-server
+```
+sudo apt-get install mysql-server
+```
 You will be asked to enter a password for 'root' user
 Please make note of it in /etc/hvp.secrets
-`sudo mysql_install_db
-`sudo /usr/bin/mysql_secure_installation
+```
+sudo mysql_install_db
+sudo /usr/bin/mysql_secure_installation
+```
 You will be asked questions after password entry
 Answer the following:
-> Remove anonymous users? [Y/n] y                                            
-> Disallow root login remotely? [Y/n] y
-> Remove test database and access to it? [Y/n] y
-> Reload privilege tables now? [Y/n] y
-sudo apt-get install python-dev libmysqlclient-dev
+> Remove anonymous users? [Y/n] y                                           
 
+> Disallow root login remotely? [Y/n] y
+
+> Remove test database and access to it? [Y/n] y
+
+> Reload privilege tables now? [Y/n] y
+```
+sudo apt-get install python-dev libmysqlclient-dev
+```
 Make databases for the Node
-`mysql -u root -p
+```
+mysql -u root -p
+```
 NOTE: In theory you can host the Labs database on different server/credentials for extra security
 But for the purposes of these instructions we will combine them in the one database
-`mysql> CREATE DATABASE Portal;
-`mysql> CREATE DATABASE SiteConf;
+```
+mysql> CREATE DATABASE Portal;
+mysql> CREATE DATABASE SiteConf;
+```
 Make a db user for the portal. Please note the username and password for later
-`mysql> CREATE USER 'portalproxy'@'localhost' IDENTIFIED BY 'pr0xyPASS';
-`mysql> GRANT ALL PRIVILEGES ON Portal.* to 'portalproxy'@'localhost';
-`mysql> GRANT ALL PRIVILEGES ON SiteConf.* to 'portalproxy'@'localhost';
-`mysql> FLUSH PRIVILEGES;
-`mysql> exit
-
+```
+mysql> CREATE USER 'portalproxy'@'localhost' IDENTIFIED BY 'pr0xyPASS';
+mysql> GRANT ALL PRIVILEGES ON Portal.* to 'portalproxy'@'localhost';
+mysql> GRANT ALL PRIVILEGES ON SiteConf.* to 'portalproxy'@'localhost';
+mysql> FLUSH PRIVILEGES;
+mysql> exit
+```
 Test by
-`mysql -u portalproxy -p Portal
-
+```
+mysql -u portalproxy -p Portal
+```
 
 ## Setup django and dependencies under virtual env for Apache/WSGI to run
 
