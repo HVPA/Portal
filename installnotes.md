@@ -24,22 +24,22 @@ sudo su
 cd /var
 mkdir HVP
 cd HVP
-git clone https://bt_alanlo@bitbucket.org/hvpa/portal.git Portal
-git clone https://bt_alanlo@bitbucket.org/hvpa/siteconf.git SiteConf
-git clone https://bt_alanlo@bitbucket.org/hvpa/variantimporter.git VariantImporter
-git clone https://bt_alanlo@bitbucket.org/hvpa/variantindexer.git VariantIndexer
-git clone https://bt_alanlo@bitbucket.org/hvpa/orghashgenerator.git OrgHashGenerator
+git clone https://github.com/HVPA/Portal.git Portal
+git clone https://github.com/HVPA/SiteConf.git SiteConf
+git clone https://github.com/HVPA/VariantImporter.git VariantImporter
+git clone https://github.com/HVPA/VariantIndexer.git VariantIndexer
+git clone https://github.com/HVPA/OrgHashGenerator.git OrgHashGenerator
 ```
 Add the HGVS_Parser library to the Portal
 ```
 pushd Portal/search/hgvs_parser
-git clone https://bt_alanlo@bitbucket.org/hvpa/hgvs_nomenclatureparser.git .
+git clone https://github.com/HVPA/HGVS_NomenclatureParser.git .
 popd
 ```
 Add the HGVS_Parser library to the VariantImporter
 ```
 pushd VariantImporter/Utils/HGVS
-git clone https://bt_alanlo@bitbucket.org/hvpa/hgvs_nomenclatureparser.git .
+git clone https://github.com/HVPA/HGVS_NomenclatureParser.git .
 popd
 ```
 
