@@ -4,19 +4,19 @@
 		<!-- base href="http://www.humanvariomeproject.org/" -->
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta name="robots" content="index, follow">
-		<meta name="keywords" content="variome, genetics, genome, genome 
+		<meta name="keywords" content="variome, genetics, genome, genome
 			project, mutation, variation, variation database, lsdb, gene">
-		<meta name="description" content="The Human Variome Project is the 
-			global initiative to collect and curate all human genetic variation 
-			affecting human health.">	
+		<meta name="description" content="The Human Variome Project is the
+			global initiative to collect and curate all human genetic variation
+			affecting human health.">
 		<title>The Human Variome Project Australian Node</title>
-		
+
 		<!-- Javascript -->
 		<!-- jQuery -->
 		<script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
 		<script type="text/javascript" src="/js/jquery-ui-1.8.custom.min.js"></script>
 
-		<!-- Google Analytics  -->		
+		<!-- Google Analytics  -->
 		<script type="text/javascript">
 			var _gaq = _gaq || [];
 			_gaq.push(['_setAccount', 'UA-20563690-1']);
@@ -25,25 +25,25 @@
 			_gaq.push(['trackPageview']);
 
 			(function(){
-				var ga = document.createElement('script'); 
+				var ga = document.createElement('script');
 				ga.type = 'text/javascript';
 				ga.async = true;
 				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 				var s = document.getElementsByTagName('script')[0];
 				s.parentNode.insertBefore(ga, s);
 			})();
-		</script>		
+		</script>
 
 		<!-- dataTables -->
 		<script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
 		<link rel="stylesheet" href="/css/demo_page.css" type="text/css">
 		<link rel="stylesheet" href="/css/demo_table.css" type="text/css">
-		
+
 		{% block extra_js %}{% endblock %}
-		
+
 		<script src="/js/ga.js" type="text/javascript"></script>
 		<script type="text/javascript" src="/js/vision_files/caption.js"></script>
-		
+
 		<!-- CSS -->
 		<link rel="stylesheet" href="/css/system.css" type="text/css">
 		<link rel="stylesheet" href="/css/general.css" type="text/css">
@@ -83,7 +83,7 @@
 	</head>
 	<div firebugversion="1.5.3" style="display: none;" id="_firebugConsole"></div>
 	<body>
-	   <div id="print_notice"><img class="print_notice" src="/img/Print_logo.jpg" alt="The Human Variome Project" 
+	   <div id="print_notice"><img class="print_notice" src="/img/Print_logo.jpg" alt="The Human Variome Project"
 			width="350px" height="100px"></div>
 	   <div id="wrapper">
 			<div id="header">
@@ -99,13 +99,13 @@
 							<a href="/"><span>Home</span></a>
 						</li>
 						<li>
-							<a href="http://hvpaustralia.org.au/what-is-the-australian-node"><span>About</span></a>
+							<a href="http://www.hvpaustralia.org.au/"><span>About</span></a>
 						</li>
 						<li>
-							<a href="/policy/"><span>Usage Policy</span></a>
+							<a href="http://www.hvpaustralia.org.au/data/data-access-policy/"><span>Usage Policy</span></a>
 						</li>
 						<li>
-							<a href="http://hvpaustralia.org.au/contact-us"><span>Contact us</span></a>
+							<a href="http://www.hvpaustralia.org.au/contact/"><span>Contact us</span></a>
 						</li>
 						{% if user.is_authenticated %}
 						<li>
@@ -146,7 +146,7 @@
 									<a href="/pending/"><span>View Pending User Applications</span></a>
 								</li>
 								<li>
-									<a href="/request/"><span>View Lab Request Applications</span></a>								
+									<a href="/request/"><span>View Lab Request Applications</span></a>
 								</li>
 							{% else %}{% if user.get_profile.IsLabLeader %}
 								<li>
@@ -168,10 +168,10 @@
 				</div>
 				{% if user.is_authenticated %}
 				<div class="column" style="float:left; width:20px;">
-					<a href="#" 
-						id="btnHide" 
-						title="Show/Hide side bar" 
-						class="ui-icon ui-icon-triangle-1-w" 
+					<a href="#"
+						id="btnHide"
+						title="Show/Hide side bar"
+						class="ui-icon ui-icon-triangle-1-w"
 						style="float: left"> </a>
 				</div>
 				{% endif %}
@@ -201,7 +201,7 @@
 								<!-- Page heading goes here -->
 								<td class="contentheading" width="100%">{% block contentheader %} {% endblock %}</td>
 								<td class="buttonheading" align="right" width="100%">
-									&nbsp; 
+									&nbsp;
 								</td>
 							</tr>
 						</tbody>
@@ -217,7 +217,7 @@
 					</table>
 				<span class="article_separator">&nbsp;</span>
 			</div>
-		</div>            
+		</div>
 		<div id="footer">
 			<div id="text_nav">
 	      <ul class="menu">
@@ -227,33 +227,33 @@
 	              </a>
 	          </li>
 	          <li class="item2">
-	              <a href="http://hvpaustralia.org.au/the-node/">
-	                  <span>The Node</span>
+	              <a href="http://www.hvpaustralia.org.au/">
+	                  <span>About</span>
 	              </a>
 	          </li>
 	          <li class="item3">
-	              <a href="http://hvpaustralia.org.au/the-data/">
-	                  <span>The Data</span>
+	              <a href="http://www.hvpaustralia.org.au/contact/">
+	                  <span>Contact</span>
 	              </a>
 	          </li>
 	          <li class="item4">
-	              <a href="http://hvpaustralia.org.au/the-system/">
+	              <a href="http://hvpaustralia.org.au/system/">
 	                  <span>The System</span>
 	              </a>
 	          </li>
 	          <li class="item5">
-	              <a href="http://hvpaustralia.org.au/information-for-patients/">
-	                  <span>Information for Patients</span>
+	              <a href="http://www.hvpaustralia.org.au/data/">
+	                  <span>Data</span>
 	              </a>
 	          </li>
 	          <li class="item6">
-	              <a href="http://hvpaustralia.org.au/blog/">
-	                  <span>Blog</span>
+	              <a href="http://www.hvpaustralia.org.au/data/privacy-ethics/">
+	                  <span>Privacy &amp; Ethics</span>
 	              </a>
 	          </li>
 	          <li class="item7">
-	              <a href="http://hvpaustralia.org.au/sitemap/">
-	                  <span>Sitemap</span>
+	              <a href="http://www.hvpaustralia.org.au/who/">
+	                  <span>Who</span>
 	              </a>
 	          </li>
 	      </ul>
